@@ -108,6 +108,7 @@ style: |
 ![w:950 Class Diagram](./images/diagram_class.png)
 
 
+
 ---
 
 ## Sujet - Live coding
