@@ -99,4 +99,17 @@ style: |
 
 ## Analyse Fonctionnelle
 
-![w:600 Use Case Diagram](./images/notepad_usecase.png)
+![w:1000 Use Case Diagram](./images/notepad_usecase45.png)
+
+---
+
+## Conception
+
+![w:950 Class Diagram](./images/diagram_class.png)
+
+
+---
+
+## Sujet - Live coding
+* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément.
+* Une barre de recherche filtrant des éléments par titre.
