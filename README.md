@@ -76,25 +76,24 @@ style: |
 
 ### Les technologies à utiliser
 #### Front-End
-- **Blade:** Templates réutilisables (components, layouts).
-- **Tailwind CSS:** Développement rapide, responsive.
-- **Preline UI:** Composants intégrés.
-- **Lucide:** Icones.
+1. **Blade:** Templates réutilisables (components, layouts).
+2. **Tailwind CSS:** Développement rapide, responsive.
+3. **Preline UI:** Composants intégrés.
+4. **Lucide:** Icones.
 
 ---
 
 #### Back-End et Architecture
-- **Framework:** Laravel 12.
-- **Architecture N-Tiers:**
+5. **Framework:** Laravel 12.
+6. **Architecture N-Tiers:**
   - **Controller:** Requêtes HTTP.
   - **Service:** Logique métier.
   - **Model:** Base de données.
 
 ### Fonctionnalités
-*   **CRUD:** Créer, Lire, Mettre à jour, Supprimer.
-*   **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
-*   **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
-*   **Support Multi-langue:** Support des langues française et anglaise (fr, en).
+7. **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
+8. **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
+9. **Support Multi-langue:** Support des langues française et anglaise (fr, en).
 
 
 
