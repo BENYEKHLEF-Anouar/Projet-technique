@@ -75,30 +75,28 @@ style: |
 
 
 ### Les technologies à utiliser
-#### Front-End
-1. **Blade:** Templates réutilisables (components, layouts).
-2. **Tailwind CSS:** Développement rapide, responsive.
-3. **Preline UI:** Composants intégrés.
-4. **Lucide:** Icones.
+
+1.  **Base de données:** MySQL.
+2.  **Framework:** Laravel 12.
+3.  **Architecture N-Tiers:**
+    - **Controller:** Requêtes HTTP.
+    - **Service:** Logique métier.
+    - **Model:** Base de données.
+4.  **Architecture:** MVC.
+5.  **Blade:** Templates réutilisables (components, layouts).
+6.  **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
 
 ---
 
-#### Back-End et Architecture
-5. **Framework:** Laravel 12.
-6. **Architecture N-Tiers:**
-  - **Controller:** Requêtes HTTP.
-  - **Service:** Logique métier.
-  - **Model:** Base de données.
-
-### Fonctionnalités
-7. **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
-8. **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
-9. **Support Multi-langue:** Support des langues française et anglaise (fr, en).
-
-
+7.  **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
+8.  **Support Multi-langue:** Support des langues française et anglaise (fr, en).
+9.  **Vite:** Outil de build rapide.
+10. **Preline UI:** Librairie UI.
+11. **Lucide:** Librairie d'icônes.
+12.  **Tailwind CSS:** Développement rapide, responsive.
 
 ---
 
 ## Analyse Fonctionnelle
 
-![w:600 Use Case Diagram](./images/notes_usecase.png)
+![w:600 Use Case Diagram](./images/notepad_usecase.png)
