@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex flex-col">
+    <div class="flex flex-col mb-10">
         <div class="-m-1.5 overflow-x-auto">
             <div class="p-1.5 min-w-full inline-block align-middle">
                 <div
@@ -128,6 +128,7 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <p id="error-categories" class="text-xs text-red-600 mt-2 hidden"></p>
 
                             <!-- Content -->
                             <div>
@@ -135,6 +136,7 @@
                                 <textarea id="content" name="content" rows="6"
                                     class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 shadow-sm transition-all"
                                     placeholder="Write your note content here..."></textarea>
+                                <p id="error-content" class="text-xs text-red-600 mt-2 hidden"></p>
                             </div>
 
                             <!-- Image Upload -->

@@ -14,9 +14,9 @@
                 <th scope="col"
                     class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
                     Categories</th>
-                <th scope="col"
+                <!-- <th scope="col"
                     class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Content
-                </th>
+                </th> -->
                 <th scope="col"
                     class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Action
                 </th>
@@ -41,9 +41,9 @@
                                 class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">{{ $category->name }}</span>
                         @endforeach
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200 truncate max-w-xs">
+                    <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200 truncate max-w-xs">
                         {{ Str::limit($note->content, 50) }}
-                    </td>
+                    </td> -->
                     <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                         <button type="button" data-id="{{ $note->id }}"
                             class="view-note-btn text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 mr-2">View</button>

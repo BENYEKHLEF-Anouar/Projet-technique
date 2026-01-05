@@ -46,10 +46,35 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error(error);
             if (error.response && error.response.data.errors) {
-                // Show validation errors
-                // Simple implementation: alert first error
-                const errors = Object.values(error.response.data.errors).flat();
-                alert(errors.join('\n'));
+                if (error.response && error.response.data.errors) {
+                    // Show validation errors inline
+                    const errors = error.response.data.errors;
+
+                    // Clear previous errors first (optional if we clear on reset, but stricter here)
+                    ['name', 'content', 'categories'].forEach(field => {
+                        const errEl = document.getElementById(`error-${field}`);
+                        if (errEl) {
+                            errEl.innerText = '';
+                            errEl.classList.add('hidden');
+                        }
+                    });
+
+                    // Display new errors
+                    for (const [field, messages] of Object.entries(errors)) {
+                        // Map 'categories' to 'error-categories' etc.
+                        // 'categories' might come as 'categories' or 'categories.0'? Laravel usually sends 'categories' for the array itself.
+                        const errorElement = document.getElementById(`error-${field}`);
+                        if (errorElement) {
+                            errorElement.innerText = messages[0];
+                            errorElement.classList.remove('hidden');
+                        } else {
+                            // Fallback for fields without specific error container (e.g. image)
+                            alert(messages[0]);
+                        }
+                    }
+                } else {
+                    alert('An error occurred. Please try again.');
+                }
             } else {
                 alert('An error occurred. Please try again.');
             }
@@ -219,6 +244,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const imgContainer = document.getElementById('current-image');
         imgContainer.classList.add('hidden');
         imgContainer.querySelector('img').src = ''; // Clear source to prevent ghosting
+
+        // Clear errors
+        ['name', 'content', 'categories'].forEach(field => {
+            const errEl = document.getElementById(`error-${field}`);
+            if (errEl) {
+                errEl.innerText = '';
+                errEl.classList.add('hidden');
+            }
+        });
     }
 
     function populateForm(note) {

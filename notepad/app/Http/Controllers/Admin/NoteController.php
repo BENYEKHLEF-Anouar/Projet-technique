@@ -59,7 +59,7 @@ class NoteController extends Controller
         // For the initial page load, we can pass data or let JS fetch it.
         // Given it's a simple SPA, passing initial data is efficient.
         $notes = $this->noteService->getPaginated(
-            perPage: 10,
+            perPage: 8,
             search: $request->query('search'),
             categoryId: $request->query('category')
         );
@@ -79,8 +79,8 @@ class NoteController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'categories' => 'array|exists:categories,id',
+            'content' => 'required|string',
+            'categories' => 'required|array|exists:categories,id',
             'image' => 'nullable|image|max:2048', // 2MB Max
         ]);
 
@@ -112,8 +112,8 @@ class NoteController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'categories' => 'array|exists:categories,id',
+            'content' => 'required|string',
+            'categories' => 'required|array|exists:categories,id',
             'image' => 'nullable|image|max:2048',
         ]);
 
