@@ -42,7 +42,7 @@ style: |
 
 
 # **Présentation Projet-technique**
-### Memo Notepad (Notes,Categories)
+### Memo Notepad (Notes, Categories)
 **Réalisé par :** BENYEKHLEF Anouar
 **Encadré par :** M. ESSARRAJ Fouad
 
@@ -53,26 +53,35 @@ style: |
 ## Travail à faire
 
 ### Développer l'Application Memo Notepad
-*   **Partie Publique:** Interface for visitors to view notes. Features: Title search, Category filter, Pagination (10 items/page).
-*   **Partie Admin:** Secure dashboard for CRUD operations. Features: Modals for add/edit, AJAX for asynchronous updates.
+*   **Partie Publique:** Interface permettant aux visiteurs de consulter les notes. Fonctionnalités : Recherche par titre, filtre par catégorie, pagination (10 éléments/page).
+*   **Partie Admin:** Tableau de bord sécurisé pour les opérations CRUD. Fonctionnalités : Modales pour ajout/édition, AJAX pour les mises à jour asynchrones.
 
 ---
 
 ## Contexte
 
-*   **Processus 2TUP:** Project follows the 2TUP (Y Development Process) methodology, separating Functional, Technical, and Realization branches.
-*   **Solidification des Compétences:** Focus on reinforcing Laravel 12 skills without AI tools, building on previous Solicode experience.
+*   **Projet de Fin de Formation:** Travail sur le projet de fin de formation, commençant par la branche technique.
+
+*   **Processus 2TUP:** Le projet suit la méthodologie 2TUP (Processus de développement en Y), séparant les branches Fonctionnelle, Technique et Réalisation.
+  
+![w:600 2TUP](./images/2tup.png)
+
+
+*   **Solidification des Compétences:** Concentration sur le renforcement des compétences Laravel 12 sans outils d'IA, en s'appuyant sur l'expérience précédente à Solicode.
 
 ---
 
 ## Besoin - Analyse Technique
 
-### Stack
+
+### Les technologies à utiliser
 #### Front-End
 - **Blade:** Templates réutilisables (components, layouts).
 - **Tailwind CSS:** Développement rapide, responsive.
 - **Preline UI:** Composants intégrés.
 - **Lucide:** Icones.
+
+---
 
 #### Back-End et Architecture
 - **Framework:** Laravel 12.
@@ -81,18 +90,16 @@ style: |
   - **Service:** Logique métier.
   - **Model:** Base de données.
 
-### Features
-*   **CRUD:** Create, Read, Update, Delete.
-*   **AJAX:** Dynamic interactions (e.g., Modals) without page reloads.
+### Fonctionnalités
+*   **CRUD:** Créer, Lire, Mettre à jour, Supprimer.
+*   **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
+*   **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
+*   **Support Multi-langue:** Support des langues arabe et anglaise (ar, en).
 
-### Naming Conventions
-- **Controllers:** `PascalCase` + `Controller` suffix (e.g., `NoteController`).
-- **Models:** `PascalCase` singular (e.g., `Note`).
-- **Tables:** `snake_case` plural (e.g., `notes`).
-- **Variables/Methods:** `camelCase` (e.g., `getNotes`).
+
 
 ---
 
 ## Analyse Fonctionnelle
 
-![w:600 Use Case Diagram](./images/notepad_usecase.png)
+![w:600 Use Case Diagram](./images/notes_usecase.png)
