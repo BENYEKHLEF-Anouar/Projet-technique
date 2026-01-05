@@ -22,4 +22,22 @@ class Note extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    /**
+     * Get the URL of the image (local or external).
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        return \Illuminate\Support\Facades\Storage::url($this->image);
+    }
+
+    protected $appends = ['image_url'];
 }
