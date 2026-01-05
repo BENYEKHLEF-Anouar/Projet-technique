@@ -42,8 +42,8 @@ style: |
 
 
 # **Présentation Projet-technique**
-### Memo Notepad (Notes, Categories)
-**Réalisé par :** BENYEKHLEF Anouar
+### Memo Notepad (Notes, Categories) <br>
+**Réalisé par :** BENYEKHLEF Anouar <br>
 **Encadré par :** M. ESSARRAJ Fouad
 
 
