@@ -94,7 +94,7 @@ style: |
 *   **CRUD:** Créer, Lire, Mettre à jour, Supprimer.
 *   **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
 *   **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
-*   **Support Multi-langue:** Support des langues arabe et anglaise (ar, en).
+*   **Support Multi-langue:** Support des langues française et anglaise (fr, en).
 
 
 
