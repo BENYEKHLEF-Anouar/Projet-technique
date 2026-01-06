@@ -10,7 +10,7 @@ class HomeController extends Controller
     //     Laravel automatically injects:
     // Request $request: Gives access to query parameters, form data, headers, etc.
     // NoteService $noteService: Resolved from the service container.
-    
+
     public function index(Request $request, NoteService $noteService)
     {
         $notes = $noteService->getNotes(
@@ -18,7 +18,14 @@ class HomeController extends Controller
             $request->input('category') // Gets the category query parameter (e.g., ?category=3).
         );
 
-        return view('notes.index', compact('notes')); // compact('notes') is shorthand for: ['notes' => $notes]
+        $categories = \App\Models\Category::all();
 
+        return view('notes.index', compact('notes', 'categories'));
+
+    }
+    public function show(int $id, NoteService $noteService)
+    {
+        $note = $noteService->getNote($id);
+        return view('notes.show', compact('note'));
     }
 }
