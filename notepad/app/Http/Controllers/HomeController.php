@@ -22,6 +22,11 @@ class HomeController extends Controller
 
         $categories = $categoryService->getAllCategories();
 
+          if ($request->ajax()) {
+        return view('notes.partials.notes_grid', compact('notes'))->render();
+    }
+
+
         return view('notes.index', compact('notes', 'categories'));
 
     }

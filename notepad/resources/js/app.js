@@ -1,7 +1,15 @@
-// index.js
-import 'preline'
-
+import 'preline';
 import { createIcons, icons } from 'lucide';
-import 'preline'; // Keep your Preline import
+import { initFilters } from './filters';
 
-createIcons({ icons }); // Or import specific: import { Activity } from 'lucide-icons/activity.js';
+// Pre-initialize icons
+createIcons({ icons });
+
+// Expose to window for AJAX updates
+window.refreshIcons = () => {
+    createIcons({ icons });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    initFilters();
+});
