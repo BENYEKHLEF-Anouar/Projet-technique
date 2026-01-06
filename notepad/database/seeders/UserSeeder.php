@@ -14,11 +14,13 @@ class UserSeeder extends Seeder
             $header = fgetcsv($handle);
             while (($row = fgetcsv($handle)) !== false) {
                 $data = array_combine($header, $row);
-                User::create([
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'password' => Hash::make($data['password']),
-                ]);
+                User::firstOrCreate(
+                    ['email' => $data['email']],
+                    [
+                        'name' => $data['name'],
+                        'password' => Hash::make($data['password']), // securely hashes the password before storing it in the database.
+                    ]
+                );
             }
             fclose($handle);
         }

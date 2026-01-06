@@ -29,9 +29,9 @@ class NoteSeeder extends Seeder
                 ]);
 
                 // Attach categories
-                $categories = explode('|', $data['categories']);
-                $categoryIds = Category::whereIn('name', $categories)->pluck('id');
-                $note->categories()->attach($categoryIds);
+                $categories = explode('|', $data['categories']); // Splits the categories string by | : 'Work|Project X'
+                $categoryIds = Category::whereIn('name', $categories)->pluck('id'); // Gets the IDs of categories that match the names in the array.
+                $note->categories()->attach($categoryIds); //Uses a many-to-many relationship to attach categories to the note.
             }
             fclose($handle);
         }
