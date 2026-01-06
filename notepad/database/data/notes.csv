@@ -1,4 +1,4 @@
 name,content,image,user_email,categories
-First Note,This is a test note,https://blog.lulu.com/content/images/2024/12/021120_NoteTaking-Blog.png,Anouar@example.com,Technology|Education
-Second Note,Laravel tips and tricks,https://blog.lulu.com/content/images/2024/12/021120_NoteTaking-Blog.png,Mehdi@example.com,Lifestyle
-Third Note,Learning PHP basics,https://blog.lulu.com/content/images/2024/12/021120_NoteTaking-Blog.png,Nabil@example.com,Education|Technology
+Première note,Ceci est une note de test,notes/021120_NoteTaking-Blog.png,Anouar@example.com,Technologie|Éducation
+Deuxième note,Astuces et conseils Laravel,notes/021120_NoteTaking-Blog.png,Mehdi@example.com,Style de vie
+Troisième note,Apprentissage des bases de PHP,notes/021120_NoteTaking-Blog.png,Nabil@example.com,Éducation|Technologie
