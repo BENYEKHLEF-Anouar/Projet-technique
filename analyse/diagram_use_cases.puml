@@ -1,0 +1,27 @@
+@startuml
+top to bottom direction
+skinparam packageStyle rectangle
+
+actor Visitor
+actor Admin
+
+Visitor <|-- Admin
+
+rectangle "Memo Notepad System" {
+  usecase "View Notes"               as UC1
+  usecase "View Note Details"        as UC7
+  usecase "Manage Notes"             as UC6
+  usecase "Access Note Details"      as UC4
+  usecase "Filter Notes by Category" as UC3
+  usecase "Search Notes by Title"    as UC2
+}
+
+Visitor -- UC1
+Admin   -- UC6
+
+UC7 ..> UC1 : <<extend>>
+UC4 ..> UC6 : <<extend>>
+UC3 ..> UC6 : <<extend>>
+UC2 ..> UC6 : <<extend>>
+
+@enduml

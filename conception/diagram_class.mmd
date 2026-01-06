@@ -1,0 +1,25 @@
+classDiagram
+    class Note {
+        +int id
+        +string name
+        +text content
+        +string image  
+        +datetime createdAt
+        +datetime updatedAt
+    }
+
+    class Category {
+        +int id
+        +string name
+        +string description
+    }
+
+    class User {
+        +int id
+        +string name
+        +string email
+        +string password
+    }
+
+    User "1" --> "0..*" Note : creates
+    Note "0..*" --> "0..*" Category : belongs to

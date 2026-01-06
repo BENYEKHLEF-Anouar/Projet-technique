@@ -46,6 +46,12 @@ style: |
 **Réalisé par :** BENYEKHLEF Anouar <br>
 **Encadré par :** M. ESSARRAJ Fouad
 
+---
+
+## La méthode Waterfall (En cascade)
+
+![w:900 Waterfall](./images/Waterfall.webp)
+
 
 
 ---
@@ -71,7 +77,7 @@ style: |
 
 ---
 
-## Besoin - Analyse Technique
+## Exigences: Analyse Technique
 
 
 ### Les technologies à utiliser
@@ -84,7 +90,7 @@ style: |
     - **Model:** Base de données.
 4.  **Architecture:** MVC.
 5.  **Blade:** Templates réutilisables (components, layouts).
-6.  **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
+6.  **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.  
 
 ---
 
@@ -97,7 +103,7 @@ style: |
 
 ---
 
-## Analyse Fonctionnelle
+## Analyse: Analyse Fonctionnelle
 
 ![w:1000 Use Case Diagram](./images/notepad_usecase45.png)
 
