@@ -10,6 +10,6 @@ window.refreshIcons = () => {
     createIcons({ icons });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { // function that runs after the HTML document has finished loading and been parsed
     initFilters();
 });
