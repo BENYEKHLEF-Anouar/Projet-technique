@@ -8,6 +8,49 @@
 // ============================================================================
 
 /**
+ * Toggle modal visibility with transitions
+ * @param {HTMLElement} modal - The modal element
+ * @param {boolean} show - Whether to show or hide
+ */
+function toggleModal(modal, show) {
+    if (!modal) return;
+
+    if (show) {
+        // Enable display
+        modal.classList.remove('hidden');
+        
+        // Trigger reflow to enable transition
+        // This is crucial for the transition to play after removing 'hidden'
+        void modal.offsetWidth;
+        
+        // Fade in
+        modal.classList.remove('opacity-0');
+        
+        // Scale in content
+        const inner = modal.querySelector('div');
+        if (inner) {
+            inner.classList.remove('scale-95');
+            inner.classList.add('scale-100');
+        }
+    } else {
+        // Fade out
+        modal.classList.add('opacity-0');
+        
+        // Scale out content
+        const inner = modal.querySelector('div');
+        if (inner) {
+            inner.classList.remove('scale-100');
+            inner.classList.add('scale-95');
+        }
+
+        // Wait for transition to finish before hiding display
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+}
+
+/**
  * Show a success message toast
  */
 function showSuccessMessage(message) {
@@ -18,7 +61,7 @@ function showSuccessMessage(message) {
     }
 
     const alert = document.createElement('div');
-    alert.className = 'success-toast fixed top-4 right-4 z-50 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg shadow-lg flex items-center gap-3 animate-slide-in';
+    alert.className = 'success-toast fixed top-4 right-4 z-[60] p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl shadow-lg flex items-center gap-3 animate-slide-up';
     alert.innerHTML = `
         <i data-lucide="check-circle" class="w-5 h-5"></i>
         <span>${message}</span>
@@ -191,11 +234,11 @@ window.openCreateModal = function () {
     document.querySelectorAll('input[name="category_ids[]"]').forEach(cb => cb.checked = false);
 
     // Update UI
-    title.textContent = 'Create New Note';
-    submitBtn.textContent = 'Create Note';
+    title.textContent = 'Créer une Nouvelle Note';
+    submitBtn.textContent = 'Créer la Note';
 
     // Show modal
-    modal.classList.remove('hidden');
+    toggleModal(modal, true);
 
     // Refresh icons
     if (window.refreshIcons) window.refreshIcons();
@@ -251,11 +294,11 @@ window.openEditModal = async function (noteId) {
         }
 
         // Update UI
-        title.textContent = 'Edit Note';
-        submitBtn.textContent = 'Update Note';
+        title.textContent = 'Modifier la Note';
+        submitBtn.textContent = 'Mettre à jour';
 
         // Show modal
-        modal.classList.remove('hidden');
+        toggleModal(modal, true);
 
         // Refresh icons
         if (window.refreshIcons) window.refreshIcons();
@@ -271,12 +314,14 @@ window.openEditModal = async function (noteId) {
  */
 window.closeFormModal = function () {
     const modal = document.getElementById('form-note-modal');
-    modal.classList.add('hidden');
+    toggleModal(modal, false);
 
-    // Reset form
-    document.getElementById('note-form').reset();
-    clearFormErrors();
-    clearImagePreview();
+    // Reset form after transition
+    setTimeout(() => {
+        document.getElementById('note-form').reset();
+        clearFormErrors();
+        clearImagePreview();
+    }, 300);
 };
 
 /**
@@ -307,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Disable submit button
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Saving...';
+            submitBtn.innerHTML = '<span class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></span>Sauvegarde...';
 
             // Clear previous errors
             clearFormErrors();
@@ -347,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } finally {
                 // Re-enable submit button
                 submitBtn.disabled = false;
-                submitBtn.textContent = noteId ? 'Update Note' : 'Create Note';
+                submitBtn.textContent = noteId ? 'Mettre à jour' : 'Créer la Note';
             }
         });
     }
@@ -365,11 +410,11 @@ window.openViewModal = async function (noteId) {
     const content = document.getElementById('view-note-content');
 
     // Show modal with loading state
-    modal.classList.remove('hidden');
+    toggleModal(modal, true);
     content.innerHTML = `
-        <div class="text-center py-8">
+        <div class="text-center py-12">
             <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-            <p class="text-gray-600 mt-2">Loading...</p>
+            <p class="text-gray-500 mt-4 font-medium animate-pulse">Chargement...</p>
         </div>
     `;
 
@@ -391,53 +436,62 @@ window.openViewModal = async function (noteId) {
         let categoriesHtml = '';
         if (note.categories && note.categories.length > 0) {
             categoriesHtml = note.categories.map(cat =>
-                `<span class="px-3 py-1 text-sm rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">${cat.name}</span>`
+                `<span class="px-3 py-1 text-sm rounded-full bg-indigo-50 text-indigo-700 border border-indigo-100/50 font-medium">${cat.name}</span>`
             ).join('');
         } else {
-            categoriesHtml = '<span class="text-gray-500 text-sm">No categories</span>';
+            categoriesHtml = '<span class="text-gray-400 text-sm italic">Aucune catégorie</span>';
         }
 
         // Build image HTML
         let imageHtml = '';
         if (note.image) {
             imageHtml = `
-                <div>
-                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Cover Image</h4>
-                    <img src="/storage/${note.image}" alt="${note.name}" class="w-full max-w-md rounded-lg border border-gray-200">
+                <div class="rounded-xl overflow-hidden shadow-sm border border-gray-100">
+                    <img src="/storage/${note.image}" alt="${note.name}" class="w-full object-cover">
                 </div>
             `;
         }
 
         // Populate modal content
         content.innerHTML = `
-            <div class="space-y-6">
+            <div class="space-y-8 animate-fade-in">
+                ${imageHtml}
+                
                 <div>
-                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Title</h4>
-                    <p class="text-lg text-gray-900">${note.name}</p>
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Titre</h4>
+                    <p class="text-2xl font-bold text-gray-900 leading-tight">${note.name}</p>
                 </div>
                 
                 <div>
-                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Content</h4>
-                    <p class="text-gray-700 whitespace-pre-wrap">${note.content || 'No content'}</p>
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Contenu</h4>
+                    <div class="prose prose-indigo max-w-none text-gray-600 leading-relaxed whitespace-pre-wrap bg-gray-50/50 p-4 rounded-xl border border-gray-100/50">${note.content || '<span class="italic text-gray-400">Aucun contenu</span>'}</div>
                 </div>
                 
                 <div>
-                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Categories</h4>
+                    <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Catégories</h4>
                     <div class="flex flex-wrap gap-2">
                         ${categoriesHtml}
                     </div>
                 </div>
                 
-                ${imageHtml}
-                
-                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
-                    <div>
-                        <h4 class="text-sm font-semibold text-gray-700 mb-1">Author</h4>
-                        <p class="text-sm text-gray-600">${note.user?.name || 'Unknown'}</p>
+                <div class="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-semibold text-gray-500">Auteur</h4>
+                            <p class="text-sm font-medium text-gray-900">${note.user?.name || 'Inconnu'}</p>
+                        </div>
                     </div>
-                    <div>
-                        <h4 class="text-sm font-semibold text-gray-700 mb-1">Created</h4>
-                        <p class="text-sm text-gray-600">${new Date(note.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-semibold text-gray-500">Créé le</h4>
+                            <p class="text-sm font-medium text-gray-900">${new Date(note.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -449,11 +503,14 @@ window.openViewModal = async function (noteId) {
     } catch (error) {
         console.error('Error loading note:', error);
         content.innerHTML = `
-            <div class="text-center py-8">
-                <i data-lucide="alert-circle" class="w-12 h-12 text-red-500 mx-auto mb-3"></i>
-                <p class="text-red-600">Error loading note details.</p>
-                <button onclick="closeViewModal()" class="mt-4 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
-                    Close
+            <div class="text-center py-12">
+                <div class="inline-flex p-3 bg-red-50 rounded-full mb-4">
+                    <i data-lucide="alert-circle" class="w-8 h-8 text-red-500"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-1">Erreur de chargement</h3>
+                <p class="text-gray-500 mb-6">Impossible de charger les détails de la note.</p>
+                <button onclick="closeViewModal()" class="px-4 py-2 bg-white border border-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
+                    Fermer
                 </button>
             </div>
         `;
@@ -466,7 +523,7 @@ window.openViewModal = async function (noteId) {
  */
 window.closeViewModal = function () {
     const modal = document.getElementById('view-note-modal');
-    modal.classList.add('hidden');
+    toggleModal(modal, false);
 };
 
 // Close modals on background click

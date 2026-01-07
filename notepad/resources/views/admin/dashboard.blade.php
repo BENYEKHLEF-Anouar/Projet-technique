@@ -3,116 +3,115 @@
 @section('header-title', 'Tableau de Bord')
 
 @section('content')
-    <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900">Bienvenue sur le Panneau d'Administration</h2>
-        <p class="text-gray-600 mt-1">Gérez vos notes et catégories à partir d'ici</p>
+    <div class="mb-8 animate-fade-in">
+        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Bienvenue sur le Panneau d'Administration</h2>
+        <p class="text-gray-500 mt-2 text-lg">Gérez vos notes et catégories à partir d'ici</p>
     </div>
 
     <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 animate-slide-up" style="animation-delay: 0.1s;">
         <!-- Total Notes -->
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="p-3 bg-blue-50 rounded-lg">
-                    <i data-lucide="notebook" class="w-6 h-6 text-blue-600"></i>
+        <div
+            class="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center gap-5">
+                <div class="p-4 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl shadow-lg shadow-indigo-200">
+                    <i data-lucide="notebook" class="w-8 h-8 text-white"></i>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-600">Total des Notes</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\Note::count() }}</p>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total des Notes</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">{{ \App\Models\Note::count() }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Total Categories -->
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="p-3 bg-purple-50 rounded-lg">
-                    <i data-lucide="tags" class="w-6 h-6 text-purple-600"></i>
+        <div
+            class="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center gap-5">
+                <div class="p-4 bg-gradient-to-br from-purple-500 to-fuchsia-600 rounded-xl shadow-lg shadow-purple-200">
+                    <i data-lucide="tags" class="w-8 h-8 text-white"></i>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-600">Total des Catégories</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\Category::count() }}</p>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total des Catégories</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">{{ \App\Models\Category::count() }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Total Users -->
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-            <div class="flex items-center gap-4">
-                <div class="p-3 bg-orange-50 rounded-lg">
-                    <i data-lucide="users" class="w-6 h-6 text-orange-600"></i>
+        <div
+            class="bg-white p-6 rounded-2xl border border-gray-100 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center gap-5">
+                <div class="p-4 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl shadow-lg shadow-orange-200">
+                    <i data-lucide="users" class="w-8 h-8 text-white"></i>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-600">Total des Utilisateurs</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ \App\Models\User::count() }}</p>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total des Utilisateurs</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">{{ \App\Models\User::count() }}</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Quick Actions -->
-    <div class="mb-8">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Actions Rapides</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="mb-8 animate-slide-up" style="animation-delay: 0.2s;">
+        <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <i data-lucide="zap" class="w-5 h-5 text-yellow-500"></i> Actions Rapides
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Create New Note -->
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex flex-col h-full">
-                    <div class="p-3 bg-blue-50 rounded-lg w-fit mb-4">
-                        <i data-lucide="file-plus" class="w-6 h-6 text-blue-600"></i>
+            <a href="{{ route('admin.notes.create') }}"
+                class="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between">
+                <div>
+                    <div
+                        class="p-3 bg-blue-50 text-blue-600 rounded-xl w-fit mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="file-plus" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="text-base font-semibold text-gray-900 mb-2">Créer une Note</h4>
-                    <p class="text-sm text-gray-600 mb-4 flex-grow">Ajouter une nouvelle note à votre collection</p>
-                    <a href="{{ route('admin.notes.create') }}"
-                        class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition">
-                        Créer Maintenant
-                    </a>
+                    <h4 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Créer une Note
+                    </h4>
+                    <p class="text-sm text-gray-500 mt-1 group-hover:text-gray-600">Ajouter une nouvelle note</p>
                 </div>
-            </div>
+                <div
+                    class="p-2 bg-gray-50 rounded-full text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </div>
+            </a>
 
             <!-- View All Notes -->
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex flex-col h-full">
-                    <div class="p-3 bg-indigo-50 rounded-lg w-fit mb-4">
-                        <i data-lucide="notebook" class="w-6 h-6 text-indigo-600"></i>
+            <a href="{{ route('admin.notes.index') }}"
+                class="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between">
+                <div>
+                    <div
+                        class="p-3 bg-indigo-50 text-indigo-600 rounded-xl w-fit mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="notebook" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="text-base font-semibold text-gray-900 mb-2">Toutes les Notes</h4>
-                    <p class="text-sm text-gray-600 mb-4 flex-grow">Voir et gérer toutes vos notes</p>
-                    <a href="{{ route('admin.notes.index') }}"
-                        class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition">
-                        Voir les Notes
-                    </a>
+                    <h4 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">Toutes les
+                        Notes</h4>
+                    <p class="text-sm text-gray-500 mt-1 group-hover:text-gray-600">Gérer votre collection</p>
                 </div>
-            </div>
+                <div
+                    class="p-2 bg-gray-50 rounded-full text-gray-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </div>
+            </a>
 
             <!-- Search Notes -->
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex flex-col h-full">
-                    <div class="p-3 bg-purple-50 rounded-lg w-fit mb-4">
-                        <i data-lucide="search" class="w-6 h-6 text-purple-600"></i>
+            <a href="{{ route('admin.notes.index') }}"
+                class="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between">
+                <div>
+                    <div
+                        class="p-3 bg-purple-50 text-purple-600 rounded-xl w-fit mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+                        <i data-lucide="search" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="text-base font-semibold text-gray-900 mb-2">Rechercher des Notes</h4>
-                    <p class="text-sm text-gray-600 mb-4 flex-grow">Trouver rapidement des notes par mot-clé</p>
-                    <a href="{{ route('admin.notes.index') }}"
-                        class="inline-flex items-center justify-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition">
-                        Rechercher
-                    </a>
+                    <h4 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">Rechercher
+                    </h4>
+                    <p class="text-sm text-gray-500 mt-1 group-hover:text-gray-600">Trouver une note</p>
                 </div>
-            </div>
-
-            <!-- View Statistics -->
-            <!-- <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex flex-col h-full">
-                        <div class="p-3 bg-orange-50 rounded-lg w-fit mb-4">
-                            <i data-lucide="bar-chart-3" class="w-6 h-6 text-orange-600"></i>
-                        </div>
-                        <h4 class="text-base font-semibold text-gray-900 mb-2">Statistics</h4>
-                        <p class="text-sm text-gray-600 mb-4 flex-grow">View detailed statistics and insights</p>
-                        <a href="{{ route('admin.notes.index') }}"
-                            class="inline-flex items-center justify-center px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 transition">
-                            View Stats
-                        </a>
-                    </div>
-                </div> -->
+                <div
+                    class="p-2 bg-gray-50 rounded-full text-gray-400 group-hover:bg-purple-50 group-hover:text-purple-600 transition-colors">
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </div>
+            </a>
         </div>
     </div>
 @endsection
