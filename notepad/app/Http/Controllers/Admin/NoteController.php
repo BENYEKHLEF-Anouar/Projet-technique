@@ -58,27 +58,62 @@ class NoteController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'category_ids' => 'nullable|array',
+            'content' => 'required|string',
+            'category_ids' => 'required|array|min:1',
             'category_ids.*' => 'exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'The note title is required.',
+            'content.required' => 'Please add some content to your note.',
+            'category_ids.required' => 'Please select at least one category.',
+            'category_ids.min' => 'Please select at least one category.',
         ]);
 
-        $this->noteService->createNoteWithImage($validated, $request->file('image') ?? null);
+        $note = $this->noteService->createNoteWithImage($validated, $request->file('image') ?? null);
+
+        // Return JSON for AJAX requests
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Note created successfully!',
+                'note' => $note
+            ]);
+        }
 
         return redirect()->route('admin.notes.index')
             ->with('success', 'Note created successfully!');
     }
 
     /**
-     * Show the form for editing the specified note
+     * Display the specified note (for AJAX)
+     */
+    public function show(int $id)
+    {
+        $note = $this->noteService->getNote($id);
+
+        return response()->json([
+            'success' => true,
+            'note' => $note->load(['categories', 'user'])
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified note (for AJAX)
      */
     public function edit(int $id)
     {
         $note = $this->noteService->getNote($id);
+
+        // Return JSON for AJAX requests
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'note' => $note->load(['categories', 'user'])
+            ]);
+        }
+
         $categories = $this->categoryService->getAllCategories();
         $users = User::all();
-
         return view('admin.notes.form', compact('note', 'categories', 'users'));
     }
 
@@ -89,13 +124,27 @@ class NoteController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'content' => 'nullable|string',
-            'category_ids' => 'nullable|array',
+            'content' => 'required|string',
+            'category_ids' => 'required|array|min:1',
             'category_ids.*' => 'exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'The note title is required.',
+            'content.required' => 'Please add some content to your note.',
+            'category_ids.required' => 'Please select at least one category.',
+            'category_ids.min' => 'Please select at least one category.',
         ]);
 
-        $this->noteService->updateNoteWithImage($id, $validated, $request->file('image') ?? null);
+        $note = $this->noteService->updateNoteWithImage($id, $validated, $request->file('image') ?? null);
+
+        // Return JSON for AJAX requests
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Note updated successfully!',
+                'note' => $note
+            ]);
+        }
 
         return redirect()->route('admin.notes.index')
             ->with('success', 'Note updated successfully!');

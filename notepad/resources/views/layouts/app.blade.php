@@ -20,7 +20,11 @@
             </a>
 
             <nav class="hidden sm:flex gap-4">
-                <!-- Add links if needed -->
+                <a href="{{ route('admin.dashboard') }}"
+                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 transition rounded-lg hover:bg-indigo-50">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                    Admin Dashboard
+                </a>
             </nav>
         </div>
     </header>

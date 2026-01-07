@@ -40,12 +40,18 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right">
                             <div class="flex justify-end items-center gap-2">
-                                <a href="{{ route('notes.show', $note->id) }}" target="_blank" class="p-2 text-gray-400 hover:text-indigo-600 transition" title="View">
+                                <button type="button" 
+                                        onclick="openViewModal({{ $note->id }})" 
+                                        class="p-2 text-gray-400 hover:text-indigo-600 transition" 
+                                        title="View">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
-                                </a>
-                                <a href="{{ route('admin.notes.edit', $note->id) }}" class="p-2 text-gray-400 hover:text-indigo-600 transition" title="Edit">
+                                </button>
+                                <button type="button" 
+                                        onclick="openEditModal({{ $note->id }})" 
+                                        class="p-2 text-gray-400 hover:text-indigo-600 transition" 
+                                        title="Edit">
                                     <i data-lucide="edit-3" class="w-4 h-4"></i>
-                                </a>
+                                </button>
                                 <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this note?')">
                                     @csrf
                                     @method('DELETE')

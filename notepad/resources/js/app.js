@@ -1,6 +1,7 @@
 import 'preline';
 import { createIcons, icons } from 'lucide';
 import { initFilters } from './filters';
+import './modals'; // Import modal management
 
 // Pre-initialize icons
 createIcons({ icons });
