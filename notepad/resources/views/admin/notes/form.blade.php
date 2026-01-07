@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('header-title', isset($note) ? 'Edit Note' : 'Create Note')
+@section('header-title', isset($note) ? 'Edit Note' : 'Create Note') <!-- ternary operator in PHP -->
 
 @section('content')
 <div class="max-w-4xl mx-auto">

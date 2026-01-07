@@ -15,13 +15,13 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                @if($note->image)
+                                <!-- @if($note->image)
                                     <img src="{{ asset('storage/' . $note->image) }}" alt="{{ $note->name }}" class="w-12 h-12 rounded-lg object-cover">
                                 @else
                                     <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
                                         <i data-lucide="file-text" class="w-5 h-5 text-gray-400"></i>
                                     </div>
-                                @endif
+                                @endif -->
                                 <div class="text-sm font-medium text-gray-900">{{ Str::limit($note->name, 40) }}</div>
                             </div>
                         </td>

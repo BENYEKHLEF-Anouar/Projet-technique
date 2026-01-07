@@ -64,13 +64,7 @@ class NoteController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('notes', 'public');
-            $validated['image'] = $path;
-        }
-
-        $this->noteService->createNote($validated);
+        $this->noteService->createNoteWithImage($validated, $request->file('image') ?? null);
 
         return redirect()->route('admin.notes.index')
             ->with('success', 'Note created successfully!');
@@ -101,20 +95,7 @@ class NoteController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $note = Note::findOrFail($id);
-
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($note->image && Storage::disk('public')->exists($note->image)) {
-                Storage::disk('public')->delete($note->image);
-            }
-
-            $path = $request->file('image')->store('notes', 'public');
-            $validated['image'] = $path;
-        }
-
-        $this->noteService->updateNote($id, $validated);
+        $this->noteService->updateNoteWithImage($id, $validated, $request->file('image') ?? null);
 
         return redirect()->route('admin.notes.index')
             ->with('success', 'Note updated successfully!');
@@ -125,14 +106,7 @@ class NoteController extends Controller
      */
     public function destroy(int $id)
     {
-        $note = Note::findOrFail($id);
-
-        // Delete image if exists
-        if ($note->image && Storage::disk('public')->exists($note->image)) {
-            Storage::disk('public')->delete($note->image);
-        }
-
-        $this->noteService->deleteNote($id);
+        $this->noteService->deleteNoteWithImage($id);
 
         return redirect()->route('admin.notes.index')
             ->with('success', 'Note deleted successfully!');
