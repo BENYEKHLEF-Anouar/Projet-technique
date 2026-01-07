@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('header-title', isset($note) ? 'Edit Note' : 'Create Note') <!-- ternary operator in PHP -->
+@section('header-title', isset($note) ? 'Modifier la Note' : 'Créer une Note') <!-- ternary operator in PHP -->
 
 @section('content')
 <div class="max-w-4xl mx-auto">
     <div class="mb-6">
-        <h2 class="text-2xl font-bold text-gray-900">{{ isset($note) ? 'Edit Note' : 'Create New Note' }}</h2>
-        <p class="text-gray-600 mt-1">{{ isset($note) ? 'Update note details below' : 'Fill in the details to create a new note' }}</p>
+        <h2 class="text-2xl font-bold text-gray-900">{{ isset($note) ? 'Modifier la Note' : 'Créer une Nouvelle Note' }}</h2>
+        <p class="text-gray-600 mt-1">{{ isset($note) ? 'Mettez à jour les détails de la note ci-dessous' : 'Remplissez les détails pour créer une nouvelle note' }}</p>
     </div>
 
     <form action="{{ isset($note) ? route('admin.notes.update', $note->id) : route('admin.notes.store') }}" 
@@ -22,7 +22,7 @@
             <!-- Note Title -->
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Note Title <span class="text-red-500">*</span>
+                    Titre de la Note <span class="text-red-500">*</span>
                 </label>
                 <input type="text" 
                        id="name" 
@@ -30,7 +30,7 @@
                        value="{{ old('name', $note->name ?? '') }}" 
                        required
                        class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 @error('name') border-red-500 @enderror" 
-                       placeholder="Enter note title...">
+                       placeholder="Entrez le titre de la note...">
                 @error('name')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -45,7 +45,7 @@
                           name="content" 
                           rows="8" 
                           class="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 @error('content') border-red-500 @enderror" 
-                          placeholder="Write your note content here...">{{ old('content', $note->content ?? '') }}</textarea>
+                          placeholder="Écrivez le contenu de votre note ici...">{{ old('content', $note->content ?? '') }}</textarea>
                 @error('content')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -57,7 +57,7 @@
             <!-- Categories -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-3">
-                    Categories
+                    Catégories
                 </label>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     @foreach($categories as $category)
@@ -79,12 +79,12 @@
             <!-- Image Upload -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Cover Image
+                    Image de couverture
                 </label>
                 
                 @if(isset($note) && $note->image)
                     <div class="mb-4">
-                        <p class="text-sm text-gray-600 mb-2">Current image:</p>
+                        <p class="text-sm text-gray-600 mb-2">Image actuelle :</p>
                         <img src="{{ asset('storage/' . $note->image) }}" 
                              alt="Current cover" 
                              class="w-48 h-32 object-cover rounded-lg border border-gray-200">
@@ -94,8 +94,8 @@
                 <div class="flex items-center gap-4">
                     <label class="flex-1 flex flex-col items-center px-4 py-6 bg-white border-2 border-gray-200 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 transition">
                         <i data-lucide="upload" class="w-8 h-8 text-gray-400 mb-2"></i>
-                        <span class="text-sm text-gray-600">Click to upload or drag and drop</span>
-                        <span class="text-xs text-gray-500 mt-1">PNG, JPG or GIF (MAX. 2MB)</span>
+                        <span class="text-sm text-gray-600">Cliquez pour télécharger ou glissez-déposez</span>
+                        <span class="text-xs text-gray-500 mt-1">PNG, JPG ou GIF (MAX. 2MB)</span>
                         <input type="file" 
                                name="image" 
                                accept="image/*" 
@@ -110,7 +110,7 @@
                     if (imageInput && indicator) {
                         imageInput.addEventListener('change', function() {
                             if (imageInput.files && imageInput.files[0]) {
-                                indicator.textContent = 'Selected: ' + imageInput.files[0].name;
+                                indicator.textContent = 'Sélectionné : ' + imageInput.files[0].name;
                             } else {
                                 indicator.textContent = '';
                             }
@@ -128,11 +128,11 @@
         <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
             <a href="{{ route('admin.notes.index') }}" 
                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                Cancel
+                Annuler
             </a>
             <button type="submit" 
                     class="px-6 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">
-                {{ isset($note) ? 'Update Note' : 'Create Note' }}
+                {{ isset($note) ? 'Mettre à jour' : 'Créer la Note' }}
             </button>
         </div>
     </form>

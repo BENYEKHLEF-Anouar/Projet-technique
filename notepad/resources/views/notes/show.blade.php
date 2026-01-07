@@ -10,14 +10,14 @@
                         <a href="{{ route('home') }}"
                             class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition flex items-center gap-1">
                             <i data-lucide="home" class="w-4 h-4"></i>
-                            Home
+                            Accueil
                         </a>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center">
                         <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
-                        <span class="ms-2 text-sm font-medium text-gray-400 cursor-default">Note Detail</span>
+                        <span class="ms-2 text-sm font-medium text-gray-400 cursor-default">Détail de la Note</span>
                     </div>
                 </li>
             </ol>
@@ -48,7 +48,7 @@
                 <div class="flex items-center gap-4 text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">
                     <div class="flex items-center gap-1">
                         <i data-lucide="user" class="w-4 h-4 text-gray-400"></i>
-                        <span>{{ $note->user->name ?? 'Unknown' }}</span>
+                        <span>{{ $note->user->name ?? 'Inconnu' }}</span>
                     </div>
                     <div class="flex items-center gap-1">
                         <i data-lucide="calendar" class="w-4 h-4 text-gray-400"></i>
@@ -66,7 +66,7 @@
             <a href="{{ route('home') }}"
                 class="inline-flex items-center gap-x-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                Back to Home
+                Retour à l'Accueil
             </a>
         </div>
     </div>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Dashboard - Memo Notepad</title>
+    <title>Tableau de Bord Admin - Memo Notepad</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -18,7 +18,7 @@
                 <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center gap-2 text-xl font-bold text-indigo-600">
                     <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
-                    <span>Admin Panel</span>
+                    <span>Panneau d'administration</span>
                 </a>
             </div>
 
@@ -26,20 +26,20 @@
                 <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition {{ request()->routeIs('admin.dashboard') ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100' }}">
                     <i data-lucide="home" class="w-5 h-5"></i>
-                    Dashboard
+                    Tableau de Bord
                 </a>
 
                 <a href="{{ route('admin.notes.index') }}"
                     class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition {{ request()->routeIs('admin.notes.*') ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100' }}">
                     <i data-lucide="notebook" class="w-5 h-5"></i>
-                    Manage Notes
+                    Gérer les Notes
                 </a>
 
                 <div class="pt-4 mt-4 border-t border-gray-200">
                     <a href="{{ route('home') }}"
                         class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition">
                         <i data-lucide="external-link" class="w-5 h-5"></i>
-                        View Website
+                        Voir le Site
                     </a>
                 </div>
             </nav>
@@ -53,11 +53,11 @@
                     <button class="lg:hidden text-gray-500">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
-                    <h1 class="text-lg font-semibold text-gray-900">@yield('header-title', 'Admin Dashboard')</h1>
+                    <h1 class="text-lg font-semibold text-gray-900">@yield('header-title', 'Tableau de Bord Admin')</h1>
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <span class="text-sm text-gray-600">Administrator</span>
+                    <span class="text-sm text-gray-600">Administrateur</span>
                     <div class="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center">
                         <span class="text-sm font-bold text-indigo-700">A</span>
                     </div>

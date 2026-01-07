@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
-@section('header-title', 'Manage Notes')
+@section('header-title', 'Gérer les Notes')
 
 @section('content')
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900">Manage Notes</h2>
-            <p class="text-gray-600 mt-1">Create, edit, and delete notes</p>
+            <h2 class="text-2xl font-bold text-gray-900">Gérer les Notes</h2>
+            <p class="text-gray-600 mt-1">Créer, modifier et supprimer des notes</p>
         </div>
         <button type="button" onclick="openCreateModal()"
             class="inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition">
             <i data-lucide="plus" class="w-4 h-4"></i>
-            Create Note
+            Créer une Note
         </button>
     </div>
 
@@ -25,7 +25,7 @@
                     <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
                 </div>
                 <input id="search-input" type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Search notes..."
+                    placeholder="Rechercher des notes..."
                     class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
             </div>
 
@@ -33,7 +33,7 @@
             <div class="sm:w-48">
                 <select id="category-select" name="category"
                     class="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                    <option value="">All Categories</option>
+                    <option value="">Toutes les Catégories</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
                             {{ $category->name }}
@@ -47,7 +47,7 @@
             <a id="clear-filters" href="{{ route('admin.notes.index') }}"
                 class="inline-flex items-center gap-1 px-3 py-2 text-sm text-gray-600 hover:text-gray-800 transition {{ (!request('search') && !request('category')) ? 'hidden' : '' }}">
                 <i data-lucide="x" class="w-4 h-4"></i>
-                Clear
+                Effacer
             </a>
         </form>
     </div>
