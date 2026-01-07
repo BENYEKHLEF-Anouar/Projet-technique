@@ -50,64 +50,69 @@
         </div>
     </div>
 
-    <!-- Recent Notes -->
-    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center">
-            <h3 class="text-lg font-semibold text-gray-900">Recent Notes</h3>
-            <a href="{{ route('admin.notes.index') }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">
-                View All →
-            </a>
-        </div>
+    <!-- Quick Actions -->
+    <div class="mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Create New Note -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col h-full">
+                    <div class="p-3 bg-blue-50 rounded-lg w-fit mb-4">
+                        <i data-lucide="file-plus" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-gray-900 mb-2">Create Note</h4>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">Add a new note to your collection</p>
+                    <a href="{{ route('admin.notes.create') }}"
+                        class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition">
+                        Create Now
+                    </a>
+                </div>
+            </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Note</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Categories</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse(\App\Models\Note::with(['user', 'categories'])->latest()->take(5)->get() as $note)
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4">
-                                <div class="text-sm font-medium text-gray-900">{{ $note->name }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-600">{{ $note->user->name ?? 'Unknown' }}</div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex flex-wrap gap-1">
-                                    @foreach($note->categories->take(2) as $cat)
-                                        <span class="px-2 py-0.5 text-xs rounded-full bg-indigo-50 text-indigo-600">
-                                            {{ $cat->name }}
-                                        </span>
-                                    @endforeach
-                                    @if($note->categories->count() > 2)
-                                        <span class="px-2 py-0.5 text-xs text-gray-500">
-                                            +{{ $note->categories->count() - 2 }}
-                                        </span>
-                                    @endif
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-600">{{ $note->created_at->format('M d, Y') }}</div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="px-6 py-8 text-center text-gray-500">
-                                No notes available yet.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            <!-- View All Notes -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col h-full">
+                    <div class="p-3 bg-indigo-50 rounded-lg w-fit mb-4">
+                        <i data-lucide="notebook" class="w-6 h-6 text-indigo-600"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-gray-900 mb-2">All Notes</h4>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">View and manage all your notes</p>
+                    <a href="{{ route('admin.notes.index') }}"
+                        class="inline-flex items-center justify-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition">
+                        View Notes
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search Notes -->
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col h-full">
+                    <div class="p-3 bg-purple-50 rounded-lg w-fit mb-4">
+                        <i data-lucide="search" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-gray-900 mb-2">Search Notes</h4>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">Find notes quickly by keyword</p>
+                    <a href="{{ route('admin.notes.index') }}" 
+                       class="inline-flex items-center justify-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition">
+                        Search
+                    </a>
+                </div>
+            </div>
+
+            <!-- View Statistics -->
+            <!-- <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex flex-col h-full">
+                    <div class="p-3 bg-orange-50 rounded-lg w-fit mb-4">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6 text-orange-600"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-gray-900 mb-2">Statistics</h4>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">View detailed statistics and insights</p>
+                    <a href="{{ route('admin.notes.index') }}"
+                        class="inline-flex items-center justify-center px-4 py-2 bg-orange-600 text-white text-sm font-medium rounded-lg hover:bg-orange-700 transition">
+                        View Stats
+                    </a>
+                </div>
+            </div> -->
         </div>
     </div>
 @endsection
