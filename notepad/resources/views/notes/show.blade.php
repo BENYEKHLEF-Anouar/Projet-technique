@@ -11,14 +11,14 @@
                         <a href="{{ route('home') }}"
                             class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition flex items-center gap-1.5">
                             <i data-lucide="home" class="w-4 h-4"></i>
-                            Accueil
+                            {{ __('Home') }}
                         </a>
                     </div>
                 </li>
                 <li>
                     <div class="flex items-center">
                         <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
-                        <span class="ms-2 text-sm font-medium text-gray-400 cursor-default">Détail de la Note</span>
+                        <span class="ms-2 text-sm font-medium text-gray-400 cursor-default">{{ __('Note Details') }}</span>
                     </div>
                 </li>
             </ol>
@@ -73,7 +73,7 @@
             <a href="{{ route('home') }}"
                 class="inline-flex items-center gap-x-2 text-sm font-medium text-gray-500 hover:text-indigo-600 transition-all hover:-translate-x-1">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                Retour à l'Accueil
+                {{ __('Back to Home') }}
             </a>
         </div>
     </div>

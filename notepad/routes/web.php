@@ -3,9 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\NoteController;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/notes/{id}', [HomeController::class, 'show'])->name('notes.show');
+
+// Language Switcher
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'fr'])) {
+        Session::put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang.switch');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {

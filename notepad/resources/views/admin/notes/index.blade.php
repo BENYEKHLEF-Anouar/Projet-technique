@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
-@section('header-title', 'Gérer les Notes')
+@section('header-title', __('Manage Notes'))
 
 @section('content')
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-            <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Gérer les Notes</h2>
-            <p class="text-gray-500 mt-1">Créer, modifier et supprimer des notes</p>
+            <h2 class="text-3xl font-bold text-gray-900 tracking-tight">{{ __('Manage Notes') }}</h2>
+            <p class="text-gray-500 mt-1">{{ __('Create, edit, and delete notes') }}</p>
         </div>
         <button type="button" onclick="openCreateModal()"
             class="inline-flex items-center gap-2 px-5 py-3 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/40 hover:-translate-y-0.5 active:translate-y-0">
             <i data-lucide="plus" class="w-5 h-5"></i>
-            Créer une Note
+            {{ __('Create Note') }}
         </button>
     </div>
 
@@ -26,7 +26,7 @@
                         class="w-5 h-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors"></i>
                 </div>
                 <input id="search-input" type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Rechercher des notes..."
+                    placeholder="{{ __('Search notes...') }}"
                     class="w-full pl-11 pr-4 py-3 bg-white border border-transparent rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-gray-400">
             </div>
 

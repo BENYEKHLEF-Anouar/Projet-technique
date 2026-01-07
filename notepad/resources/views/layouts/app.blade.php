@@ -23,11 +23,24 @@
                     Notepad</span>
             </a>
 
-            <nav class="hidden sm:flex gap-4">
+            <nav class="hidden sm:flex items-center gap-6">
+                <!-- Language Switcher -->
+                <div class="flex items-center gap-2 text-sm font-medium">
+                    <a href="{{ route('lang.switch', 'fr') }}"
+                        class="{{ app()->getLocale() == 'fr' ? 'text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md' : 'text-gray-500 hover:text-gray-900 px-2 py-1' }} transition-colors">
+                        FR
+                    </a>
+                    <span class="text-gray-300">/</span>
+                    <a href="{{ route('lang.switch', 'en') }}"
+                        class="{{ app()->getLocale() == 'en' ? 'text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md' : 'text-gray-500 hover:text-gray-900 px-2 py-1' }} transition-colors">
+                        EN
+                    </a>
+                </div>
+
                 <a href="{{ route('admin.dashboard') }}"
                     class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors rounded-full hover:bg-indigo-50/80">
                     <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    Tableau de Bord Admin
+                    {{ __('Dashboard') }}
                 </a>
             </nav>
         </div>

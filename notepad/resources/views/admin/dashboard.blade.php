@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('header-title', 'Tableau de Bord')
+@section('header-title', __('Dashboard'))
 
 @section('content')
     <div class="mb-8 animate-fade-in">
-        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Bienvenue sur le Panneau d'Administration</h2>
-        <p class="text-gray-500 mt-2 text-lg">Gérez vos notes et catégories à partir d'ici</p>
+        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">{{ __('Welcome to the Admin Panel') }}</h2>
+        <p class="text-gray-500 mt-2 text-lg">{{ __('Manage your notes and categories from here') }}</p>
     </div>
 
     <!-- Statistics Cards -->
@@ -18,7 +18,7 @@
                     <i data-lucide="notebook" class="w-8 h-8 text-white"></i>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total des Notes</p>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">{{ __('Total Notes') }}</p>
                     <p class="text-3xl font-bold text-gray-900 mt-1">{{ \App\Models\Note::count() }}</p>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <i data-lucide="tags" class="w-8 h-8 text-white"></i>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total des Catégories</p>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">{{ __('Total Categories') }}</p>
                     <p class="text-3xl font-bold text-gray-900 mt-1">{{ \App\Models\Category::count() }}</p>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <i data-lucide="users" class="w-8 h-8 text-white"></i>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">Total des Utilisateurs</p>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">{{ __('Total Users') }}</p>
                     <p class="text-3xl font-bold text-gray-900 mt-1">{{ \App\Models\User::count() }}</p>
                 </div>
             </div>
@@ -56,7 +56,7 @@
     <!-- Quick Actions -->
     <div class="mb-8 animate-slide-up" style="animation-delay: 0.2s;">
         <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-            <i data-lucide="zap" class="w-5 h-5 text-yellow-500"></i> Actions Rapides
+            <i data-lucide="zap" class="w-5 h-5 text-yellow-500"></i> {{ __('Quick Actions') }}
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Create New Note -->
@@ -67,9 +67,10 @@
                         class="p-3 bg-blue-50 text-blue-600 rounded-xl w-fit mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                         <i data-lucide="file-plus" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">Créer une Note
+                    <h4 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {{ __('Create Note') }}
                     </h4>
-                    <p class="text-sm text-gray-500 mt-1 group-hover:text-gray-600">Ajouter une nouvelle note</p>
+                    <p class="text-sm text-gray-500 mt-1 group-hover:text-gray-600">{{ __('Add a new note') }}</p>
                 </div>
                 <div
                     class="p-2 bg-gray-50 rounded-full text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
@@ -85,9 +86,9 @@
                         class="p-3 bg-indigo-50 text-indigo-600 rounded-xl w-fit mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
                         <i data-lucide="notebook" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">Toutes les
-                        Notes</h4>
-                    <p class="text-sm text-gray-500 mt-1 group-hover:text-gray-600">Gérer votre collection</p>
+                    <h4 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
+                        {{ __('All Notes') }}</h4>
+                    <p class="text-sm text-gray-500 mt-1 group-hover:text-gray-600">{{ __('Manage your collection') }}</p>
                 </div>
                 <div
                     class="p-2 bg-gray-50 rounded-full text-gray-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">

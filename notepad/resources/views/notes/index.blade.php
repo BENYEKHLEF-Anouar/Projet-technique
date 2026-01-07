@@ -6,14 +6,13 @@
     <div class="text-center mb-16 animate-fade-in">
         <div
             class="inline-block p-1 px-3 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-semibold uppercase tracking-wide mb-4 shadow-sm">
-            Vos idées, sécurisées
+            {{ __('Your ideas, secured') }}
         </div>
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-            Vos Notes, <span
-                class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">Réinventées</span>
+            {!! __('Your Notes, Reimagined') !!}
         </h1>
         <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            Capturez vos pensées, organisez vos projets et boostez votre productivité avec une interface simple et élégante.
+            {{ __('Capture your thoughts...') }}
         </p>
     </div>
 
@@ -31,7 +30,7 @@
                     </div>
                     <input type="text" name="search" value="{{ request('search') }}" id="search-input"
                         class="py-3.5 ps-11 block w-full bg-white/50 border-transparent rounded-xl text-base focus:border-indigo-500 focus:ring-0 focus:bg-white transition-all placeholder:text-gray-400 text-gray-800"
-                        placeholder="Rechercher des notes...">
+                        placeholder="{{ __('Search Notes') }}...">
                 </div>
 
                 <!-- Category Dropdown -->
@@ -39,7 +38,7 @@
                     <div class="relative h-full">
                         <select name="category" id="category-select"
                             class="py-3.5 px-4 pe-9 block w-full h-full bg-gray-50/50 border-transparent rounded-xl text-sm font-medium focus:border-indigo-500 focus:ring-0 focus:bg-white transition-all cursor-pointer hover:bg-gray-50">
-                            <option value="">Toutes les Catégories</option>
+                            <option value="">{{ __('Categories') }}</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}

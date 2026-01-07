@@ -6,7 +6,7 @@
         class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden transform scale-95 transition-transform duration-300">
         {{-- Modal Header --}}
         <div class="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50/50">
-            <h3 id="modal-title" class="text-xl font-bold text-gray-900">Créer une Nouvelle Note</h3>
+            <h3 id="modal-title" class="text-xl font-bold text-gray-900">{{ __('Create Note') }}</h3>
             <button type="button" onclick="closeFormModal()"
                 class="p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all">
                 <i data-lucide="x" class="w-5 h-5"></i>
@@ -34,11 +34,11 @@
                 <div class="group">
                     <label for="note-name"
                         class="block text-sm font-medium text-gray-700 mb-2 group-focus-within:text-indigo-600 transition-colors">
-                        Titre de la Note <span class="text-red-500">*</span>
+                        {{ __('Title') }} <span class="text-red-500">*</span>
                     </label>
                     <input type="text" id="note-name" name="name"
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-gray-400"
-                        placeholder="Entrez le titre de la note...">
+                        placeholder="{{ __('Title') }}...">
                     <p id="error-name" class="mt-1.5 text-xs text-red-600 hidden font-medium flex items-center gap-1">
                         <i data-lucide="info" class="w-3 h-3"></i> <span></span>
                     </p>
@@ -48,11 +48,11 @@
                 <div class="group">
                     <label for="note-content"
                         class="block text-sm font-medium text-gray-700 mb-2 group-focus-within:text-indigo-600 transition-colors">
-                        Contenu <span class="text-red-500">*</span>
+                        {{ __('Content') }} <span class="text-red-500">*</span>
                     </label>
                     <textarea id="note-content" name="content" rows="8"
                         class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-gray-400 leading-relaxed"
-                        placeholder="Écrivez le contenu de votre note ici..."></textarea>
+                        placeholder="{{ __('Content') }}..."></textarea>
                     <p id="error-content"
                         class="mt-1.5 text-xs text-red-600 hidden font-medium flex items-center gap-1">
                         <i data-lucide="info" class="w-3 h-3"></i> <span></span>
@@ -62,7 +62,7 @@
                 {{-- Categories --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-3">
-                        Catégories <span class="text-red-500">*</span>
+                        {{ __('Categories') }} <span class="text-red-500">*</span>
                     </label>
                     <div id="categories-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         @foreach($categories as $category)
@@ -90,13 +90,13 @@
                 {{-- Image Upload with Preview --}}
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
-                        Image de Couverture
+                        {{ __('Cover Image') }}
                     </label>
 
                     {{-- Current Image (for edit mode) --}}
                     <div id="current-image-container"
                         class="hidden mb-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                        <p class="text-sm text-gray-600 mb-3 font-medium">Image actuelle :</p>
+                        <p class="text-sm text-gray-600 mb-3 font-medium">{{ __('Cover Image') }} :</p>
                         <div class="relative w-fit group">
                             <img id="current-image" src="" alt="Current cover"
                                 class="w-48 h-32 object-cover rounded-lg shadow-sm">
@@ -115,16 +115,15 @@
                                 <i data-lucide="upload-cloud" class="w-6 h-6"></i>
                             </div>
                             <span
-                                class="text-sm font-medium text-gray-700 group-hover:text-indigo-600 transition-colors">Cliquez
-                                pour télécharger ou glissez-déposez</span>
-                            <span class="text-xs text-gray-500 mt-1">PNG, JPG ou GIF (MAX. 2MB)</span>
+                                class="text-sm font-medium text-gray-700 group-hover:text-indigo-600 transition-colors">{{ __('Click to upload or drag and drop') }}</span>
+                            <span class="text-xs text-gray-500 mt-1">{{ __('PNG, JPG or GIF (MAX. 2MB)') }}</span>
                             <input type="file" id="note-image" name="image" accept="image/*" class="hidden"
                                 onchange="handleImagePreview(this)">
                         </label>
 
                         {{-- Image Preview --}}
                         <div id="image-preview-container" class="hidden animate-fade-in">
-                            <p class="text-sm text-gray-600 mb-2 font-medium">Aperçu de la nouvelle image :</p>
+                            <p class="text-sm text-gray-600 mb-2 font-medium">{{ __('New image preview') }} :</p>
                             <div class="relative inline-block group">
                                 <img id="image-preview" src="" alt="Preview"
                                     class="w-48 h-32 object-cover rounded-xl border border-gray-200 shadow-md">
@@ -142,11 +141,11 @@
             <div class="px-6 py-4 bg-gray-50/80 border-t border-gray-200 flex justify-end gap-3 backdrop-blur-sm">
                 <button type="button" onclick="closeFormModal()"
                     class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm">
-                    Annuler
+                    {{ __('Cancel') }}
                 </button>
                 <button type="submit" id="submit-btn"
                     class="px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 rounded-xl hover:shadow-lg hover:shadow-indigo-500/30 transition-all transform active:scale-95">
-                    Créer la Note
+                    {{ __('Create Note') }}
                 </button>
             </div>
         </form>
