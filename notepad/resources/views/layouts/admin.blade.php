@@ -4,101 +4,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- expose the CSRF token to the frontend (HTML and JavaScript). -->
     <title>{{ __('Admin Dashboard') }} - Memo Notepad</title>
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <!-- <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}"> -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-gray-50">
 
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <aside
-            class="w-64 glass border-r border-gray-200/50 hidden lg:block fixed h-full z-40 transition-all duration-300">
-            <div class="p-6 border-b border-gray-100">
-                <a href="{{ route('admin.dashboard') }}"
-                    class="flex items-center gap-2.5 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600">
-                    <div class="p-1.5 bg-indigo-100 rounded-lg text-indigo-600">
-                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                    </div>
-                    <span>{{ __('Admin Panel') }}</span>
-                </a>
-            </div>
+    <!-- Navigation Toggle -->
+    <div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden">
+        <div class="flex items-center py-4">
+            <button type="button" class="text-gray-500 hover:text-gray-600" data-hs-overlay="#application-sidebar"
+                aria-controls="application-sidebar" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle Navigation</span>
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </div>
+    <!-- End Navigation Toggle -->
 
-            <nav class="p-4 space-y-1.5 h-[calc(100vh-80px)] overflow-y-auto">
-                <a href="{{ route('admin.dashboard') }}"
-                    class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group {{ request()->routeIs('admin.dashboard') ? 'bg-indigo-50 text-indigo-700 shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900' }}">
-                    <i data-lucide="home"
-                        class="w-5 h-5 transition-transform group-hover:scale-110 {{ request()->routeIs('admin.dashboard') ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-600' }}"></i>
-                    {{ __('Dashboard') }}
-                </a>
+    <!-- Sidebar -->
+    <div id="application-sidebar"
+        class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-r border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
+        <div class="px-6">
+            <a class="flex-none text-xl font-semibold text-gray-900" href="{{ route('admin.dashboard') }}"
+                aria-label="Brand">{{ __('Admin Panel') }}</a>
+        </div>
 
-                <a href="{{ route('admin.notes.index') }}"
-                    class="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group {{ request()->routeIs('admin.notes.*') ? 'bg-indigo-50 text-indigo-700 shadow-sm' : 'text-gray-600 hover:bg-gray-50/80 hover:text-gray-900' }}">
-                    <i data-lucide="notebook"
-                        class="w-5 h-5 transition-transform group-hover:scale-110 {{ request()->routeIs('admin.notes.*') ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-600' }}"></i>
-                    {{ __('Notes') }}
-                </a>
-
-                <div class="pt-4 mt-4 border-t border-gray-100">
-                    <a href="{{ route('home') }}"
-                        class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50/80 hover:text-gray-900 transition-all duration-200 group">
-                        <i data-lucide="external-link"
-                            class="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-transform group-hover:translate-x-0.5"></i>
+        <nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+            <ul class="space-y-1.5">
+                <li>
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-100 font-semibold' : '' }}"
+                        href="{{ route('admin.dashboard') }}">
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        {{ __('Dashboard') }}
+                    </a>
+                </li>
+                <li>
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 {{ request()->routeIs('admin.notes.*') ? 'bg-gray-100 font-semibold' : '' }}"
+                        href="{{ route('admin.notes.index') }}">
+                        <i data-lucide="notebook" class="w-4 h-4"></i>
+                        {{ __('Notes') }}
+                    </a>
+                </li>
+                <li class="pt-4 mt-4 border-t border-gray-200">
+                    <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                        href="{{ route('home') }}">
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
                         {{ __('Home') }}
                     </a>
-                </div>
-            </nav>
-        </aside>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- End Sidebar -->
 
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col lg:ml-64 transition-all duration-300">
-            <!-- Header -->
-            <header
-                class="glass border-b border-gray-200/50 h-16 flex items-center justify-between px-6 sticky top-0 z-30">
-                <div class="flex items-center gap-4">
-                    <button class="lg:hidden text-gray-500 hover:text-gray-700 transition">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                    <h1 class="text-lg font-semibold text-gray-800 tracking-tight">
-                        @yield('header-title', __('Admin Dashboard'))</h1>
+    <!-- Content -->
+    <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
+        <header class="flex items-center justify-between mb-8">
+            <h1 class="text-2xl font-bold text-gray-800">
+                @yield('header-title', __('Admin Dashboard'))
+            </h1>
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-gray-600">{{ __('Administrator') }}</span>
+                <div class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-200">
+                    <span class="text-xs font-medium text-gray-600">A</span>
                 </div>
+            </div>
+        </header>
 
-                <div class="flex items-center gap-3">
-                    <span class="text-sm font-medium text-gray-600">{{ __('Administrator') }}</span>
-                    <div
-                        class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-100 to-violet-100 border border-indigo-200 flex items-center justify-center shadow-sm">
-                        <span class="text-sm font-bold text-indigo-700">A</span>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Content -->
-            <main class="flex-1 p-6 lg:p-8">
-                @if(session('success'))
-                    <div
-                        class="mb-6 p-4 bg-green-50/50 border border-green-200 text-green-700 rounded-xl flex items-center gap-3 animate-fade-in shadow-sm">
-                        <div class="p-1 bg-green-100 rounded-full">
-                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+        <main>
+            @if(session('success'))
+                <div class="bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 mb-6" role="alert">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i data-lucide="check-circle" class="h-5 w-5 text-teal-600 mt-0.5"></i>
                         </div>
-                        <span class="font-medium">{{ session('success') }}</span>
-                    </div>
-                @endif
-
-                @if(session('error'))
-                    <div
-                        class="mb-6 p-4 bg-red-50/50 border border-red-200 text-red-700 rounded-xl flex items-center gap-3 animate-fade-in shadow-sm">
-                        <div class="p-1 bg-red-100 rounded-full">
-                            <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                        <div class="ms-3">
+                            <p class="text-sm text-teal-700 font-medium">
+                                {{ session('success') }}
+                            </p>
                         </div>
-                        <span class="font-medium">{{ session('error') }}</span>
                     </div>
-                @endif
+                </div>
+            @endif
 
-                @yield('content')
-            </main>
-        </div>
+            @if(session('error'))
+                <div class="bg-red-50 border-t-2 border-red-500 rounded-lg p-4 mb-6" role="alert">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i data-lucide="alert-circle" class="h-5 w-5 text-red-600 mt-0.5"></i>
+                        </div>
+                        <div class="ms-3">
+                            <p class="text-sm text-red-700 font-medium">
+                                {{ session('error') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @yield('content')
+        </main>
+    </div>
     </div>
 
 </body>

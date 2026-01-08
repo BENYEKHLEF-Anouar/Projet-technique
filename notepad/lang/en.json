@@ -58,5 +58,7 @@
     "Edit": "Edit",
     "Admin Panel": "Admin Panel",
     "Admin Dashboard": "Admin Dashboard",
-    "Administrator": "Administrator"
-}
+    "Administrator": "Administrator",
+    "Name" : "Name",
+    "Updated At" : "Updated At"
+}  

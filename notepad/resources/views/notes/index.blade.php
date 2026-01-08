@@ -2,62 +2,55 @@
 
 @section('content')
 
-    <!-- Hero Section -->
-    <div class="text-center mb-16 animate-fade-in">
-        <div
-            class="inline-block p-1 px-3 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-semibold uppercase tracking-wide mb-4 shadow-sm">
-            {{ __('Your ideas, secured') }}
+    <!-- Hero -->
+    <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-10">
+        <div class="text-center max-w-2xl mx-auto">
+            <h1 class="block text-3xl font-bold text-gray-800 sm:text-4xl md:text-5xl">
+                {!! __('Your Notes, Reimagined') !!}
+            </h1>
+            <p class="mt-3 text-lg text-gray-800">
+                {{ __('Capture your thoughts...') }}
+            </p>
         </div>
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-            {!! __('Your Notes, Reimagined') !!}
-        </h1>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-            {{ __('Capture your thoughts...') }}
-        </p>
     </div>
+    <!-- End Hero -->
 
-    <!-- Search & Filter Section -->
-    <div class="mb-12 max-w-3xl mx-auto animate-slide-up" style="animation-delay: 0.1s;">
-        <form id="filter-form" action="{{ route('home') }}" method="GET" class="relative z-10">
-            <div
-                class="glass p-2 rounded-2xl shadow-xl shadow-indigo-100/50 border border-white/50 flex flex-col sm:flex-row gap-2">
-
-                <!-- Search Input -->
-                <div class="relative flex-grow group">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
-                        <i data-lucide="search"
-                            class="w-5 h-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors"></i>
-                    </div>
+    <!-- Search & Filter -->
+    <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+        <form id="filter-form" action="{{ route('home') }}" method="GET">
+            <div class="flex flex-col sm:flex-row gap-y-2 sm:gap-x-4">
+                <div class="relative flex-grow">
                     <input type="text" name="search" value="{{ request('search') }}" id="search-input"
-                        class="py-3.5 ps-11 block w-full bg-white/50 border-transparent rounded-xl text-base focus:border-indigo-500 focus:ring-0 focus:bg-white transition-all placeholder:text-gray-400 text-gray-800"
+                        class="py-3 px-4 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                         placeholder="{{ __('Search Notes') }}...">
+                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
+                        <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                    </div>
                 </div>
 
-                <!-- Category Dropdown -->
                 <div class="sm:w-64">
-                    <div class="relative h-full">
-                        <select name="category" id="category-select"
-                            class="py-3.5 px-4 pe-9 block w-full h-full bg-gray-50/50 border-transparent rounded-xl text-sm font-medium focus:border-indigo-500 focus:ring-0 focus:bg-white transition-all cursor-pointer hover:bg-gray-50">
-                            <option value="">{{ __('Categories') }}</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <select name="category" id="category-select"
+                        class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+                        <option value="">{{ __('Categories') }}</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <a href="{{ route('home') }}" id="clear-filters"
-                    class="inline-flex items-center justify-center gap-x-2 px-5 py-3.5 rounded-xl border border-transparent text-sm font-semibold text-gray-500 hover:text-red-500 hover:bg-red-50 transition-all {{ (!request('search') && !request('category')) ? 'hidden' : '' }}">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+                    class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none {{ (!request('search') && !request('category')) ? 'hidden' : '' }}">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                    {{ __('Clear all filters') }}
                 </a>
             </div>
         </form>
     </div>
 
-    <!-- Notes Grid Container (to be updated via AJAX) -->
-    <div id="notes-container">
+    <!-- Notes Grid Container -->
+    <div id="notes-container" class="max-w-[85rem] wx-auto px-4 sm:px-6 lg:px-8">
         @include('notes.partials.notes_grid', ['notes' => $notes])
     </div>
 

@@ -1,80 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-4xl mx-auto py-6 animate-fade-in">
-        <!-- Breadcrumbs -->
-        <nav class="flex mb-8" aria-label="Breadcrumb">
-            <ol
-                class="flex items-center space-x-2 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/60 shadow-sm">
-                <li>
-                    <div class="flex items-center">
-                        <a href="{{ route('home') }}"
-                            class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition flex items-center gap-1.5">
-                            <i data-lucide="home" class="w-4 h-4"></i>
-                            {{ __('Home') }}
-                        </a>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex items-center">
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
-                        <span class="ms-2 text-sm font-medium text-gray-400 cursor-default">{{ __('Note Details') }}</span>
-                    </div>
-                </li>
-            </ol>
-        </nav>
+    <div class="max-w-3xl mx-auto">
+        <!-- Back Link -->
+        <a class="inline-flex items-center gap-x-1.5 text-sm text-gray-600 decoration-2 hover:underline hover:text-blue-600 mb-6" href="{{ route('home') }}">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            {{ __('Back to Home') }}
+        </a>
 
-        <!-- Note Content -->
-        <article class="glass rounded-2xl overflow-hidden shadow-xl shadow-indigo-100/20 border border-white/60">
-            @if($note->image)
-                <div class="w-full h-80 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10"></div>
-                    <img src="{{ asset('storage/' . $note->image) }}" alt="{{ $note->name }}"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                </div>
-            @endif
+        <!-- Content -->
+        <div class="space-y-5 md:space-y-8">
+            <div class="space-y-3">
+                <h2 class="text-2xl font-bold md:text-3xl dark:text-white">{{ $note->name }}</h2>
 
-            <div class="p-8 sm:p-12 relative">
-                <!-- Categories -->
-                <div class="flex flex-wrap gap-2 mb-6">
-                    @foreach($note->categories as $category)
-                        <span
-                            class="inline-flex items-center py-1.5 px-3 rounded-lg text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100/50 uppercase tracking-wide">
-                            {{ $category->name }}
-                        </span>
-                    @endforeach
-                </div>
-
-                <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">{{ $note->name }}
-                </h1>
-
-                <div class="flex items-center gap-6 text-sm text-gray-500 mb-10 border-b border-gray-100/80 pb-8">
-                    <div class="flex items-center gap-2">
-                        <div class="p-1.5 bg-indigo-50 rounded-full text-indigo-600">
-                            <i data-lucide="user" class="w-4 h-4"></i>
+                <div class="flex items-center gap-x-2">
+                    <div class="flex items-center gap-x-2">
+                        <div class="flex-shrink-0">
+                             <div class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 border border-gray-200 text-xs font-medium text-gray-600">
+                                {{ substr($note->user->name ?? '?', 0, 1) }}
+                            </div>
                         </div>
-                        <span class="font-medium">{{ $note->user->name ?? 'Inconnu' }}</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <div class="p-1.5 bg-violet-50 rounded-full text-violet-600">
-                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                        <div class="grow">
+                             <p class="text-sm font-semibold text-gray-800">
+                                {{ $note->user->name ?? __('Unknown') }}
+                            </p>
                         </div>
-                        <span class="font-medium">{{ $note->created_at->format('M d, Y') }}</span>
                     </div>
-                </div>
-
-                <div class="prose prose-lg prose-indigo max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
-                    {{ $note->content }}
+                     <span class="text-xs text-gray-400">&bull;</span>
+                    <p class="text-xs text-gray-500">
+                        {{ $note->created_at->format('M d, Y') }}
+                    </p>
                 </div>
             </div>
-        </article>
 
-        <div class="mt-10 text-center">
-            <a href="{{ route('home') }}"
-                class="inline-flex items-center gap-x-2 text-sm font-medium text-gray-500 hover:text-indigo-600 transition-all hover:-translate-x-1">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                {{ __('Back to Home') }}
-            </a>
+            @if($note->image)
+                <figure>
+                    <img class="w-full object-cover rounded-xl" src="{{ asset('storage/' . $note->image) }}" alt="{{ $note->name }}">
+                </figure>
+            @endif
+
+            <p class="text-lg text-gray-800">
+                {{ $note->content }}
+            </p>
+
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-gray-200">
+                @foreach($note->categories as $cat)
+                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        {{ $cat->name }}
+                    </span>
+                @endforeach
+            </div>
         </div>
+        <!-- End Content -->
     </div>
 @endsection

@@ -5,50 +5,47 @@
 @section('content')
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-            <h2 class="text-3xl font-bold text-gray-900 tracking-tight">{{ __('Manage Notes') }}</h2>
-            <p class="text-gray-500 mt-1">{{ __('Create, edit, and delete notes') }}</p>
+            <h2 class="text-2xl font-bold text-gray-800">{{ __('Manage Notes') }}</h2>
+            <p class="text-sm text-gray-600 mt-1">{{ __('Create, edit, and delete notes') }}</p>
         </div>
-        <button type="button" onclick="openCreateModal()"
-            class="inline-flex items-center gap-2 px-5 py-3 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/40 hover:-translate-y-0.5 active:translate-y-0">
-            <i data-lucide="plus" class="w-5 h-5"></i>
+        <button type="button" onclick="openCreateModal()" data-hs-overlay="#form-note-modal"
+            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+            <i data-lucide="plus" class="w-4 h-4"></i>
             {{ __('Create Note') }}
         </button>
     </div>
 
     <!-- Filters -->
-    <div class="glass p-1.5 rounded-2xl shadow-sm mb-8 border border-gray-200/50">
+    <div class="bg-white border border-gray-200 rounded-xl p-4 mb-8">
         <form id="filter-form" action="{{ route('admin.notes.index') }}" method="GET"
-            class="flex flex-col sm:flex-row gap-2">
+            class="flex flex-col sm:flex-row gap-4">
             <!-- Search Input -->
-            <div class="relative flex-1 group">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                    <i data-lucide="search"
-                        class="w-5 h-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors"></i>
-                </div>
+            <div class="relative flex-1">
                 <input id="search-input" type="text" name="search" value="{{ request('search') }}"
                     placeholder="{{ __('Search notes...') }}"
-                    class="w-full pl-11 pr-4 py-3 bg-white border border-transparent rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-gray-400">
+                    class="py-3 px-4 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
+                    <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                </div>
             </div>
 
             <!-- Category Filter -->
             <div class="sm:w-56">
-                <div class="relative h-full">
-                    <select id="category-select" name="category"
-                        class="w-full h-full px-4 py-3 bg-white border border-transparent rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer hover:bg-gray-50/50">
-                        <option value="">{{ __('All Categories') }}</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                <select id="category-select" name="category"
+                    class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+                    <option value="">{{ __('All Categories') }}</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
 
             <!-- Clear Filters -->
             <a id="clear-filters" href="{{ route('admin.notes.index') }}"
-                class="inline-flex items-center justify-center gap-1 px-4 py-3 text-sm font-medium text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all {{ (!request('search') && !request('category')) ? 'hidden' : '' }}">
+                class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none {{ (!request('search') && !request('category')) ? 'hidden' : '' }}">
                 <i data-lucide="x" class="w-4 h-4"></i>
             </a>
         </form>

@@ -58,5 +58,7 @@
     "Edit": "Modifier",
     "Admin Panel": "Panneau Admin",
     "Admin Dashboard": "Tableau de Bord Admin",
-    "Administrator": "Administrateur"
+    "Administrator": "Administrateur",
+    "Name" : "Nom",
+    "Updated At" : "Mise à jour le"
 }
