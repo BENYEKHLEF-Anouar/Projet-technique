@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Tableau de Bord Admin - Memo Notepad</title>
+    <title>{{ __('Admin Dashboard') }} - Memo Notepad</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -21,7 +22,7 @@
                     <div class="p-1.5 bg-indigo-100 rounded-lg text-indigo-600">
                         <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                     </div>
-                    <span>Panneau Admin</span>
+                    <span>{{ __('Admin Panel') }}</span>
                 </a>
             </div>
 
@@ -61,11 +62,11 @@
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                     <h1 class="text-lg font-semibold text-gray-800 tracking-tight">
-                        @yield('header-title', 'Tableau de Bord Admin')</h1>
+                        @yield('header-title', __('Admin Dashboard'))</h1>
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <span class="text-sm font-medium text-gray-600">Administrateur</span>
+                    <span class="text-sm font-medium text-gray-600">{{ __('Administrator') }}</span>
                     <div
                         class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-100 to-violet-100 border border-indigo-200 flex items-center justify-center shadow-sm">
                         <span class="text-sm font-bold text-indigo-700">A</span>

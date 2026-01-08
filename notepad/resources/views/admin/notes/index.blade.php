@@ -35,7 +35,7 @@
                 <div class="relative h-full">
                     <select id="category-select" name="category"
                         class="w-full h-full px-4 py-3 bg-white border border-transparent rounded-xl text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer hover:bg-gray-50/50">
-                        <option value="">Toutes les Catégories</option>
+                        <option value="">{{ __('All Categories') }}</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
                                 {{ $category->name }}

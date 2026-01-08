@@ -49,7 +49,7 @@
                     </span>
                     <span class="flex items-center gap-1.5">
                         <i data-lucide="user" class="w-3.5 h-3.5"></i>
-                        {{ $note->user->name ?? 'Inconnu' }}
+                        {{ $note->user->name ?? __('Unknown') }}
                     </span>
                 </div>
             </div>
@@ -65,11 +65,11 @@
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-6">
             <i data-lucide="search-x" class="w-8 h-8 text-gray-400"></i>
         </div>
-        <h3 class="text-lg font-medium text-gray-900">Aucune note trouvée</h3>
-        <p class="text-gray-500 mt-2">Essayez d'ajuster votre recherche ou filtre par catégorie.</p>
+        <h3 class="text-lg font-medium text-gray-900">{{ __('No notes found') }}</h3>
+        <p class="text-gray-500 mt-2">{{ __('Try adjusting your search or category filter.') }}</p>
         <a href="{{ route('home') }}"
             class="mt-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-indigo-600 hover:text-indigo-800 disabled:opacity-50 disabled:pointer-events-none dark:text-indigo-500 dark:hover:text-indigo-400 transition">
-            Effacer tous les filtres
+            {{ __('Clear all filters') }}
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
     </div>

@@ -52,7 +52,7 @@
                                     class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
                                     {{ substr($note->user->name ?? '?', 0, 1) }}
                                 </div>
-                                {{ $note->user->name ?? 'Inconnu' }}
+                                {{ $note->user->name ?? __('Unknown') }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -62,21 +62,21 @@
                             <div class="flex justify-end items-center gap-1">
                                 <button type="button" onclick="openViewModal({{ $note->id }})"
                                     class="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all"
-                                    title="Voir">
+                                    title="{{ __('View') }}">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </button>
                                 <button type="button" onclick="openEditModal({{ $note->id }})"
                                     class="p-2 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
-                                    title="Modifier">
+                                    title="{{ __('Edit') }}">
                                     <i data-lucide="edit-3" class="w-4 h-4"></i>
                                 </button>
                                 <form action="{{ route('admin.notes.destroy', $note->id) }}" method="POST" class="inline"
-                                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette note ?')">
+                                    onsubmit="return confirm('{{ __('Are you sure you want to delete this note?') }}')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
                                         class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                                        title="Supprimer">
+                                        title="{{ __('Delete') }}">
                                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                                     </button>
                                 </form>
@@ -90,12 +90,11 @@
                                 class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 mb-4 ring-8 ring-gray-50">
                                 <i data-lucide="inbox" class="w-10 h-10 text-gray-300"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-900">Aucune note trouvée</h3>
-                            <p class="text-gray-500 mt-1 max-w-sm mx-auto">Essayez d'ajuster vos filtres ou créez une
-                                nouvelle note pour commencer.</p>
+                            <h3 class="text-lg font-bold text-gray-900">{{ __('No notes found') }}</h3>
+                            <p class="text-gray-500 mt-1 max-w-sm mx-auto">{{ __('Try adjusting your filters or create a new note to start.') }}</p>
                             <button onclick="openCreateModal()"
                                 class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition">
-                                Créer une Note
+                                {{ __('Create Note') }}
                             </button>
                         </td>
                     </tr>

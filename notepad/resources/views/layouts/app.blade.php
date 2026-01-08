@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memo Notepad</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -59,7 +60,7 @@
                 <span class="text-sm font-semibold">Memo Notepad</span>
             </div>
             <p class="text-sm text-gray-500">
-                &copy; {{ date('Y') }} Memo Notepad. Tous droits réservés.
+                &copy; {{ date('Y') }} Memo Notepad. {{ __('All rights reserved.') }}
             </p>
         </div>
     </footer>

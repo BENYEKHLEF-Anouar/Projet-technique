@@ -46,5 +46,17 @@
     "PNG, JPG or GIF (MAX. 2MB)": "PNG, JPG or GIF (MAX. 2MB)",
     "New image preview": "New image preview",
     "Search notes...": "Search notes...",
-    "Close": "Close"
+    "Close": "Close",
+    "No notes found": "No notes found",
+    "Try adjusting your search or category filter.": "Try adjusting your search or category filter.",
+    "Clear all filters": "Clear all filters",
+    "All rights reserved.": "All rights reserved.",
+    "All Categories": "All Categories",
+    "Are you sure you want to delete this note?": "Are you sure you want to delete this note?",
+    "Try adjusting your filters or create a new note to start.": "Try adjusting your filters or create a new note to start.",
+    "View": "View",
+    "Edit": "Edit",
+    "Admin Panel": "Admin Panel",
+    "Admin Dashboard": "Admin Dashboard",
+    "Administrator": "Administrator"
 }
