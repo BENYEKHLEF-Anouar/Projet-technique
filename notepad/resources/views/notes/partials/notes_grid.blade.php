@@ -26,7 +26,7 @@
                             @endforeach
                         </div>
 
-                        <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-600">
+                        <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-600 break-words line-clamp-2">
                             {{ $note->name }}
                         </h3>
 
