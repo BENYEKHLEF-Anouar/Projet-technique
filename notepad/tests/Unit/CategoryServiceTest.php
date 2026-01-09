@@ -2,32 +2,40 @@
 
 namespace Tests\Unit;
 
+use Tests\TestCase;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class CategoryServiceTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected CategoryService $categoryService;
-
-    protected function setUp(): void
+    public function test_it_can_get_all_categories()
     {
-        parent::setUp();
+        // Arrange
+        Category::create([
+            'name' => 'Technologie',
+            'description' => 'Tout sur la technologie',
+        ]);
 
-        $this->categoryService = new CategoryService();
+        Category::create([
+            'name' => 'Style de vie',
+            'description' => 'Vie quotidienne et conseils',
+        ]);
 
-        $this->seedCategoriesFromCsv();
-    }
+        Category::create([
+            'name' => 'Éducation',
+            'description' => 'Apprentissage et connaissances',
+        ]);
 
-    /** @test */
-    public function it_returns_all_categories()
-    {
-        $categories = $this->categoryService->getAllCategories();
+        $service = new CategoryService();
 
-        $this->assertCount(3, $categories);
+        // Act
+        $result = $service->getAllCategories();
+
+        // Assert
+        $this->assertCount(3, $result);
 
         $this->assertDatabaseHas('categories', [
             'name' => 'Technologie',
@@ -36,26 +44,5 @@ class CategoryServiceTest extends TestCase
         $this->assertDatabaseHas('categories', [
             'name' => 'Éducation',
         ]);
-    }
-
-    private function seedCategoriesFromCsv(): void
-    {
-        $path = database_path('seeders/data/categories.csv');
-
-        $rows = array_map('str_getcsv', file($path));
-        $header = array_shift($rows);
-
-        foreach ($rows as $row) {
-            if (empty(array_filter($row))) {
-                continue; // skip empty lines
-            }
-
-            $data = array_combine($header, $row);
-
-            Category::create([
-                'name' => $data['name'],
-                'description' => $data['description'],
-            ]);
-        }
     }
 }

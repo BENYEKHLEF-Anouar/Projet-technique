@@ -81,7 +81,7 @@
         </h3>
         <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             <!-- Create New Note -->
-            <a href="{{ route('admin.notes.create') }}"
+            <!-- <a href="{{ route('admin.notes.create') }}"
                 class="group flex flex-col pt-6 pb-4 px-4 text-center bg-white border shadow-sm rounded-xl hover:shadow-md transition">
                 <div class="mx-auto flex justify-center items-center w-12 h-12 bg-blue-50 rounded-full mb-3">
                     <i data-lucide="file-plus" class="flex-shrink-0 w-6 h-6 text-blue-600"></i>
@@ -92,7 +92,7 @@
                 <p class="text-sm text-gray-500">
                     {{ __('Add a new note') }}
                 </p>
-            </a>
+            </a> -->
 
             <!-- View All Notes -->
             <a href="{{ route('admin.notes.index') }}"
