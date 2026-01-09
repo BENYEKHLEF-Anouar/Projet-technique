@@ -8,7 +8,7 @@
             <h2 class="text-2xl font-bold text-gray-800">{{ __('Manage Notes') }}</h2>
             <p class="text-sm text-gray-600 mt-1">{{ __('Create, edit, and delete notes') }}</p>
         </div>
-        <button type="button" onclick="openCreateModal()" data-hs-overlay="#form-note-modal"
+        <button type="button" onclick="openCreateModal()"
             class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
             <i data-lucide="plus" class="w-4 h-4"></i>
             {{ __('Create Note') }}
