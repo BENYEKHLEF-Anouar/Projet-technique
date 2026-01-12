@@ -65,7 +65,10 @@ class NoteServiceTest extends TestCase
         $result = $service->getNotes('Laravel');
 
         $this->assertEquals(1, $result->total()); // Only 1 matching record
-        $this->assertEquals('Laravel Tips', $result->first()->name); // checks that the expected value equals the actual value
+        $this->assertEquals(
+            'Laravel Tips',
+            collect($result->items())->first()->name
+        ); // Convert to collection / checks that the expected value equals the actual value
     }
 
     public function test_it_can_create_a_note_with_categories()

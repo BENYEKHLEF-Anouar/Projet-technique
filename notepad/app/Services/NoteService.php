@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Note;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NoteService
 {
@@ -111,8 +112,8 @@ class NoteService
         $note = Note::findOrFail($id);
         if ($imageFile) {
             // Check for and delete the old image file to save space.
-            if ($note->image && \Storage::disk('public')->exists($note->image)) {
-                \Storage::disk('public')->delete($note->image);
+            if ($note->image && Storage::disk('public')->exists($note->image)) {
+                Storage::disk('public')->delete($note->image);
             }
             // Store the new image.
             $path = $imageFile->store('notes', 'public');
@@ -141,8 +142,8 @@ class NoteService
     {
         $note = Note::findOrFail($id);
         // Delete the image file from storage if it exists.
-        if ($note->image && \Storage::disk('public')->exists($note->image)) {
-            \Storage::disk('public')->delete($note->image);
+        if ($note->image && Storage::disk('public')->exists($note->image)) {
+            Storage::disk('public')->delete($note->image);
         }
         $this->deleteNote($id);
     }
