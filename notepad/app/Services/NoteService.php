@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\Storage;
 
 class NoteService extends BaseService
 {
+    // protected int $perPage = 10;
+
     /**
      * Retrieve a paginated list of notes, optionally filtered by search term and category.
      */
     public function getNotes(
         ?string $search = null,
         ?int $categoryId = null,
-        int $perPage = 8
+        ?int $perPage = null
     ): LengthAwarePaginator {
         $query = Note::query() // Starts a new Eloquent query on the notes table.
             ->with(['user', 'categories']) // Eager load relationships to prevent N+1 query problem.

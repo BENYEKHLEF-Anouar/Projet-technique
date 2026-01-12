@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 abstract class BaseService // template or base that other classes can use
 {
-    protected function paginate(Builder $query, int $perPage = 10): LengthAwarePaginator
+    protected int $perPage = 10;
+
+    protected function paginate(Builder $query, ?int $perPage = null): LengthAwarePaginator
     {
-        return $query->latest()->paginate($perPage)->withQueryString();
+        return $query->latest()->paginate($perPage ?? $this->perPage)->withQueryString();
     }
 }
