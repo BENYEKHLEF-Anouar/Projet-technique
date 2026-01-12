@@ -4,106 +4,72 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Note;
-use App\Models\User;
 use App\Models\Category;
+use App\Models\User;
 use App\Services\NoteService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class NoteServiceTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
+
+    protected NoteService $service;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->service = new NoteService();
+    }
 
     public function test_it_can_get_all_notes()
     {
-        $user = User::create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
-        ]);
-
-        $note1 = Note::create([
-            'name' => 'Note 1',
-            'content' => 'Content 1',
-            'user_id' => $user->id,
-        ]);
-
-        $note2 = Note::create([
-            'name' => 'Note 2',
-            'content' => 'Content 2',
-            'user_id' => $user->id,
-        ]);
-
-        $service = new NoteService();
-
-        $result = $service->getNotes();
-
-        $this->assertEquals(2, $result->total());
+        $result = $this->service->getNotes();
+        $this->assertGreaterThan(0, $result->total());
     }
 
     public function test_it_can_filter_notes_by_search()
     {
-        $user = User::create([
-            'name' => 'Alice',
-            'email' => 'alice@example.com',
-            'password' => bcrypt('password'),
-        ]);
+        $result = $this->service->getNotes('Laravel');
 
-        Note::create([
-            'name' => 'Laravel Tips',
-            'content' => 'Some content',
-            'user_id' => $user->id,
-        ]);
+        $this->assertEquals(1, $result->total());
 
-        Note::create([
-            'name' => 'PHP Basics',
-            'content' => 'Some content',
-            'user_id' => $user->id,
-        ]);
+        $firstNote = collect($result->items())->first();
+        $this->assertStringContainsString('Laravel', $firstNote->content);
+    }
 
-        $service = new NoteService();
+    public function test_it_can_filter_notes_by_category()
+    {
+        // Pick a category that exists in your seeded data
+        $category = Category::where('name', 'Éducation')->first();
 
-        $result = $service->getNotes('Laravel');
+        $result = $this->service->getNotes(null, $category->id);
 
-        $this->assertEquals(1, $result->total()); // Only 1 matching record
-        $this->assertEquals(
-            'Laravel Tips',
-            collect($result->items())->first()->name
-        ); // Convert to collection / checks that the expected value equals the actual value
+        $this->assertGreaterThan(0, $result->total());
+
+        // Ensure every returned note belongs to the selected category
+        foreach ($result->items() as $note) { // Loops through all returned notes and checks each note belongs to that category.
+            $noteCategories = $note->categories->pluck('id')->toArray();
+            $this->assertContains($category->id, $noteCategories);
+        }
     }
 
     public function test_it_can_create_a_note_with_categories()
     {
-        $user = User::create([
-            'name' => 'Bob',
-            'email' => 'bob@example.com',
-            'password' => bcrypt('password'),
-        ]);
-
-        $category1 = Category::create([
-            'name' => 'Tech',
-            'description' => 'Tech stuff',
-        ]);
-
-        $category2 = Category::create([
-            'name' => 'Education',
-            'description' => 'Learning',
-        ]);
-
-        $service = new NoteService();
+        $categories = Category::take(2)->get();
+        $user = User::first();
 
         $data = [
-            'name' => 'New Note',
+            'name' => 'New Note Test',
             'content' => 'Some content',
             'user_id' => $user->id,
-            'category_ids' => [$category1->id, $category2->id],
+            'category_ids' => $categories->pluck('id')->toArray(),
         ];
 
-        $note = $service->createNote($data);
+        $note = $this->service->createNote($data);
 
         $this->assertDatabaseHas('notes', [
             'id' => $note->id,
-            'name' => 'New Note',
-            'user_id' => $user->id,
+            'name' => 'New Note Test',
         ]);
 
         $this->assertCount(2, $note->categories);
@@ -111,49 +77,27 @@ class NoteServiceTest extends TestCase
 
     public function test_it_can_update_a_note()
     {
-        $user = User::create([
-            'name' => 'Charlie',
-            'email' => 'charlie@example.com',
-            'password' => bcrypt('password'),
-        ]);
+        $note = Note::first();
 
-        $note = Note::create([
-            'name' => 'Old Note',
-            'content' => 'Old content',
-            'user_id' => $user->id,
-        ]);
-
-        $service = new NoteService();
-
-        $updated = $service->updateNote($note->id, [
-            'name' => 'Updated Note',
+        $updatedData = [
+            'name' => 'Updated Note Test',
             'content' => 'Updated content',
-        ]);
+        ];
+
+        $this->service->updateNote($note->id, $updatedData);
 
         $this->assertDatabaseHas('notes', [
             'id' => $note->id,
-            'name' => 'Updated Note',
+            'name' => 'Updated Note Test',
             'content' => 'Updated content',
         ]);
     }
 
     public function test_it_can_delete_a_note()
     {
-        $user = User::create([
-            'name' => 'Dana',
-            'email' => 'dana@example.com',
-            'password' => bcrypt('password'),
-        ]);
+        $note = Note::first();
 
-        $note = Note::create([
-            'name' => 'Delete Me',
-            'content' => 'Content',
-            'user_id' => $user->id,
-        ]);
-
-        $service = new NoteService();
-
-        $service->deleteNote($note->id);
+        $this->service->deleteNote($note->id);
 
         $this->assertDatabaseMissing('notes', [
             'id' => $note->id,

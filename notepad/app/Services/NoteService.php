@@ -7,7 +7,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class NoteService
+class NoteService extends BaseService
 {
     /**
      * Retrieve a paginated list of notes, optionally filtered by search term and category.
@@ -17,7 +17,7 @@ class NoteService
         ?int $categoryId = null,
         int $perPage = 8
     ): LengthAwarePaginator {
-        return Note::query() // Starts a new Eloquent query on the notes table.
+        $query = Note::query() // Starts a new Eloquent query on the notes table.
             ->with(['user', 'categories']) // Eager load relationships to prevent N+1 query problem.
             ->when($search, function ($query, $search) {
                 // Apply search filter if search term is present.
@@ -34,10 +34,9 @@ class NoteService
                 $query->whereHas('categories', function ($query) use ($categoryId) {
                     $query->where('categories.id', $categoryId);
                 });
-            })
-            ->latest() // Order by created_at descending.
-            ->paginate($perPage)
-            ->withQueryString(); // Maintain query parameters in pagination links.
+            });
+
+        return $this->paginate($query, $perPage);
     }
 
     /**
