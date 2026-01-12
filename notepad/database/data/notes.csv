@@ -1,4 +1,7 @@
 name,content,image,user_email,categories
-Première note,Ceci est une note de test,notes/021120_NoteTaking-Blog.png,Anouar@example.com,Technologie|Éducation
-Deuxième note,Astuces et conseils Laravel,notes/021120_NoteTaking-Blog.png,Mehdi@example.com,Style de vie
-Troisième note,Apprentissage des bases de PHP,notes/021120_NoteTaking-Blog.png,Nabil@example.com,Éducation|Technologie
+Introduction à la prise de notes,Ceci est une note de test,notes/021120_NoteTaking-Blog.png,Anouar@example.com,Technologie|Éducation
+Bonnes pratiques avec Laravel,Astuces et conseils Laravel,notes/021120_NoteTaking-Blog.png,Mehdi@example.com,Style de vie
+Bases essentielles de PHP,Apprentissage des bases de PHP,notes/021120_NoteTaking-Blog.png,Nabil@example.com,Éducation|Technologie
+Recette Smoothie,Délicieuse recette de smoothie vert,notes/021120_NoteTaking-Blog.png,Anouar@example.com,Santé|Style de vie
+Voyage au Maroc,Planification des vacances à Marrakech,notes/021120_NoteTaking-Blog.png,Mehdi@example.com,Voyage
+Projet Web,Idées pour le nouveau site web,notes/021120_NoteTaking-Blog.png,Nabil@example.com,Technologie
