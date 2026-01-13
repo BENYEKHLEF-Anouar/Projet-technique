@@ -2,25 +2,32 @@
 
 1.  **Base de données:** MySQL.
 2.  **Framework:** Laravel 12.
-3.  **Architecture N-Tiers:**
-    - **Controller:** Requêtes HTTP uniquement.
-    - **Service:** Logique métier.
-    - **Model:** Base de données.
-4.  **Architecture:** MVC.
-5.  **Blade:** Templates réutilisables (components, layouts).
-6.  **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.
+3.  **Architecture:**
+    - **Pattern:** MVC avec couche Service (N-Tiers).
+    - **Models:** Représentation des données (`Note`, `Category`, `User`).
+    - **Services:** Logique métier centralisée (`NoteService`, `CategoryService`, `BaseService`).
+    - **Controllers:** Gestion des requêtes/réponses uniquement, pas de logique métier.
+4.  **Frontend:**
+    - **Tailwind CSS:** v4.0.0 (via Vite).
+    - **Preline UI:** Composants UI.
+    - **Lucide:** Icônes.
+    - **Blade:** Templates et composants.
+5.  **Interactivité:**
+    - **AJAX:** Requêtes asynchrones pour les interactions dynamiques (ex: ouverture/fermeture modales, soumission de formulaires).
 
 ---
 
-7.  **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
-8.  **Support Multi-langue:** Support des langues française et anglaise (fr, en).
-9.  **Vite:** Outil de build rapide.
-10. **Preline UI:** Librairie UI.
-11. **Lucide:** Librairie d'icônes.
-12. **Tailwind CSS:** Développement rapide, responsive.
-13. **Conventions:**
-    - Utiliser l'anglais pour tout le code (variables, fonctions, classes, etc.).
-    - Respecter les conventions de nommage PHP (PSR).
-14. **Logique Métier:**
-    - Toute la logique métier doit être dans les **Services**.
-    - Les **Controllers** ne doivent servir qu'à recevoir les requêtes et retourner les réponses.
+### Fonctionnalités & Spécifications
+
+6.  **Gestion des Médias:** Téléchargement et stockage d'images pour les notes.
+7.  **Internationalisation (i18n):** Support FR/EN (`lang/fr.json`, `lang/en.json`).
+8.  **Tests & Qualité:**
+    - **Tests Automatisés:** `php artisan test`.
+    - **Données de Test:** Seeders complets (`UserSeeder`, `CategorySeeder`, `NoteSeeder`).
+    - **Stratégie de Test:** Exploiter les données seedées pour valider la logique métier (`NoteService`, `CategoryService`) sans créer de données ad-hoc.
+9.  **Conventions de Code:**
+    - **Langue:** Anglais pour tout le code (classes, variables, commentaires).
+    - **Standards:** Respect des PSR PHP.
+
+------------------------
+
