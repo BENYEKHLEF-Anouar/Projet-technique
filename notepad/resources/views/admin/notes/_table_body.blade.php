@@ -8,9 +8,13 @@
                 <span class="text-gray-400">-</span>
             @endif
         </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $note->name }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ Str::limit($note->content, 50) }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $note->name }}
+        </td>
+        <td
+            class="px-6 py-4 whitespace-normal break-words max-w-xs text-sm font-medium text-gray-800 dark:text-neutral-200">
+            {{ Str::limit($note->content, 50) }}</td>
+        <td
+            class="px-6 py-4 whitespace-normal break-words max-w-xs text-sm font-medium text-gray-800 dark:text-neutral-200">
             <div class="flex flex-wrap gap-1">
                 @forelse($note->categories as $cat)
                     <span

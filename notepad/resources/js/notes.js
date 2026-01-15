@@ -1,9 +1,9 @@
-const table = document.getElementById('notes-table');
+const table = document.getElementById('notes-table-body');
 const searchInput = document.getElementById('search');
 
 function fetchNotes(query = '') {
-    fetch(`/notes?search=${query}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } }) 
-        .then(res => res.text()) 
+    fetch(`/notes?search=${query}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        .then(res => res.text())
         .then(html => {
             if (table) {
                 table.innerHTML = html;
@@ -14,7 +14,7 @@ function fetchNotes(query = '') {
         });
 
 
-        
+
 }
 
 
@@ -22,15 +22,15 @@ function fetchNotes(query = '') {
 
 
 if (searchInput) {
-    searchInput.addEventListener('input', (e) => { 
+    searchInput.addEventListener('input', (e) => {
         fetchNotes(e.target.value);
     });
 }
 
 document.getElementById('noteForm')?.addEventListener('submit', (e) => {
-    e.preventDefault(); 
-    const form = e.target; 
-   
+    e.preventDefault();
+    const form = e.target;
+
 
 
     const successMsg = document.getElementById('success-msg');
@@ -40,8 +40,8 @@ document.getElementById('noteForm')?.addEventListener('submit', (e) => {
 
     fetch(form.action, {
         method: 'POST',
-        body: new FormData(form), 
-        headers: { 'X-Requested-With': 'XMLHttpRequest' } 
+        body: new FormData(form),
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
         .then(res => {
             if (res.ok) {
@@ -49,7 +49,7 @@ document.getElementById('noteForm')?.addEventListener('submit', (e) => {
                 if (typeof HSOverlay !== 'undefined') {
                     HSOverlay.close('#hs-slide-down-animation-modal');
                 }
-                form.reset(); 
+                form.reset();
                 if (successMsg) {
                     successMsg.innerText = form.dataset.success;
                 }
