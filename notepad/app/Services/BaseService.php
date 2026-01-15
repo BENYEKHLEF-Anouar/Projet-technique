@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 
-abstract class BaseService // template or base that other classes can use
+abstract class BaseService
 {
     protected int $perPage = 10;
 

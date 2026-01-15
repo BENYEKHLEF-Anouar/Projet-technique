@@ -23,13 +23,13 @@ class NoteServiceTest extends TestCase
 
     public function test_it_can_get_all_notes()
     {
-        $result = $this->service->getNotes();
+        $result = $this->service->getAll();
         $this->assertGreaterThan(0, $result->total());
     }
 
     public function test_it_can_filter_notes_by_search()
     {
-        $result = $this->service->getNotes('Laravel');
+        $result = $this->service->getAll(['search' => 'Laravel']);
 
         $this->assertEquals(1, $result->total());
 
@@ -42,7 +42,7 @@ class NoteServiceTest extends TestCase
         // Pick a category that exists in your seeded data
         $category = Category::where('name', 'Éducation')->first();
 
-        $result = $this->service->getNotes(null, $category->id);
+        $result = $this->service->getAll(['category_id' => $category->id]);
 
         $this->assertGreaterThan(0, $result->total());
 
@@ -65,7 +65,7 @@ class NoteServiceTest extends TestCase
             'category_ids' => $categories->pluck('id')->toArray(),
         ];
 
-        $note = $this->service->createNote($data);
+        $note = $this->service->create($data);
 
         $this->assertDatabaseHas('notes', [
             'id' => $note->id,
@@ -84,7 +84,7 @@ class NoteServiceTest extends TestCase
             'content' => 'Updated content',
         ];
 
-        $this->service->updateNote($note->id, $updatedData);
+        $this->service->update($note, $updatedData);
 
         $this->assertDatabaseHas('notes', [
             'id' => $note->id,
@@ -97,7 +97,7 @@ class NoteServiceTest extends TestCase
     {
         $note = Note::first();
 
-        $this->service->deleteNote($note->id);
+        $this->service->delete($note);
 
         $this->assertDatabaseMissing('notes', [
             'id' => $note->id,

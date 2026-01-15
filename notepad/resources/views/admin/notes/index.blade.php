@@ -1,63 +1,55 @@
-@extends('layouts.admin')
-
-@section('header-title', __('Manage Notes'))
+@extends('layouts.app')
 
 @section('content')
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <div>
-            <h2 class="text-2xl font-bold text-gray-800">{{ __('Manage Notes') }}</h2>
-            <p class="text-sm text-gray-600 mt-1">{{ __('Create, edit, and delete notes') }}</p>
-        </div>
-        <button type="button" onclick="openCreateModal()"
-            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-            <i data-lucide="plus" class="w-4 h-4"></i>
-            {{ __('Create Note') }}
-        </button>
-    </div>
+    <div class="container mx-auto p-4 space-y-6">
+        <h1 class="text-2xl font-bold text-gray-800">{{ __('note.views.title') }}</h1>
 
-    <!-- Filters -->
-    <div class="bg-white border border-gray-200 rounded-xl p-4 mb-8">
-        <form id="filter-form" action="{{ route('admin.notes.index') }}" method="GET"
-            class="flex flex-col sm:flex-row gap-4">
-            <!-- Search Input -->
-            <div class="relative flex-1">
-                <input id="search-input" type="text" name="search" value="{{ request('search') }}"
-                    placeholder="{{ __('Search notes...') }}"
-                    class="py-3 px-4 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none">
-                    <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+        <div id="success-msg" class="text-green-600 font-medium h-6">
+            {{ session('success') }}
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
+            <div class="max-w-sm w-full">
+                <input type="text" id="search"
+                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                    placeholder="{{ __('note.views.search_placeholder') }}">
+            </div>
+
+            <button type="button" id="openModal"
+                class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                data-hs-overlay="#hs-slide-down-animation-modal">
+                {{ __('note.views.add_note') }}
+            </button>
+        </div>
+
+        <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                    <div
+                        class="border border-gray-200 rounded-lg shadow-xs overflow-hidden dark:border-neutral-700 dark:shadow-gray-900">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                            <thead class="bg-gray-50 dark:bg-neutral-700">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
+                                        {{ __('note.attributes.name') }}</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
+                                        {{ __('note.attributes.content') }}</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
+                                        {{ __('note.attributes.categories') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notes-table" class="divide-y divide-gray-200 dark:divide-neutral-700">
+                                @include('admin.notes._table_body')
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <!-- Category Filter -->
-            <div class="sm:w-56">
-                <select id="category-select" name="category"
-                    class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                    <option value="">{{ __('All Categories') }}</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-
-            <!-- Clear Filters -->
-            <a id="clear-filters" href="{{ route('admin.notes.index') }}"
-                class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none {{ (!request('search') && !request('category')) ? 'hidden' : '' }}">
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </a>
-        </form>
+        </div>
     </div>
 
-    <!-- Notes Table -->
-    <div id="notes-container">
-        @include('admin.notes._table', ['notes' => $notes])
-    </div>
-
-    <!-- Include Modals -->
-    @include('admin.notes._modal_form')
-    @include('admin.notes._modal_view')
-
+    @include('admin.notes._modal')
 @endsection
