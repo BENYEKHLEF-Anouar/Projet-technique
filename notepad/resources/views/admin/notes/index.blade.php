@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container mx-auto p-4 space-y-6">
         <h1 class="text-2xl font-bold text-gray-800">{{ __('note.views.title') }}</h1>
 
-        <div id="success-msg" class="text-green-600 font-medium h-6">
-            {{ session('success') }}
-        </div>
+        <div id="success-msg" class="text-green-600 font-medium h-6"></div>
+
+
 
         <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
             <div class="max-w-sm w-full">
@@ -30,6 +30,9 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                             <thead class="bg-gray-50 dark:bg-neutral-700">
                                 <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
+                                        {{ __('note.attributes.image') }}</th>
                                     <th scope="col"
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
                                         {{ __('note.attributes.name') }}</th>

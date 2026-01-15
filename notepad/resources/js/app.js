@@ -1,7 +1,6 @@
 import 'preline';
 import { createIcons, icons } from 'lucide';
-import { initFilters } from './filters';
-import './modals'; // Import modal management
+import './notes';
 
 // Pre-initialize icons
 createIcons({ icons });
@@ -10,7 +9,3 @@ createIcons({ icons });
 window.refreshIcons = () => {
     createIcons({ icons });
 };
-
-document.addEventListener('DOMContentLoaded', () => { // function that runs after the HTML document has finished loading and been parsed
-    initFilters();
-});

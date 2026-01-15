@@ -1,33 +1,47 @@
-const table = document.getElementById('films-table');
+const table = document.getElementById('notes-table');
+const searchInput = document.getElementById('search');
 
-/**
- * 1. Recherche AJAX
- */
-document.getElementById('search')?.addEventListener('input', (e) => {
-    fetch(`/films?search=${e.target.value}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+function fetchNotes(query = '') {
+    fetch(`/notes?search=${query}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
         .then(res => res.text())
-        .then(html => table.innerHTML = html);
-});
+        .then(html => {
+            if (table) {
+                table.innerHTML = html;
+                if (window.refreshIcons) {
+                    window.refreshIcons();
+                }
+            }
+        });
+}
 
-/**
- * 2. Ajout AJAX
- */
-document.getElementById('filmForm')?.addEventListener('submit', (e) => {
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        fetchNotes(e.target.value);
+    });
+}
+
+document.getElementById('noteForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const form = e.target;
+    // Clear previous success message
+    const successMsg = document.getElementById('success-msg');
+    if (successMsg) successMsg.innerText = '';
 
     fetch(form.action, {
         method: 'POST',
         body: new FormData(form),
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
-        .then(res => res.text())
-        .then(html => {
-            table.innerHTML = html;
-            if (typeof HSOverlay !== 'undefined') {
-                HSOverlay.close('#hs-slide-down-animation-modal');
+        .then(res => {
+            if (res.ok) {
+                fetchNotes(searchInput ? searchInput.value : '');
+                if (typeof HSOverlay !== 'undefined') {
+                    HSOverlay.close('#hs-slide-down-animation-modal');
+                }
+                form.reset();
+                if (successMsg) {
+                    successMsg.innerText = form.dataset.success;
+                }
             }
-            form.reset();
-            document.getElementById('success-msg').innerText = form.dataset.success;
         });
 });
