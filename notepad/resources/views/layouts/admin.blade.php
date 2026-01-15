@@ -51,7 +51,7 @@
     <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
 
         <main>
-            @if(session('success'))
+            <!-- @if(session('success'))
                 <div class="bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 mb-6" role="alert">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -64,9 +64,9 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            @endif -->
 
-            @if(session('error'))
+            <!-- @if(session('error'))
                 <div class="bg-red-50 border-t-2 border-red-500 rounded-lg p-4 mb-6" role="alert">
                     <div class="flex">
                         <div class="flex-shrink-0">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            @endif -->
 
             @yield('content')
         </main>
