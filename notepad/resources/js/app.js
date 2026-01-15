@@ -1,6 +1,5 @@
 import 'preline';
 import { createIcons, icons } from 'lucide';
-import './notes';
 
 // Pre-initialize icons
 createIcons({ icons });
