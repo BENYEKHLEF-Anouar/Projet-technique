@@ -11,7 +11,7 @@ class NoteService extends BaseService
      */
     public function getAll(array $filters = [])
     {
-        $query = Note::query();
+        $query = Note::with(['user', 'categories']);
 
         // Search by name
         if (!empty($filters['search'])) {

@@ -27,6 +27,10 @@
                 file:bg-gray-50 file:border-0
                 file:me-4
                 file:py-3 file:px-4">
+            <div id="image-preview" class="mt-2 hidden">
+                <p class="text-sm text-gray-500 mb-1">Current Image:</p>
+                <img src="" alt="Preview" class="h-20 w-auto rounded-md object-cover border">
+            </div>
         </div>
 
         <!-- Categories -->

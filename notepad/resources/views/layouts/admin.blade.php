@@ -8,7 +8,18 @@
     <!-- expose the CSRF token to the frontend (HTML and JavaScript). -->
     <title>{{ __('Admin Dashboard') }} - Memo Notepad</title>
     <!-- <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}"> -->
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50">
@@ -44,6 +55,14 @@
                 </li>
             </ul>
         </nav>
+
+        <div class="mt-auto p-6 border-t border-gray-200">
+            <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100"
+                href="{{ route('public.index') }}">
+                <i data-lucide="globe" class="w-4 h-4"></i>
+                {{ __('note.views.back_to_website') }}
+            </a>
+        </div>
     </div>
     <!-- End Sidebar -->
 
