@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreNoteRequest;
+use App\Http\Requests\UpdateNoteRequest;
 use App\Services\CategoryService;
 use App\Services\NoteService;
 use Illuminate\Http\Request;
@@ -32,15 +34,9 @@ class NoteController extends Controller
         return view('admin.notes.index', compact('notes', 'categories'));
     }
 
-    public function store(Request $request)
+    public function store(StoreNoteRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'content' => 'required|string',
-            'category_ids' => 'nullable|array',
-            'category_ids.*' => 'exists:categories,id',
-            'image' => 'nullable|image|max:2048',
-        ]);
+        $data = $request->validated();
 
         $data['user_id'] = auth()->id() ?? 1;
 
@@ -76,17 +72,11 @@ class NoteController extends Controller
         return view('admin.notes.show', compact('note'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateNoteRequest $request, $id)
     {
         $note = $this->noteService->getNote($id);
 
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'content' => 'required|string',
-            'category_ids' => 'nullable|array',
-            'category_ids.*' => 'exists:categories,id',
-            'image' => 'nullable|image|max:2048',
-        ]);
+        $data = $request->validated();
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image');

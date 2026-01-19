@@ -3,13 +3,14 @@
 namespace App\Services;
 
 use App\Models\Note;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class NoteService extends BaseService
 {
     /**
      * Retrieve a paginated list of notes, optionally filtered by search term and category.
      */
-    public function getAll(array $filters = [])
+    public function getAll(array $filters = []): LengthAwarePaginator
     {
         $query = Note::with(['user', 'categories']);
 
@@ -32,7 +33,7 @@ class NoteService extends BaseService
     /**
      * Create a new note.
      */
-    public function create(array $data)
+    public function create(array $data): Note
     {
         // Upload image
         if (!empty($data['image'])) {
@@ -52,7 +53,7 @@ class NoteService extends BaseService
     /**
      * Update an existing note.
      */
-    public function update(Note $note, array $data)
+    public function update(Note $note, array $data): Note
     {
         // Upload image
         if (!empty($data['image'])) {
@@ -72,7 +73,7 @@ class NoteService extends BaseService
     /**
      * Delete a note.
      */
-    public function delete(Note $note)
+    public function delete(Note $note): void
     {
         $note->delete();
     }
@@ -80,7 +81,7 @@ class NoteService extends BaseService
     /**
      * Get a single note (Helper for show methods)
      */
-    public function getNote(int $id)
+    public function getNote(int $id): Note
     {
         return Note::with(['categories'])->findOrFail($id);
     }

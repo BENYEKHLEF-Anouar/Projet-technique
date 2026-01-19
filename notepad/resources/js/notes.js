@@ -63,6 +63,9 @@ function resetForm() {
 
     const successMsg = document.getElementById('success-msg');
     if (successMsg) successMsg.innerText = '';
+
+    // Clear Error Messages
+    document.querySelectorAll('.error-msg').forEach(el => el.innerText = '');
 }
 
 // Add Note Button Listener
@@ -168,13 +171,30 @@ document.getElementById('noteForm')?.addEventListener('submit', (e) => {
         body: formData,
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
-        .then(res => {
+        .then(async res => {
+            const data = await res.json();
+            if (res.status === 422) {
+                // Clear previous errors
+                document.querySelectorAll('.error-msg').forEach(el => el.innerText = '');
+
+                // Display new errors
+                for (const [field, messages] of Object.entries(data.errors)) {
+                    const errorSpan = document.getElementById(`error-${field.replace('.', '_')}`);
+                    if (errorSpan) {
+                        errorSpan.innerText = messages[0];
+                    }
+                }
+                return;
+            }
+
             if (!res.ok) {
                 throw new Error('Network response was not ok');
             }
-            return res.json();
+            return data;
         })
         .then(data => {
+            if (!data) return; // Case of 422 already handled
+
             if (data.success) {
                 fetchNotes();
                 if (typeof HSOverlay !== 'undefined') {
@@ -190,6 +210,6 @@ document.getElementById('noteForm')?.addEventListener('submit', (e) => {
         })
         .catch(err => {
             console.error('Error submitting form:', err);
-            alert('Failed to save note. Please try again.');
+            // alert('Failed to save note. Please try again.');
         });
 });

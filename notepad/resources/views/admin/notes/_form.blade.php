@@ -5,19 +5,21 @@
         <!-- Name -->
         <div class="mb-4 sm:mb-8">
             <label for="name" class="block mb-2 text-sm font-medium">{{ __('note.attributes.name') }}</label>
-            <input type="text" id="name" name="name" required
+            <input type="text" id="name" name="name"
                 class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                 placeholder="{{ __('note.views.name_placeholder') }}">
+            <span id="error-name" class="text-xs text-red-600 mt-1 block error-msg"></span>
         </div>
 
         <!-- Content -->
         <div class="mb-4 sm:mb-8">
             <label for="content" class="block mb-2 text-sm font-medium">{{ __('note.attributes.content') }}</label>
             <div class="mt-1">
-                <textarea id="content" name="content" required rows="3"
+                <textarea id="content" name="content" rows="3"
                     class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                     placeholder="{{ __('note.views.content_placeholder') }}"></textarea>
             </div>
+            <span id="error-content" class="text-xs text-red-600 mt-1 block error-msg"></span>
         </div>
 
         <!-- Image -->
@@ -27,6 +29,7 @@
                 file:bg-gray-50 file:border-0
                 file:me-4
                 file:py-3 file:px-4">
+            <span id="error-image" class="text-xs text-red-600 mt-1 block error-msg"></span>
             <div id="image-preview" class="mt-2 hidden">
                 <p class="text-sm text-gray-500 mb-1">Current Image:</p>
                 <img src="" alt="Preview" class="h-20 w-auto rounded-md object-cover border">
@@ -46,6 +49,7 @@
                     </div>
                 @endforeach
             </div>
+            <span id="error-category_ids" class="text-xs text-red-600 mt-1 block error-msg"></span>
         </div>
     </div>
 </form>

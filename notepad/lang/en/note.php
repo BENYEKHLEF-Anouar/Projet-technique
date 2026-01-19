@@ -29,4 +29,12 @@ return [
         'image' => 'Image',
         'categories' => 'Categories',
     ],
+    'validation' => [
+        'name_required' => 'The note title is required.',
+        'content_required' => 'The note content is required.',
+        'image_type' => 'The file must be an image (jpg, jpeg, png, etc.).',
+        'image_size' => 'The image must not exceed 2MB.',
+        'category_invalid' => 'One or more selected categories are invalid.',
+        'category_required' => 'Please select at least one category.',
+    ],
 ];

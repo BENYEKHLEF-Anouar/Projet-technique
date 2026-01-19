@@ -29,4 +29,12 @@ return [
         'image' => 'Image',
         'categories' => 'Catégories',
     ],
+    'validation' => [
+        'name_required' => 'Le titre de la note est obligatoire.',
+        'content_required' => 'Le contenu de la note est obligatoire.',
+        'image_type' => 'Le fichier doit être une image (jpg, jpeg, png, etc.).',
+        'image_size' => 'L\'image ne doit pas dépasser 2 Mo.',
+        'category_invalid' => 'Une ou plusieurs catégories sélectionnées sont invalides.',
+        'category_required' => 'Veuillez sélectionner au moins une catégorie.',
+    ],
 ];
