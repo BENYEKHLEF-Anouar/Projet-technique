@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'index'])->name('public.index');
 Route::get('/note/{note}', [PublicController::class, 'show'])->name('public.show');
 
+// Language Switch
+Route::get('/lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'fr'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('lang.switch');
+
 // Routes pour les notes
 Route::resource('notes', NoteController::class);
 

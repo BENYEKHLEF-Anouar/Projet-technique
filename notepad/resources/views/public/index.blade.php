@@ -28,7 +28,7 @@
                     <option value="">{{ __('category.views.all') ?? 'All Categories' }}</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
+                            {{ trans()->has('category.names.' . $category->name) ? __('category.names.' . $category->name) : $category->name }}
                         </option>
                     @endforeach
                 </select>

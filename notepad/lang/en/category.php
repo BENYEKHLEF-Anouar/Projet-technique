@@ -8,4 +8,11 @@ return [
     'views' => [
         'all' => 'All Categories',
     ],
+    'names' => [
+        'Technologie' => 'Technology',
+        'Style de vie' => 'Lifestyle',
+        'Éducation' => 'Education',
+        'Santé' => 'Health',
+        'Voyage' => 'Travel',
+    ],
 ];

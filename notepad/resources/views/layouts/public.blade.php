@@ -29,6 +29,14 @@
         <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between" aria-label="Global">
             <a class="flex-none text-xl font-bold text-blue-600" href="{{ route('public.index') }}">Memo Notepad</a>
             <div class="flex flex-row items-center gap-5 mt-5 sm:justify-end sm:mt-0 sm:ps-5">
+                <!-- Language Switcher -->
+                <div class="flex items-center gap-x-2 border-r border-gray-200 pe-5">
+                    <a href="{{ route('lang.switch', 'en') }}"
+                        class="text-xs font-semibold {{ app()->getLocale() == 'en' ? 'text-blue-600' : 'text-gray-500 hover:text-blue-600' }}">EN</a>
+                    <span class="text-gray-300">|</span>
+                    <a href="{{ route('lang.switch', 'fr') }}"
+                        class="text-xs font-semibold {{ app()->getLocale() == 'fr' ? 'text-blue-600' : 'text-gray-500 hover:text-blue-600' }}">FR</a>
+                </div>
                 <!-- <a class="font-medium text-gray-600 hover:text-blue-600" href="{{ route('public.index') }}"
                     aria-current="page">{{ __('note.views.home') }}</a> -->
                 <a class="font-medium text-gray-600 hover:text-blue-600 inline-flex items-center gap-x-1.5"

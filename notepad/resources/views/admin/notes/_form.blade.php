@@ -44,7 +44,9 @@
                     <div class="flex">
                         <input type="checkbox" name="category_ids[]" value="{{ $cat->id }}" id="cat-{{ $cat->id }}"
                             class="shrink-0 mt-0.5 border-gray-200 rounded-sm text-blue-600 focus:ring-blue-500 checked:border-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                        <label for="cat-{{ $cat->id }}" class="text-sm text-gray-500 ms-3">{{ $cat->name }}</label>
+                        <label for="cat-{{ $cat->id }}" class="text-sm text-gray-500 ms-3">
+                            {{ trans()->has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
+                        </label>
                     </div>
                 @endforeach
             </div>

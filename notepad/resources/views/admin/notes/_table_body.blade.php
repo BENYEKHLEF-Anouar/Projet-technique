@@ -1,13 +1,13 @@
 @foreach($notes as $note)
     <tr>
         <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-            @if($note->image)
-                <img src="{{ asset('storage/' . $note->image) }}" alt="{{ $note->name }}"
-                    class="h-10 w-10 object-cover rounded-md">
-            @else
-                <span class="text-gray-400">-</span>
-            @endif
-        </td> -->
+                @if($note->image)
+                    <img src="{{ asset('storage/' . $note->image) }}" alt="{{ $note->name }}"
+                        class="h-10 w-10 object-cover rounded-md">
+                @else
+                    <span class="text-gray-400">-</span>
+                @endif
+            </td> -->
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <a href="{{ route('public.show', $note->id) }}" target="_blank"
                 class="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-x-1.5"
@@ -22,7 +22,7 @@
                 @forelse($note->categories as $cat)
                     <span
                         class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-lg text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ $cat->name }}
+                        {{ trans()->has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
                     </span>
                 @empty
                     <span class="text-gray-400">Aucune</span>

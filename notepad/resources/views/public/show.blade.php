@@ -29,7 +29,7 @@
                             @foreach($note->categories as $cat)
                                 <span
                                     class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
-                                    {{ $cat->name }}
+                                    {{ trans()->has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
                                 </span>
                             @endforeach
                         </div>
