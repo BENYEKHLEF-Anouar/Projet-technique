@@ -7,10 +7,10 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                         <thead class="bg-gray-50 dark:bg-neutral-700">
                             <tr>
-                                <th scope="col"
+                                <!-- <th scope="col"
                                     class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
                                     {{ __('note.attributes.image') }}
-                                </th>
+                                </th> -->
                                 <th scope="col"
                                     class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
                                     {{ __('note.attributes.name') }}

@@ -41,6 +41,31 @@ function attachEventListeners() {
 // Initial attachment
 attachEventListeners();
 
+// Handle admin pagination links
+document.addEventListener('click', (e) => {
+    const paginationLink = e.target.closest('#table-wrapper nav a');
+    if (paginationLink) {
+        e.preventDefault();
+        const url = paginationLink.href;
+
+        fetch(url, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+            .then(res => res.text())
+            .then(html => {
+                const tableWrapper = document.getElementById('table-wrapper');
+                if (tableWrapper) {
+                    tableWrapper.outerHTML = html;
+                    if (window.refreshIcons) {
+                        window.refreshIcons();
+                    }
+                    attachEventListeners();
+                }
+            })
+            .catch(err => console.error('Error fetching paginated admin notes:', err));
+    }
+});
+
 // Reset form for "Add Note"
 function resetForm() {
     const form = document.getElementById('noteForm');

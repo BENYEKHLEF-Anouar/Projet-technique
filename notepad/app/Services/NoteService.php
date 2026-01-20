@@ -57,6 +57,10 @@ class NoteService extends BaseService
     {
         // Upload image
         if (!empty($data['image'])) {
+            // Delete old image if it exists
+            if ($note->image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($note->image);
+            }
             $data['image'] = $data['image']->store('notes', 'public');
         }
 
@@ -75,6 +79,11 @@ class NoteService extends BaseService
      */
     public function delete(Note $note): void
     {
+        // Delete image from storage
+        if ($note->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($note->image);
+        }
+
         $note->delete();
     }
 

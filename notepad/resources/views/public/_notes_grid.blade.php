@@ -17,7 +17,7 @@
                 @foreach($note->categories as $cat)
                     <span
                         class="inline-flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ $cat->name ?? $cat->nom }}
+                        {{ $cat->name }}
                     </span>
                 @endforeach
             </div>

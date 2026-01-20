@@ -20,12 +20,13 @@ class PublicController extends Controller
     public function index(Request $request)
     {
         $notes = $this->noteService->getAll([
+            'search' => $request->input('search'),
             'category_id' => $request->input('category_id')
         ]);
         $categories = $this->categoryService->getAllCategories();
 
         if ($request->ajax()) {
-            return view('public._notes_grid', compact('notes'))->render();
+            return view('public._notes_wrapper', compact('notes'))->render();
         }
 
         return view('public.index', compact('notes', 'categories'));

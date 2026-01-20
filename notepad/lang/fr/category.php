@@ -5,4 +5,7 @@ return [
         'name' => 'Nom',
         'description' => 'Description',
     ],
+    'views' => [
+        'all' => 'Toutes les catégories',
+    ],
 ];
