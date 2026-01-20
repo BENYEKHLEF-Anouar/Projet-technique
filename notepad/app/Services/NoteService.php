@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Note;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Storage;
 
 class NoteService extends BaseService
 {
@@ -59,7 +60,7 @@ class NoteService extends BaseService
         if (!empty($data['image'])) {
             // Delete old image if it exists
             if ($note->image) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($note->image);
+                Storage::disk('public')->delete($note->image);
             }
             $data['image'] = $data['image']->store('notes', 'public');
         }
@@ -81,7 +82,7 @@ class NoteService extends BaseService
     {
         // Delete image from storage
         if ($note->image) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($note->image);
+            Storage::disk('public')->delete($note->image);
         }
 
         $note->delete();
