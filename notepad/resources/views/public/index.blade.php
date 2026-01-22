@@ -16,15 +16,15 @@
                 class="flex flex-col sm:flex-row gap-3">
                 <div class="relative flex-grow">
                     <input type="text" name="search" id="public-search" value="{{ request('search') }}"
-                        class="py-3 px-4 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500"
+                        class="py-3 px-4 ps-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                         placeholder="{{ __('note.views.search_placeholder') ?? 'Search notes...' }}">
                     <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-                        <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                        <i data-lucide="search" class="shrink-0 size-4 text-gray-400 dark:text-neutral-500"></i>
                     </div>
                 </div>
 
                 <select name="category_id" id="public-category"
-                    class="py-3 px-4 pe-9 block w-full sm:w-48 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500">
+                    class="py-3 px-4 pe-9 block w-full sm:w-48 border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                     <option value="">{{ __('category.views.all') ?? 'All Categories' }}</option>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
@@ -35,8 +35,8 @@
 
                 @if(request('search') || request('category_id'))
                     <a href="{{ route('public.index') }}"
-                        class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50">
-                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                        class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800">
+                        <i data-lucide="rotate-ccw" class="shrink-0 size-4"></i>
                         Clear
                     </a>
                 @endif

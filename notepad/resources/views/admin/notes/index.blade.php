@@ -9,15 +9,18 @@
 
 
         <div class="flex flex-col sm:flex-row gap-4 justify-between items-center">
-            <div class="max-w-sm w-full">
+            <div class="max-w-sm w-full relative">
                 <input type="text" id="search"
-                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                    class="py-3 px-4 ps-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                     placeholder="{{ __('note.views.search_placeholder') }}">
+                <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
+                    <i data-lucide="search" class="shrink-0 size-4 text-gray-400 dark:text-neutral-500"></i>
+                </div>
             </div>
 
             <div class="max-w-sm w-full">
                 <select id="category-filter"
-                    class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+                    class="py-3 px-4 pe-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                     <option value="">{{ __('All Categories') }}</option>
                     @foreach($categories as $cat)
                         <option value="{{ $cat->id }}">
