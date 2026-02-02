@@ -40,7 +40,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (categoryFilter) {
+    // We now use a Combobox
+    const comboBoxEl = document.querySelector('[data-hs-combo-box]');
+    if (comboBoxEl && categoryFilter) {
+        // Preline v2.x selection event
+        comboBoxEl.addEventListener('hsComboBoxSelection', (e) => {
+            const val = e.detail.value || '';
+            categoryFilter.value = val;
+            fetchPublicNotes();
+        });
+
+        // Fallback for direct clicks
+        comboBoxEl.addEventListener('click', (e) => {
+            const itemWrapper = e.target.closest('[data-hs-combo-box-output-item]');
+            if (itemWrapper) {
+                const valueSource = itemWrapper.querySelector('[data-value]');
+                const val = valueSource ? valueSource.getAttribute('data-value') : '';
+                categoryFilter.value = val;
+                fetchPublicNotes();
+            }
+        });
+    } else if (categoryFilter && categoryFilter.tagName === 'SELECT') {
+        // Fallback if still using select
         categoryFilter.addEventListener('change', fetchPublicNotes);
     }
 

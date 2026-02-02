@@ -10,8 +10,7 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
-}
+@theme {}
 
 .glass {
     background: rgba(255, 255, 255, 0.8);

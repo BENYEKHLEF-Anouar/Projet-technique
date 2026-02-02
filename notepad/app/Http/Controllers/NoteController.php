@@ -25,11 +25,12 @@ class NoteController extends Controller
             'search' => $request->input('search'),
             'category_id' => $request->input('category_id')
         ]);
-        $categories = $this->categoryService->getAllCategories();
-
-        if ($request->ajax()) {
-            return view('admin.notes._table_wrapper', compact('notes'))->render();
+        
+        if ($request->wantsJson()) {
+            return response()->json($notes);
         }
+
+        $categories = $this->categoryService->getAllCategories();
 
         return view('admin.notes.index', compact('notes', 'categories'));
     }
@@ -44,12 +45,13 @@ class NoteController extends Controller
             $data['image'] = $request->file('image');
         }
 
-        $this->noteService->create($data);
+        $note = $this->noteService->create($data);
 
-        if ($request->ajax()) {
+        if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'message' => __('note.views.success') ?? 'Note created successfully!',
+                'note' => $note
             ]);
         }
 
@@ -60,10 +62,10 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        if (request()->ajax()) {
+        if (request()->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'note' => $note,
+                'note' => $note->load('categories'),
                 'image_url' => $note->image ? asset('storage/' . $note->image) : null,
                 'categories' => $note->categories->pluck('id')
             ]);
@@ -82,12 +84,13 @@ class NoteController extends Controller
             $data['image'] = $request->file('image');
         }
 
-        $this->noteService->update($note, $data);
+        $updatedNote = $this->noteService->update($note, $data);
 
-        if ($request->ajax()) {
+        if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'message' => __('note.views.updated_success') ?? 'Note updated successfully!',
+                'note' => $updatedNote
             ]);
         }
 
@@ -99,7 +102,7 @@ class NoteController extends Controller
         $note = $this->noteService->getNote($id);
         $this->noteService->delete($note);
 
-        if (request()->ajax()) {
+        if (request()->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'message' => __('note.views.deleted_success') ?? 'Note deleted successfully!',

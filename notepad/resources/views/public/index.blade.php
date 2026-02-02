@@ -23,15 +23,52 @@
                     </div>
                 </div>
 
-                <select name="category_id" id="public-category"
-                    class="py-3 px-4 pe-9 block w-full sm:w-48 border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
-                    <option value="">{{ __('category.views.all') ?? 'All Categories' }}</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                            {{ trans()->has('category.names.' . $category->name) ? __('category.names.' . $category->name) : $category->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <!-- Search Box (Combobox) -->
+                <div class="sm:w-48">
+                    <input type="hidden" name="category_id" id="public-category" value="{{ request('category_id') }}">
+                    <div class="relative" data-hs-combo-box='{
+                        "isOpenOnFocus": true
+                    }'>
+                        <div class="relative">
+                            <input class="py-3 px-4 pe-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" 
+                                type="text" role="combobox" aria-expanded="false" 
+                                placeholder="{{ __('category.views.all') ?? 'All Categories' }}" 
+                                value="{{ $categories->firstWhere('id', request('category_id'))?->name ?? '' }}" 
+                                data-hs-combo-box-input="">
+                            <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
+                                <i data-lucide="chevron-down" class="shrink-0 size-4 text-gray-500"></i>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown -->
+                        <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg shadow-xl p-2 max-h-72 overflow-hidden overflow-y-auto dark:bg-neutral-800 dark:border-neutral-700" 
+                            style="display: none;" data-hs-combo-box-output="">
+                            <div data-hs-combo-box-output-items-wrapper="">
+                                <!-- All Option -->
+                                <div data-hs-combo-box-output-item tabindex="0">
+                                    <span class="flex items-center cursor-pointer py-2 px-4 w-full text-sm text-gray-800 hover:bg-gray-100 rounded-lg dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-200" data-value="">
+                                        <div class="flex items-center w-full">
+                                            <div data-hs-combo-box-search-text data-hs-combo-box-value>{{ __('category.views.all') ?? 'All Categories' }}</div>
+                                        </div>
+                                    </span>
+                                </div>
+                                <!-- Categories -->
+                                @foreach($categories as $category)
+                                    <div data-hs-combo-box-output-item tabindex="0">
+                                        <span class="flex items-center cursor-pointer py-2 px-4 w-full text-sm text-gray-800 hover:bg-gray-100 rounded-lg dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-200" data-value="{{ $category->id }}">
+                                            <div class="flex items-center w-full">
+                                                <div data-hs-combo-box-search-text data-hs-combo-box-value>{{ trans()->has('category.names.' . $category->name) ? __('category.names.' . $category->name) : $category->name }}</div>
+                                            </div>
+                                            <span class="hidden hs-combo-box-selected:block">
+                                                <i data-lucide="check" class="shrink-0 size-3.5 text-blue-600 dark:text-blue-500"></i>
+                                            </span>
+                                        </span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 @if(request('search') || request('category_id'))
                     <a href="{{ route('public.index') }}"

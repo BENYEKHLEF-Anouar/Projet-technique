@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Box Component Preview</title>
+    <!-- Preline UI & Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#14b8a6', // Teal 500
+                        'primary-hover': '#0d9488',
+                        'primary-focus': '#0f766e',
+                        foreground: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 p-10">
+    <!-- Component Start -->
+    <!--  use this for categories filter -->
+
+    <div class="max-w-sm">
+        <!-- SearchBox -->
+        <!-- Note: apiUrl logic is mocked here for visuals -->
+        <div class="relative" data-hs-combo-box='{
+        "groupingType": "default",
+        "isOpenOnFocus": true,
+        "apiUrl": "https://api.shadcn.com/categories", 
+        "apiGroupField": "category",
+        "outputItemTemplate": "<div data-hs-combo-box-output-item class=\"rounded-lg hover:bg-gray-100 cursor-pointer p-2\"> <span data-hs-combo-box-search-text data-hs-combo-box-value></span></div>",
+        "groupingTitleTemplate": "<div class=\"text-xs uppercase text-muted-foreground-1 m-3 mb-1\"></div>"
+      }'>
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+                    <svg class="shrink-0 size-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                </div>
+                <input
+                    class="py-3 ps-10 pe-4 block w-full bg-white border border-gray-200 rounded-lg sm:text-sm text-foreground focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
+                    type="text" role="combobox" aria-expanded="false" placeholder="Type a name" value=""
+                    data-hs-combo-box-input="">
+            </div>
+
+            <!-- SearchBox Dropdown -->
+            <div class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg shadow-xl p-2"
+                style="display: none;" data-hs-combo-box-output="">
+                <div class="max-h-72 rounded-b-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb"
+                    data-hs-combo-box-output-items-wrapper=""></div>
+                <div class="p-2 text-sm text-gray-500">Note: This preview won't fetch real data without a backend.</div>
+            </div>
+            <!-- End SearchBox Dropdown -->
+        </div>
+        <!-- End SearchBox -->
+    </div>
+    <!-- Component End -->
+</body>
+
+</html>
