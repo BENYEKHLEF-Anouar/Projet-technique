@@ -1,7 +1,10 @@
 
-export default ({ initialNotes = [], initialPagination = {}, initialCategoryId = '', csrf = '' }) => ({
+export default ({ initialNotes = [], initialPagination = {}, initialCategoryId = '', csrf = '', deleteConfirmMessage = '', currentUserId = null, userRole = 'user' }) => ({
     notes: initialNotes,
     pagination: initialPagination,
+    deleteConfirmMessage: deleteConfirmMessage,
+    currentUserId: currentUserId,
+    userRole: userRole,
     search: '',
     categoryId: initialCategoryId,
     currentPage: initialPagination.current_page || 1,
@@ -206,7 +209,9 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
                 if (response.status === 422) {
                     this.errors = result.errors;
                 } else {
-                    alert(result.message || 'An error occurred');
+                    window.dispatchEvent(new CustomEvent('notify', {
+                        detail: { message: result.message || 'An error occurred', type: 'error' }
+                    }));
                 }
                 return;
             }
@@ -215,19 +220,22 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
             this.closeModal();
             this.fetchNotes();
 
-            // Optional: User feedback
-            // alert(result.message); 
-
+            // Success feedback
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: { message: result.message, type: 'success' }
+            }));
         } catch (error) {
             console.error(error);
-            alert('Unexpected error occurred');
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: { message: 'Unexpected error occurred', type: 'error' }
+            }));
         } finally {
             this.loading = false;
         }
     },
 
     async deleteNote(id) {
-        if (!confirm('Are you sure you want to delete this note?')) return;
+        if (!confirm(this.deleteConfirmMessage || 'Are you sure?')) return;
 
         try {
             const response = await fetch(`/notes/${id}`, {
@@ -239,13 +247,23 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
                 }
             });
 
+            const result = await response.json();
+
             if (response.ok) {
                 this.fetchNotes();
+                window.dispatchEvent(new CustomEvent('notify', {
+                    detail: { message: result.message, type: 'success' }
+                }));
             } else {
-                alert('Failed to delete note');
+                window.dispatchEvent(new CustomEvent('notify', {
+                    detail: { message: result.message || 'Failed to delete note', type: 'error' }
+                }));
             }
         } catch (error) {
             console.error('Error deleting note:', error);
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: { message: 'Unexpected error occurred', type: 'error' }
+            }));
         }
     }
 });

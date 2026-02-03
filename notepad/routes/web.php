@@ -16,13 +16,7 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang.switch');
 
-// Routes pour les notes
+// Routes for notes (admin area)
 Route::resource('notes', NoteController::class);
 
-// Route::controller(NoteController::class)->prefix('notes')->name('notes.')->group(function () {
-//     Route::get('/', 'index')->name('index');
-//     Route::post('/', 'store')->name('store');
-//     Route::get('/{note}', 'show')->name('show');
-//     Route::put('/{note}', 'update')->name('update');
-//     Route::delete('/{note}', 'destroy')->name('destroy');
-// });
+Auth::routes();

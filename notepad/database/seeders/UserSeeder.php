@@ -18,7 +18,8 @@ class UserSeeder extends Seeder
                     ['email' => $data['email']],
                     [
                         'name' => $data['name'],
-                        'password' => Hash::make($data['password']), // securely hashes the password before storing it in the database.
+                        'password' => Hash::make($data['password']),
+                        'role' => $data['role'] ?? 'user',
                     ]
                 );
             }

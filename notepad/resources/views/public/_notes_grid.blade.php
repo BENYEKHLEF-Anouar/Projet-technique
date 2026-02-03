@@ -17,7 +17,7 @@
                 @foreach($note->categories as $cat)
                     <span
                         class="inline-flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ trans()->has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
+                        {{ Lang::has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
                     </span>
                 @endforeach
             </div>
@@ -25,6 +25,7 @@
                 class="text-xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white line-clamp-2 break-words">
                 {{ $note->name }}
             </h3>
+            <p class="text-sm text-gray-500 mb-1">{{ __('note.views.preview') }}</p>
             <p class="mt-3 text-gray-500 line-clamp-3 break-words">
                 {{ $note->content }}
             </p>
@@ -37,11 +38,11 @@
                 </div>
                 <div class="flex items-center gap-x-1.5 text-xs text-gray-500">
                     <i data-lucide="user" class="w-3.5 h-3.5"></i>
-                    <span>{{ $note->user->name ?? 'Unknown' }}</span>
+                    <span>{{ $note->user->name ?? __('note.views.unknown') }}</span>
                 </div>
             </div>
             <div class="justify-end text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center gap-1">
-                Read more <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                {{ __('note.views.read_more') ?? 'Read more' }} <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </div>
         </div>
     </a>
@@ -50,7 +51,7 @@
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
             <i data-lucide="file-x" class="w-8 h-8 text-gray-500"></i>
         </div>
-        <h3 class="text-lg font-semibold text-gray-800">No notes found</h3>
-        <p class="text-gray-500 mt-2">Try adjusting your search or filter.</p>
+        <h3 class="text-lg font-semibold text-gray-800">{{ __('note.views.no_notes_found') }}</h3>
+        <p class="text-gray-500 mt-2">{{ __('note.views.explore_ideas') }}</p>
     </div>
 @endforelse

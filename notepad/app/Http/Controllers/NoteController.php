@@ -17,6 +17,7 @@ class NoteController extends Controller
     {
         $this->noteService = $noteService;
         $this->categoryService = $categoryService;
+        $this->middleware('auth');
     }
 
     public function index(Request $request)
@@ -25,7 +26,7 @@ class NoteController extends Controller
             'search' => $request->input('search'),
             'category_id' => $request->input('category_id')
         ]);
-        
+
         if ($request->wantsJson()) {
             return response()->json($notes);
         }
@@ -37,9 +38,11 @@ class NoteController extends Controller
 
     public function store(StoreNoteRequest $request)
     {
+        $this->authorize('create-note');
+
         $data = $request->validated();
 
-        $data['user_id'] = auth()->id() ?? 1;
+        $data['user_id'] = auth()->id();
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image');
@@ -50,17 +53,19 @@ class NoteController extends Controller
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => __('note.views.success') ?? 'Note created successfully!',
+                'message' => __('note.views.success'),
                 'note' => $note
             ]);
         }
 
-        return redirect()->route('notes.index')->with('success', __('note.views.success') ?? 'Note created successfully!');
+        return redirect()->route('notes.index')->with('success', __('note.views.success'));
     }
 
     public function show($id)
     {
         $note = $this->noteService->getNote($id);
+
+        $this->authorize('manage-note', $note);
 
         if (request()->wantsJson()) {
             return response()->json([
@@ -78,6 +83,8 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
+        $this->authorize('manage-note', $note);
+
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
@@ -89,26 +96,28 @@ class NoteController extends Controller
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => __('note.views.updated_success') ?? 'Note updated successfully!',
+                'message' => __('note.views.updated_success'),
                 'note' => $updatedNote
             ]);
         }
 
-        return redirect()->route('notes.index')->with('success', __('note.views.updated_success') ?? 'Note updated successfully!');
+        return redirect()->route('notes.index')->with('success', __('note.views.updated_success'));
     }
 
     public function destroy($id)
     {
         $note = $this->noteService->getNote($id);
+
+        $this->authorize('manage-note', $note);
         $this->noteService->delete($note);
 
         if (request()->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => __('note.views.deleted_success') ?? 'Note deleted successfully!',
+                'message' => __('note.views.deleted_success'),
             ]);
         }
 
-        return redirect()->route('notes.index')->with('success', __('note.views.deleted_success') ?? 'Note deleted successfully!');
+        return redirect()->route('notes.index')->with('success', __('note.views.deleted_success'));
     }
 }

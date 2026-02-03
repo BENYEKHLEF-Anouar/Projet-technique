@@ -9,10 +9,15 @@ class User extends Authenticatable
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'role'];
 
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }

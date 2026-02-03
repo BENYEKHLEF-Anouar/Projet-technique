@@ -1,46 +1,48 @@
-@foreach($notes as $note)
+{{-- Notes Table Body Rows --}}
+<template x-for="note in notes" :key="note.id">
     <tr>
-        <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                @if($note->image)
-                    <img src="{{ asset('storage/' . $note->image) }}" alt="{{ $note->name }}"
-                        class="h-10 w-10 object-cover rounded-md">
-                @else
-                    <span class="text-gray-400">-</span>
-                @endif
-            </td> -->
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <a href="{{ route('public.show', $note->id) }}" target="_blank"
-                class="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-x-1.5"
-                title="View article">
-                {{ $note->name }}
-                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+            <a :href="`{{ url('/note') }}/${note.id}`" target="_blank"
+                class="inline-flex items-center gap-x-1 text-blue-600 hover:text-blue-700 hover:underline dark:text-blue-500 dark:hover:text-blue-400">
+                <span x-text="note.name"></span>
+                <i data-lucide="external-link" class="size-3"></i>
             </a>
         </td>
-        <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ Str::limit($note->content, 50) }}</td> -->
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+        <td class="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200">
+            <div class="truncate max-w-xs" x-text="note.content"></div>
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200">
             <div class="flex flex-wrap gap-1">
-                @forelse($note->categories as $cat)
+                <template x-for="cat in note.categories" :key="cat.id">
                     <span
-                        class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-lg text-xs font-medium bg-blue-100 text-blue-800">
-                        {{ trans()->has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
-                    </span>
-                @empty
-                    <span class="text-gray-400">Aucune</span>
-                @endforelse
+                        class="inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500"
+                        x-text="cat.name"></span>
+                </template>
             </div>
         </td>
+
         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-            <div class="inline-flex gap-x-2">
-                <button type="button" onclick="editNote({{ $note->id }})" title="{{ __('note.views.edit') ?? 'Edit' }}"
-                    class="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:bg-blue-100 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:bg-blue-800/30">
-                    <i data-lucide="pencil" class="w-4 h-4"></i>
+            <div class="flex justify-end gap-x-2" x-show="userRole === 'admin' || note.user_id === currentUserId">
+                {{-- Edit --}}
+                <button type="button" @click="openEditModal(note)"
+                    class="inline-flex items-center justify-center size-8 rounded-lg text-blue-600 hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-blue-900/30"
+                    title="{{ __('note.views.edit') }}">
+                    <i data-lucide="pencil" class="size-4"></i>
                 </button>
-                <button type="button" onclick="deleteNote({{ $note->id }})"
-                    title="{{ __('note.views.delete') ?? 'Delete' }}"
-                    class="inline-flex items-center justify-center w-8 h-8 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:bg-red-100 disabled:opacity-50 disabled:pointer-events-none dark:text-red-500 dark:hover:bg-red-800/30">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                {{-- Delete --}}
+                <button type="button" @click="deleteNote(note.id)"
+                    class="inline-flex items-center justify-center size-8 rounded-lg text-red-600 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-900/30"
+                    title="{{ __('note.views.delete') }}">
+                    <i data-lucide="trash-2" class="size-4"></i>
                 </button>
             </div>
         </td>
     </tr>
-@endforeach
+</template>
+<template x-if="notes.length === 0">
+    <tr>
+        <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+            {{ __('note.views.no_notes_found') }}
+        </td>
+    </tr>
+</template>

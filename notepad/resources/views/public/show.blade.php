@@ -7,7 +7,7 @@
             <a class="inline-flex items-center gap-x-1.5 text-sm text-gray-600 decoration-2 hover:underline hover:text-blue-600 mb-6"
                 href="{{ route('public.index') }}">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                {{ __('note.views.back_to_notes') ?? 'Back to Notes' }}
+                {{ __('note.views.back_to_notes') }}
             </a>
 
             <!-- Content -->
@@ -22,14 +22,14 @@
                         <span>•</span>
                         <div class="flex items-center gap-x-1.5">
                             <i data-lucide="user" class="w-4 h-4"></i>
-                            <span>{{ $note->user->name ?? 'Unknown' }}</span>
+                            <span>{{ $note->user->name ?? __('note.views.unknown') }}</span>
                         </div>
                         <span>•</span>
                         <div class="flex flex-wrap gap-1">
                             @foreach($note->categories as $cat)
                                 <span
                                     class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-md text-xs font-medium bg-blue-100 text-blue-800">
-                                    {{ trans()->has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
+                                    {{ Lang::has('category.names.' . $cat->name) ? __('category.names.' . $cat->name) : $cat->name }}
                                 </span>
                             @endforeach
                         </div>
