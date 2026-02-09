@@ -242,7 +242,21 @@ document.getElementById('noteForm')?.addEventListener('submit', (e) => {
             if (data.success) {
                 fetchNotes();
                 if (typeof HSOverlay !== 'undefined') {
-                    HSOverlay.close(modalId);
+                    const modalEl = document.querySelector(modalId);
+                    if (modalEl) {
+                        HSOverlay.close(modalEl);
+                        // Force backdrop removal as a fallback
+                        setTimeout(() => {
+                            const backdrop = document.querySelector('[data-hs-overlay-backdrop-template]');
+                            if (backdrop) backdrop.remove();
+                            // Also remove the explicit backdrop element if Preline created one
+                            const activeBackdrop = document.querySelector('.hs-overlay-backdrop');
+                            if (activeBackdrop) activeBackdrop.remove();
+                            // Clean up body classes
+                            document.body.style.overflow = '';
+                            document.body.classList.remove('overflow-hidden');
+                        }, 300);
+                    }
                 }
                 form.reset();
                 if (window.showNotification) window.showNotification(data.message, 'success');

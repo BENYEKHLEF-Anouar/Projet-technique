@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Models\Note;
 use App\Models\Category;
-use App\Models\User;
 use App\Services\NoteService;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -56,12 +55,10 @@ class NoteServiceTest extends TestCase
     public function test_it_can_create_a_note_with_categories()
     {
         $categories = Category::take(2)->get();
-        $user = User::first();
 
         $data = [
             'name' => 'New Note Test',
             'content' => 'Some content',
-            'user_id' => $user->id,
             'category_ids' => $categories->pluck('id')->toArray(),
         ];
 

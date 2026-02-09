@@ -7,7 +7,6 @@
             <h1 class="text-2xl font-bold text-gray-800">{{ __('note.views.title') }}</h1>
 
             <button type="button" id="openModal"
-                data-hs-overlay="#hs-slide-down-animation-modal"
                 class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 {{ __('note.views.add_note') }}
