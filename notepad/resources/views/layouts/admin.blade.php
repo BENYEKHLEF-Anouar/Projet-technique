@@ -88,57 +88,23 @@
 
         <main>
             <!-- Notifications -->
-            <div x-data="{ 
-                show: false, 
-                message: '', 
-                type: 'success',
-                init() {
-                    @if(session('success'))
-                        this.showNotification('{{ session('success') }}', 'success');
-                    @endif
-                    @if(session('error'))
-                        this.showNotification('{{ session('error') }}', 'error');
-                    @endif
-                },
-                showNotification(msg, type = 'success') {
-                    this.message = msg;
-                    this.type = type;
-                    this.show = true;
-                    this.$nextTick(() => {
-                        if (window.refreshIcons) window.refreshIcons();
+            <!-- Notification Container -->
+            <div id="notification-container" class="fixed top-4 right-4 z-[100] min-w-[300px]"></div>
+
+            @if(session('success'))
+                <script>
+                    window.addEventListener('DOMContentLoaded', () => {
+                        if (window.showNotification) window.showNotification("{{ session('success') }}", 'success');
                     });
-                    setTimeout(() => this.show = false, 5000);
-                }
-            }" @notify.window="showNotification($event.detail.message, $event.detail.type)"
-                class="fixed top-4 right-4 z-[100] min-w-[300px]" x-cloak>
-                <div x-show="show" x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 translate-y-[-20px]"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100 translate-y-0"
-                    x-transition:leave-end="opacity-0 translate-y-[-20px]" :class="{
-                        'bg-teal-50 border-teal-500 text-teal-800': type === 'success',
-                        'bg-red-50 border-red-500 text-red-800': type === 'error'
-                     }" class="border-t-2 rounded-lg p-4 shadow-lg">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i x-show="type === 'success'" data-lucide="check-circle"
-                                class="h-5 w-5 text-teal-600 mt-0.5"></i>
-                            <i x-show="type === 'error'" data-lucide="alert-circle"
-                                class="h-5 w-5 text-red-600 mt-0.5"></i>
-                        </div>
-                        <div class="ms-3">
-                            <p class="text-sm font-medium" x-text="message"></p>
-                        </div>
-                        <div class="ms-auto ps-3">
-                            <button @click="show = false" type="button"
-                                class="inline-flex rounded-md p-1.5 focus:outline-hidden">
-                                <i data-lucide="x" class="h-4 w-4"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </script>
+            @endif
+            @if(session('error'))
+                <script>
+                    window.addEventListener('DOMContentLoaded', () => {
+                        if (window.showNotification) window.showNotification("{{ session('error') }}", 'error');
+                    });
+                </script>
+            @endif
 
             @yield('content')
         </main>

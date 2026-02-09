@@ -27,6 +27,10 @@ class NoteController extends Controller
             'category_id' => $request->input('category_id')
         ]);
 
+        if ($request->ajax()) {
+            return view('admin.notes._table_wrapper', compact('notes'))->render();
+        }
+
         if ($request->wantsJson()) {
             return response()->json($notes);
         }
