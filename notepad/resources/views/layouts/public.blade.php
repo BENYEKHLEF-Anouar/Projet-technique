@@ -38,51 +38,6 @@
                     <a href="{{ route('lang.switch', 'fr') }}"
                         class="text-xs font-semibold {{ app()->getLocale() == 'fr' ? 'text-blue-600' : 'text-gray-500 hover:text-blue-600' }}">FR</a>
                 </div>
-                <!-- Auth Links -->
-                @guest
-                    <a class="font-medium text-gray-600 hover:text-blue-600"
-                        href="{{ route('login') }}">{{ __('Login') }}</a>
-                    @if (Route::has('register'))
-                        <a class="font-medium text-gray-600 hover:text-blue-600"
-                            href="{{ route('register') }}">{{ __('Register') }}</a>
-                    @endif
-                @else
-                    <a class="font-medium text-gray-600 hover:text-blue-600 inline-flex items-center gap-x-1.5"
-                        href="{{ route('notes.index') }}">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                        {{ __('note.views.admin_dashboard') }}
-                    </a>
-
-                    <!-- User Dropdown -->
-                    <div class="hs-dropdown relative inline-flex">
-                        <button id="hs-dropdown-user" type="button"
-                            class="hs-dropdown-toggle inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none px-3 py-2"
-                            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <i data-lucide="user" class="w-4 h-4"></i>
-                            <span class="font-semibold">{{ Auth::user()->name }}</span>
-                            <i data-lucide="chevron-down" class="hs-dropdown-open:rotate-180 w-4 h-4"></i>
-                        </button>
-
-                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full"
-                            role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-user">
-                            <div class="p-1 space-y-0.5">
-                                <div class="px-3 py-2 border-b border-gray-200">
-                                    <p class="text-xs text-gray-500">{{ __('note.auth.signed_in_as') }}</p>
-                                    <p class="text-sm font-medium text-gray-800">{{ Auth::user()->email }}</p>
-                                </div>
-
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit"
-                                        class="w-full flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-600 hover:bg-red-50 focus:outline-none focus:bg-red-50">
-                                        <i data-lucide="log-out" class="w-4 h-4"></i>
-                                        {{ __('Logout') }}
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                @endguest
             </div>
         </nav>
     </header>

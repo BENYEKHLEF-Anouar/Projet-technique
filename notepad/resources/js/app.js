@@ -1,15 +1,15 @@
 import 'preline';
 import { createIcons, icons } from 'lucide';
-import Alpine from 'alpinejs';
-import noteManager from './alpine/components/noteManager';
 
 import './public_filters';
 
-// Register Alpine component
-Alpine.data('noteManager', noteManager);
+// Pre-initialize icons
+createIcons({ icons });
 
-window.Alpine = Alpine;
-Alpine.start();
+// Expose to window for AJAX updates
+window.refreshIcons = () => {
+    createIcons({ icons });
+};
 
 // Pre-initialize icons
 createIcons({ icons });
