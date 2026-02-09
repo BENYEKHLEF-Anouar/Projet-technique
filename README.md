@@ -70,7 +70,7 @@ style: |
 
 *   **Processus 2TUP:** Le projet suit la méthodologie 2TUP (Processus de développement en Y), séparant les branches Fonctionnelle, Technique et Réalisation.
   
-![w:600 2TUP](./images/2tup.png)
+![w:600 2TUP](./images/2tup-2.png)
 
 
 *   **Solidification des Compétences:** Concentration sur le renforcement des compétences Laravel 12 sans outils d'IA, en s'appuyant sur l'expérience précédente à Solicode.
