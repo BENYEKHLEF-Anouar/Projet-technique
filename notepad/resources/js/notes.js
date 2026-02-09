@@ -6,7 +6,15 @@ function fetchNotes() {
     const query = searchInput ? searchInput.value : '';
     const categoryId = categoryFilter ? categoryFilter.value : '';
 
-    fetch(`/notes?search=${query}&category_id=${categoryId}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+    const tableWrapper = document.getElementById('table-wrapper');
+    if (tableWrapper) tableWrapper.style.opacity = '0.5';
+
+    fetch(`/notes?search=${query}&category_id=${categoryId}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'text/html, application/json'
+        }
+    })
         .then(res => res.text())
         .then(html => {
             const tableWrapper = document.getElementById('table-wrapper');
@@ -15,38 +23,59 @@ function fetchNotes() {
                 if (window.refreshIcons) {
                     window.refreshIcons();
                 }
-                // Re-attach event listeners after DOM update
-                attachEventListeners();
             }
         })
-        .catch(err => console.error('Error fetching notes:', err));
+        .catch(err => console.error('Error fetching notes:', err))
+        .finally(() => {
+            const tableWrapper = document.getElementById('table-wrapper');
+            if (tableWrapper) tableWrapper.style.opacity = '1';
+        });
+}
+
+// Debounce search
+let debounceTimer;
+function handleSearch() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(fetchNotes, 300);
 }
 
 function attachEventListeners() {
-    // Re-get elements after DOM update
     searchInput = document.getElementById('search');
     categoryFilter = document.getElementById('category-filter');
 
     if (searchInput) {
-        searchInput.removeEventListener('input', fetchNotes); // Remove old listener
-        searchInput.addEventListener('input', fetchNotes);
+        searchInput.removeEventListener('input', handleSearch);
+        searchInput.addEventListener('input', handleSearch);
     }
 
+    // Preline ComboBox Listener
+    const comboBoxEl = document.querySelector('[data-hs-combo-box]');
+    if (comboBoxEl) {
+        comboBoxEl.removeEventListener('hsComboBoxSelection', handleComboBox);
+        comboBoxEl.addEventListener('hsComboBoxSelection', handleComboBox);
+    }
+}
+
+function handleComboBox(e) {
+    const val = e.detail.value || '';
     if (categoryFilter) {
-        categoryFilter.removeEventListener('change', fetchNotes); // Remove old listener
-        categoryFilter.addEventListener('change', fetchNotes);
+        categoryFilter.value = val;
+        fetchNotes();
     }
 }
 
 // Initial attachment
 attachEventListeners();
 
-// Handle admin pagination links
+// Handle admin pagination links via delegation
 document.addEventListener('click', (e) => {
     const paginationLink = e.target.closest('#table-wrapper nav a');
     if (paginationLink) {
         e.preventDefault();
         const url = paginationLink.href;
+
+        const tableWrapper = document.getElementById('table-wrapper');
+        if (tableWrapper) tableWrapper.style.opacity = '0.5';
 
         fetch(url, {
             headers: { 'X-Requested-With': 'XMLHttpRequest' }
@@ -59,10 +88,13 @@ document.addEventListener('click', (e) => {
                     if (window.refreshIcons) {
                         window.refreshIcons();
                     }
-                    attachEventListeners();
                 }
             })
-            .catch(err => console.error('Error fetching paginated admin notes:', err));
+            .catch(err => console.error('Error fetching paginated admin notes:', err))
+            .finally(() => {
+                const tableWrapper = document.getElementById('table-wrapper');
+                if (tableWrapper) tableWrapper.style.opacity = '1';
+            });
     }
 });
 
@@ -72,47 +104,49 @@ function resetForm() {
     if (!form) return;
 
     form.reset();
-    form.action = '/notes'; // Reset to store route
+    form.action = '/notes';
 
-    // Remove method spoofing
     const methodInput = form.querySelector('input[name="_method"]');
     if (methodInput) methodInput.remove();
 
-    // Reset Image Preview
     const imgPreview = document.getElementById('image-preview');
-    if (imgPreview) imgPreview.classList.add('hidden');
+    if (imgPreview) {
+        imgPreview.classList.add('hidden');
+        imgPreview.querySelector('img').src = '';
+    }
 
-    // Reset Title
     const modalTitle = document.getElementById('hs-slide-down-animation-modal-label');
-    if (modalTitle) modalTitle.innerText = "Add Note"; // Or translate key if available on element data
+    if (modalTitle) modalTitle.innerText = "Add Note";
 
-    const successMsg = document.getElementById('success-msg');
-    if (successMsg) successMsg.innerText = '';
-
-    // Clear Error Messages
     document.querySelectorAll('.error-msg').forEach(el => el.innerText = '');
 }
 
 // Add Note Button Listener
 document.getElementById('openModal')?.addEventListener('click', () => {
     resetForm();
+    if (typeof HSOverlay !== 'undefined') {
+        HSOverlay.open(modalId);
+    }
 });
 
 // Edit Note Function
 window.editNote = function (id) {
     resetForm();
 
-    fetch(`/notes/${id}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+    fetch(`/notes/${id}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        }
+    })
         .then(res => res.json())
         .then(data => {
             if (data.success) {
                 const note = data.note;
                 const form = document.getElementById('noteForm');
 
-                // Set Action
                 form.action = `/notes/${note.id}`;
 
-                // Add Method Spoofing for PUT
                 let methodInput = form.querySelector('input[name="_method"]');
                 if (!methodInput) {
                     methodInput = document.createElement('input');
@@ -122,14 +156,10 @@ window.editNote = function (id) {
                     form.appendChild(methodInput);
                 }
 
-                // Fill Text Inputs
                 form.querySelector('[name="name"]').value = note.name;
                 form.querySelector('[name="content"]').value = note.content;
 
-                // Handle Categories (Checkboxes)
-                // First uncheck all
                 form.querySelectorAll('input[name="category_ids[]"]').forEach(cb => cb.checked = false);
-                // Then check relevant ones
                 if (data.categories) {
                     data.categories.forEach(catId => {
                         const cb = form.querySelector(`input[value="${catId}"]`);
@@ -137,7 +167,6 @@ window.editNote = function (id) {
                     });
                 }
 
-                // Handle Image Preview
                 if (data.image_url) {
                     const imgPreview = document.getElementById('image-preview');
                     if (imgPreview) {
@@ -146,11 +175,9 @@ window.editNote = function (id) {
                     }
                 }
 
-                // Update Modal Title
                 const modalTitle = document.getElementById('hs-slide-down-animation-modal-label');
                 if (modalTitle) modalTitle.innerText = "Edit Note";
 
-                // Open Modal
                 if (typeof HSOverlay !== 'undefined') {
                     HSOverlay.open(modalId);
                 }
@@ -166,6 +193,7 @@ window.deleteNote = function (id) {
         method: 'DELETE',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
     })
@@ -173,13 +201,12 @@ window.deleteNote = function (id) {
         .then(data => {
             if (data.success) {
                 fetchNotes();
-                const successMsg = document.getElementById('success-msg');
-                if (successMsg) successMsg.innerText = data.message;
+                if (window.showNotification) window.showNotification(data.message, 'success');
             }
         })
         .catch(err => {
             console.error('Error deleting note:', err);
-            alert('Failed to delete note. Please try again.');
+            if (window.showNotification) window.showNotification('Failed to delete note.', 'error');
         });
 };
 
@@ -187,54 +214,57 @@ window.deleteNote = function (id) {
 document.getElementById('noteForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const form = e.target;
-    const successMsg = document.getElementById('success-msg');
-
     const formData = new FormData(form);
 
     fetch(form.action, {
         method: 'POST',
         body: formData,
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        }
     })
         .then(async res => {
             const data = await res.json();
             if (res.status === 422) {
-                // Clear previous errors
                 document.querySelectorAll('.error-msg').forEach(el => el.innerText = '');
-
-                // Display new errors
                 for (const [field, messages] of Object.entries(data.errors)) {
                     const errorSpan = document.getElementById(`error-${field.replace('.', '_')}`);
-                    if (errorSpan) {
-                        errorSpan.innerText = messages[0];
-                    }
+                    if (errorSpan) errorSpan.innerText = messages[0];
                 }
                 return;
             }
-
-            if (!res.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!res.ok) throw new Error('Network response was not ok');
             return data;
         })
         .then(data => {
-            if (!data) return; // Case of 422 already handled
-
+            if (!data) return;
             if (data.success) {
                 fetchNotes();
                 if (typeof HSOverlay !== 'undefined') {
                     HSOverlay.close(modalId);
                 }
                 form.reset();
-                if (successMsg) {
-                    successMsg.innerText = data.message || form.dataset.success;
-                }
-            } else {
-                alert('Something went wrong.');
+                if (window.showNotification) window.showNotification(data.message, 'success');
             }
         })
-        .catch(err => {
-            console.error('Error submitting form:', err);
-            // alert('Failed to save note. Please try again.');
-        });
+        .catch(err => console.error('Error submitting form:', err));
+});
+
+// Image preview helper
+document.addEventListener('change', (e) => {
+    if (e.target.id === 'note-image') {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const imgPreview = document.getElementById('image-preview');
+                if (imgPreview) {
+                    imgPreview.classList.remove('hidden');
+                    imgPreview.querySelector('img').src = event.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 });

@@ -52,33 +52,11 @@
         </nav>
 
         <div class="mt-auto p-6 border-t border-gray-200">
-            <div class="flex items-center gap-x-3 mb-4 px-2.5">
-                <div class="shrink-0">
-                    <div
-                        class="size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">
-                        {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
-                    </div>
-                </div>
-                <div class="grow">
-                    <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->name ?? 'User' }}</p>
-                    <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role ?? 'member' }}</p>
-                </div>
-            </div>
-
             <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 mb-1"
                 href="{{ route('public.index') }}">
                 <i data-lucide="globe" class="w-4 h-4"></i>
                 {{ __('note.views.back_to_website') }}
             </a>
-
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit"
-                    class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-red-600 rounded-lg hover:bg-red-50">
-                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                    {{ __('Logout') }}
-                </button>
-            </form>
         </div>
     </div>
     <!-- End Sidebar -->
@@ -88,56 +66,45 @@
 
         <main>
             <!-- Notifications -->
-            <div x-data="{ 
-                show: false, 
-                message: '', 
-                type: 'success',
-                init() {
-                    @if(session('success'))
-                        this.showNotification('{{ session('success') }}', 'success');
-                    @endif
-                    @if(session('error'))
-                        this.showNotification('{{ session('error') }}', 'error');
-                    @endif
-                },
-                showNotification(msg, type = 'success') {
-                    this.message = msg;
-                    this.type = type;
-                    this.show = true;
-                    this.$nextTick(() => {
-                        if (window.refreshIcons) window.refreshIcons();
-                    });
-                    setTimeout(() => this.show = false, 5000);
-                }
-            }" @notify.window="showNotification($event.detail.message, $event.detail.type)"
-                class="fixed top-4 right-4 z-[100] min-w-[300px]" x-cloak>
-                <div x-show="show" x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 translate-y-[-20px]"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100 translate-y-0"
-                    x-transition:leave-end="opacity-0 translate-y-[-20px]" :class="{
-                        'bg-teal-50 border-teal-500 text-teal-800': type === 'success',
-                        'bg-red-50 border-red-500 text-red-800': type === 'error'
-                     }" class="border-t-2 rounded-lg p-4 shadow-lg">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i x-show="type === 'success'" data-lucide="check-circle"
-                                class="h-5 w-5 text-teal-600 mt-0.5"></i>
-                            <i x-show="type === 'error'" data-lucide="alert-circle"
-                                class="h-5 w-5 text-red-600 mt-0.5"></i>
-                        </div>
-                        <div class="ms-3">
-                            <p class="text-sm font-medium" x-text="message"></p>
-                        </div>
-                        <div class="ms-auto ps-3">
-                            <button @click="show = false" type="button"
-                                class="inline-flex rounded-md p-1.5 focus:outline-hidden">
-                                <i data-lucide="x" class="h-4 w-4"></i>
-                            </button>
+            <div id="notification-container" class="fixed top-4 right-4 z-[100] min-w-[300px]">
+                @if(session('success'))
+                    <div
+                        class="notification-item bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 shadow-lg text-teal-800 mb-2">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="check-circle" class="h-5 w-5 text-teal-600 mt-0.5"></i>
+                            </div>
+                            <div class="ms-3">
+                                <p class="text-sm font-medium">{{ session('success') }}</p>
+                            </div>
+                            <div class="ms-auto ps-3">
+                                <button type="button" onclick="this.parentElement.parentElement.parentElement.remove()"
+                                    class="inline-flex rounded-md p-1.5 focus:outline-hidden">
+                                    <i data-lucide="x" class="h-4 w-4"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
+                @if(session('error'))
+                    <div
+                        class="notification-item bg-red-50 border-t-2 border-red-500 rounded-lg p-4 shadow-lg text-red-800 mb-2">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="alert-circle" class="h-5 w-5 text-red-600 mt-0.5"></i>
+                            </div>
+                            <div class="ms-3">
+                                <p class="text-sm font-medium">{{ session('error') }}</p>
+                            </div>
+                            <div class="ms-auto ps-3">
+                                <button type="button" onclick="this.parentElement.parentElement.parentElement.remove()"
+                                    class="inline-flex rounded-md p-1.5 focus:outline-hidden">
+                                    <i data-lucide="x" class="h-4 w-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
 
             @yield('content')

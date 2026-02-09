@@ -17,7 +17,6 @@ class NoteController extends Controller
     {
         $this->noteService = $noteService;
         $this->categoryService = $categoryService;
-        $this->middleware('auth');
     }
 
     public function index(Request $request)
@@ -27,8 +26,8 @@ class NoteController extends Controller
             'category_id' => $request->input('category_id')
         ]);
 
-        if ($request->wantsJson()) {
-            return response()->json($notes);
+        if ($request->ajax()) {
+            return view('admin.notes._table', compact('notes'))->render();
         }
 
         $categories = $this->categoryService->getAllCategories();
@@ -38,11 +37,7 @@ class NoteController extends Controller
 
     public function store(StoreNoteRequest $request)
     {
-        $this->authorize('create-note');
-
         $data = $request->validated();
-
-        $data['user_id'] = auth()->id();
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image');
@@ -65,8 +60,6 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        $this->authorize('manage-note', $note);
-
         if (request()->wantsJson()) {
             return response()->json([
                 'success' => true,
@@ -82,8 +75,6 @@ class NoteController extends Controller
     public function update(UpdateNoteRequest $request, $id)
     {
         $note = $this->noteService->getNote($id);
-
-        $this->authorize('manage-note', $note);
 
         $data = $request->validated();
 
@@ -107,8 +98,6 @@ class NoteController extends Controller
     public function destroy($id)
     {
         $note = $this->noteService->getNote($id);
-
-        $this->authorize('manage-note', $note);
         $this->noteService->delete($note);
 
         if (request()->wantsJson()) {

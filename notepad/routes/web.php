@@ -16,7 +16,5 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('lang.switch');
 
-// Routes for notes (admin area)
+// Routes for notes (management area)
 Route::resource('notes', NoteController::class);
-
-Auth::routes();

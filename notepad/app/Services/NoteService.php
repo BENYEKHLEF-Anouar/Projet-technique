@@ -13,7 +13,7 @@ class NoteService extends BaseService
      */
     public function getAll(array $filters = []): LengthAwarePaginator
     {
-        $query = Note::with(['user', 'categories']);
+        $query = Note::with(['categories']);
 
         // Search by name
         if (!empty($filters['search'])) {
