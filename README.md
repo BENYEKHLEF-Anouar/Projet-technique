@@ -119,3 +119,18 @@ style: |
 ## Sujet - Live coding
 * Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément.
 * Une barre de recherche filtrant des éléments par titre.
+
+---
+
+## Historique des Versions
+
+| Version | Description | Branche |
+| :--- | :--- | :--- |
+| **v1** | Public Side (Consultation, Recherche, Filtre) | `public` |
+| **v2** | Admin Side (CRUD, Modales) | `admin` |
+| **v3** | Authentification / Authorization (Gates) | `gates` |
+| **v4** | SPA / AJAX | `spa-ajax` |
+| **v5** | SPA / Alpine.js | `spa-alpine` |
+| **v6** | Spatie / Authorization | `spatie` |
+| **v7** | API | `api` |
+| **v8** | Mobile App | `mobile` |
