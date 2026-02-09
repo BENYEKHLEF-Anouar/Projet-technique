@@ -149,8 +149,8 @@ style: |
 ---
 
 ## **v4** SPA / AJAX - Live Coding
-* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément.
-Une barre de recherche filtrant des éléments par titre.
+* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément. <br>
+* Une barre de recherche filtrant des éléments par titre.
 
 ---
 
