@@ -56,7 +56,7 @@ style: |
 
 ---
 
-## Travail à faire
+## Exigences: Travail à faire
 
 ### Développer l'Application Memo Notepad
 *   **Partie Publique:** Interface permettant aux visiteurs de consulter les notes. Fonctionnalités : Recherche par titre, filtre par catégorie, pagination (10 éléments/page).
@@ -64,7 +64,7 @@ style: |
 
 ---
 
-## Contexte
+## Contexte: Projet de Fin de Formation
 
 *   **Projet de Fin de Formation:** Travail sur le projet de fin de formation, commençant par la branche technique.
 
@@ -77,7 +77,7 @@ style: |
 
 ---
 
-## Exigences: Analyse Technique
+## Analyse Technique
 
 
 ### Les technologies à utiliser
@@ -91,19 +91,21 @@ style: |
 4.  **Architecture:** MVC.
 5.  **Blade:** Templates réutilisables (components, layouts).
 6.  **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.  
+7. **Alpine.js:** Librairie JavaScript pour les interactions dynamiques.
+8. **Spatie:** Librairie pour la gestion des permissions et rôles.
 
 ---
 
-7.  **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
-8.  **Support Multi-langue:** Support des langues française et anglaise (fr, en).
-9.  **Vite:** Outil de build rapide.
-10. **Preline UI:** Librairie UI.
-11. **Lucide:** Librairie d'icônes.
-12.  **Tailwind CSS:** Développement rapide, responsive.
+9.  **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
+10. **Support Multi-langue:** Support des langues française et anglaise (fr, en).
+11. **Vite:** Outil de build rapide.
+12. **Preline UI:** Librairie UI.
+13. **Lucide:** Librairie d'icônes.
+14.  **Tailwind CSS:** Développement rapide, responsive.
 
 ---
 
-## Analyse: Analyse Fonctionnelle
+## Analyse Fonctionnelle
 
 ![w:1000 Use Case Diagram](./images/notepad_usecase45.png)
 
@@ -116,13 +118,7 @@ style: |
 
 ---
 
-## Sujet - Live coding
-* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément.
-* Une barre de recherche filtrant des éléments par titre.
-
----
-
-## Historique des Versions
+## Versions
 
 | Version | Description | Branche |
 | :--- | :--- | :--- |
@@ -134,3 +130,49 @@ style: |
 | **v6** | Spatie / Authorization | `spatie` |
 | **v7** | API | `api` |
 | **v8** | Mobile App | `mobile` |
+
+---
+
+## **v1** Public Side - Live Coding
+* Creation du portfolio personnel
+
+---
+
+## **v2** Admin Side - Live Coding
+* Gestion des articles (CRUD)
+
+---
+
+## **v3** Authentification / Authorization - Live Coding
+* 
+
+---
+
+## **v4** SPA / AJAX - Live Coding
+* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément.
+Une barre de recherche filtrant des éléments par titre.
+
+---
+
+## **v5** SPA / Alpine.js - Live Coding
+* 
+
+---
+
+## **v6** Spatie / Authorization - Live Coding
+* 
+
+---
+
+## **v7** API - Live Coding
+* 
+
+---
+
+## **v8** Mobile App - Live Coding
+* 
+
+---
+
+
+
