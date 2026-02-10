@@ -48,7 +48,20 @@ style: |
 
 ---
 
-## La méthode Waterfall (En cascade)
+## **Plan**
+
+1.  **Méthode Waterfall**
+2.  **Exigences :** Travail à faire
+3.  **Contexte :** Projet de Fin de Formation
+4.  **Analyse Technique**
+5.  **Analyse :** Analyse Fonctionnelle
+6.  **Conception**
+7.  **Versions (v1 - v8)**
+8.  **Conclusion**
+
+---
+
+## Méthode Waterfall (En cascade)
 
 ![w:900 Waterfall](./images/waterfall.png)
 
@@ -105,7 +118,7 @@ style: |
 
 ---
 
-## Analyse Fonctionnelle
+## Analyse: Analyse Fonctionnelle
 
 ![w:1000 Use Case Diagram](./images/notepad_usecase45.png)
 
@@ -133,46 +146,59 @@ style: |
 
 ---
 
-## **v1** Public Side - Live Coding
-* Creation du portfolio personnel
+## **v1** : Public Side
+
+* **Live Coding :** Création du portfolio personnel
 
 ---
 
-## **v2** Admin Side - Live Coding
-* Gestion des articles (CRUD)
+## **v2** : Admin Side
+
+* **Live Coding :** Gestion des articles (CRUD)
 
 ---
 
-## **v3** Authentification / Authorization - Live Coding
-* 
+## **v3** : Authentification / Authorization
+
+* **Live Coding :** 
 
 ---
 
-## **v4** SPA / AJAX - Live Coding
-* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément. <br>
-* Une barre de recherche filtrant des éléments par titre.
+## **v4** : SPA / AJAX
+
+* **Live Coding :** 
+  - Bouton “Ajouter” via modale
+  - Barre de recherche dynamique
 
 ---
 
-## **v5** SPA / Alpine.js - Live Coding
-* 
+## **v5** : SPA / Alpine.js
+
+* **Live Coding :** 
 
 ---
 
-## **v6** Spatie / Authorization - Live Coding
-* 
+## **v6** : Spatie / Authorization
+
+* **Live Coding :**
 
 ---
 
-## **v7** API - Live Coding
-* 
+## **v7** : API
+
+* **Live Coding :** 
 
 ---
 
-## **v8** Mobile App - Live Coding
-* 
+## **v8** : Mobile App
 
+* **Live Coding :** 
 ---
+
+## **Conclusion**
+
+
+
 
 
 
