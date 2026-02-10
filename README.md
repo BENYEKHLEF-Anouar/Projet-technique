@@ -117,7 +117,7 @@ style: |
 
 ---
 
-## Analyse Fonctionnelle
+## Analyse: Analyse Fonctionnelle
 
 ![w:1000 Use Case Diagram](./images/notepad_usecase45.png)
 
