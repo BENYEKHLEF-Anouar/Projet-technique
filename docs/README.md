@@ -17,6 +17,6 @@ Voici la structure des branches et dossiers du dépôt :
 - **mobile** (v8) : Branche dédiée à l'intégration mobile.
 
 ### Branches de Travail & Live Coding
-- **prototype-ajax** : Code de démonstration initial utlisant AJAX.
+- **prototype-ajax** : Code de démonstration initial utilisant AJAX.
 - **live-coding-ajax-start** : Point de départ pour la session de live coding pour AJAX.
 - **live-coding-ajax** : Résultat de la session de live coding pour AJAX.
