@@ -57,6 +57,7 @@ style: |
 5.  **Analyse :** Analyse Fonctionnelle
 6.  **Conception**
 7.  **Versions (v1 - v8)**
+8.  **Conclusion**
 
 ---
 
