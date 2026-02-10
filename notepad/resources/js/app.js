@@ -1,7 +1,7 @@
 import 'preline';
 import { createIcons, icons } from 'lucide';
 import Alpine from 'alpinejs';
-import noteManager from './alpine/components/noteManager';
+import noteManager from './components/noteManager';
 
 import './public_filters';
 
@@ -18,3 +18,5 @@ createIcons({ icons });
 window.refreshIcons = () => {
     createIcons({ icons });
 };
+
+
