@@ -48,7 +48,20 @@ style: |
 
 ---
 
-## La méthode Waterfall (En cascade)
+## **Plan**
+
+1.  **Méthode Waterfall**
+2.  **Exigences :** Travail à faire
+3.  **Contexte :** Projet de Fin de Formation
+4.  **Analyse Technique**
+5.  **Analyse :** Analyse Fonctionnelle
+6.  **Conception**
+7.  **Versions (v1 - v8)**
+8.  **Conclusion**
+
+---
+
+## Méthode Waterfall (En cascade)
 
 ![w:900 Waterfall](./images/waterfall.png)
 
@@ -56,7 +69,7 @@ style: |
 
 ---
 
-## Travail à faire
+## Exigences: Travail à faire
 
 ### Développer l'Application Memo Notepad
 *   **Partie Publique:** Interface permettant aux visiteurs de consulter les notes. Fonctionnalités : Recherche par titre, filtre par catégorie, pagination (10 éléments/page).
@@ -64,20 +77,20 @@ style: |
 
 ---
 
-## Contexte
+## Contexte: Projet de Fin de Formation
 
 *   **Projet de Fin de Formation:** Travail sur le projet de fin de formation, commençant par la branche technique.
 
 *   **Processus 2TUP:** Le projet suit la méthodologie 2TUP (Processus de développement en Y), séparant les branches Fonctionnelle, Technique et Réalisation.
   
-![w:600 2TUP](./images/2tup.png)
+![w:600 2TUP](./images/2tup-2.png)
 
 
 *   **Solidification des Compétences:** Concentration sur le renforcement des compétences Laravel 12 sans outils d'IA, en s'appuyant sur l'expérience précédente à Solicode.
 
 ---
 
-## Exigences: Analyse Technique
+## Analyse Technique
 
 
 ### Les technologies à utiliser
@@ -91,15 +104,17 @@ style: |
 4.  **Architecture:** MVC.
 5.  **Blade:** Templates réutilisables (components, layouts).
 6.  **AJAX:** Interactions dynamiques (ex: Modales) sans rechargement de page.  
+7. **Alpine.js:** Librairie JavaScript pour les interactions dynamiques.
+8. **Spatie:** Librairie pour la gestion des permissions et rôles.
 
 ---
 
-7.  **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
-8.  **Support Multi-langue:** Support des langues française et anglaise (fr, en).
-9.  **Vite:** Outil de build rapide.
-10. **Preline UI:** Librairie UI.
-11. **Lucide:** Librairie d'icônes.
-12.  **Tailwind CSS:** Développement rapide, responsive.
+9.  **Téléchargement d'images:** Possibilité de télécharger et de joindre des images aux notes.
+10. **Support Multi-langue:** Support des langues française et anglaise (fr, en).
+11. **Vite:** Outil de build rapide.
+12. **Preline UI:** Librairie UI.
+13. **Lucide:** Librairie d'icônes.
+14.  **Tailwind CSS:** Développement rapide, responsive.
 
 ---
 
@@ -116,6 +131,74 @@ style: |
 
 ---
 
-## Sujet - Live coding
-* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément.
-* Une barre de recherche filtrant des éléments par titre.
+## Versions
+
+| Version | Description | Branche |
+| :--- | :--- | :--- |
+| **v1** | Public Side (Consultation, Recherche, Filtre) | `public` |
+| **v2** | Admin Side (CRUD, Modales) | `admin` |
+| **v3** | Authentification / Authorization (Gates) | `gates` |
+| **v4** | SPA / AJAX | `spa-ajax` |
+| **v5** | SPA / Alpine.js | `spa-alpine` |
+| **v6** | Spatie / Authorization | `spatie` |
+| **v7** | API | `api` |
+| **v8** | Mobile App | `mobile` |
+
+---
+
+## **v1** : Public Side
+
+* **Live Coding :** Création du portfolio personnel
+
+---
+
+## **v2** : Admin Side
+
+* **Live Coding :** Gestion des articles (CRUD)
+
+---
+
+## **v3** : Authentification / Authorization
+
+* **Live Coding :** 
+
+---
+
+## **v4** : SPA / AJAX
+
+* **Live Coding :** 
+  - Bouton “Ajouter” via modale
+  - Barre de recherche dynamique
+
+---
+
+## **v5** : SPA / Alpine.js
+
+* **Live Coding :** 
+
+---
+
+## **v6** : Spatie / Authorization
+
+* **Live Coding :**
+
+---
+
+## **v7** : API
+
+* **Live Coding :** 
+
+---
+
+## **v8** : Mobile App
+
+* **Live Coding :** 
+---
+
+## **Conclusion**
+
+
+
+
+
+
