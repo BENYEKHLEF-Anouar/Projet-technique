@@ -98,9 +98,5 @@ export default ({ initialSearch = '', initialCategoryId = '' }) => ({
         }
     },
 
-    clearFilters() {
-        this.search = '';
-        this.categoryId = '';
-        this.fetchNotes();
-    }
+
 });
