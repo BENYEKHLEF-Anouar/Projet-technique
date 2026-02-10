@@ -133,45 +133,53 @@ style: |
 
 ---
 
-## **v1** Public Side - Live Coding
-* Creation du portfolio personnel
+## **v1** : Public Side
+
+* **Live Coding :** Création du portfolio personnel
 
 ---
 
-## **v2** Admin Side - Live Coding
-* Gestion des articles (CRUD)
+## **v2** : Admin Side
+
+* **Live Coding :** Gestion des articles (CRUD)
 
 ---
 
-## **v3** Authentification / Authorization - Live Coding
-* 
+## **v3** : Authentification / Authorization
+
+* **Live Coding :** 
 
 ---
 
-## **v4** SPA / AJAX - Live Coding
-* Un bouton “Ajouter” qui ouvre une modale pour créer un nouvel élément. <br>
-* Une barre de recherche filtrant des éléments par titre.
+## **v4** : SPA / AJAX
+
+* **Live Coding :** 
+  - Bouton “Ajouter” via modale
+  - Barre de recherche dynamique
 
 ---
 
-## **v5** SPA / Alpine.js - Live Coding
-* 
+## **v5** : SPA / Alpine.js
+
+* **Live Coding :** 
 
 ---
 
-## **v6** Spatie / Authorization - Live Coding
-* 
+## **v6** : Spatie / Authorization
+
+* **Live Coding :**
 
 ---
 
-## **v7** API - Live Coding
-* 
+## **v7** : API
+
+* **Live Coding :** 
 
 ---
 
-## **v8** Mobile App - Live Coding
-* 
+## **v8** : Mobile App
 
+* **Live Coding :** 
 ---
 
 
