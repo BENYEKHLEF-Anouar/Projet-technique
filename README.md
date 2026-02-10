@@ -54,7 +54,7 @@ style: |
 2.  **Exigences :** Travail à faire
 3.  **Contexte :** Projet de Fin de Formation
 4.  **Analyse Technique**
-5.  **Analyse:** Analyse Fonctionnelle
+5.  **Analyse :** Analyse Fonctionnelle
 6.  **Conception**
 7.  **Versions (v1 - v8)**
 
