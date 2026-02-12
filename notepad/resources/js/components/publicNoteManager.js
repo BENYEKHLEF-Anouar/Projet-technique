@@ -1,38 +1,22 @@
+import baseManager from './baseManager';
+
 export default ({ initialSearch = '', initialCategoryId = '' }) => ({
-    search: initialSearch,
-    categoryId: initialCategoryId,
+    // Spread base manager functionality
+    ...baseManager({ initialSearch, initialCategoryId }),
+
+    // Public-specific properties
     notesHtml: '',
-    loading: false,
 
     init() {
-        this.$watch('search', () => {
-            this.fetchNotes();
-        });
-        this.$watch('categoryId', () => {
-            this.fetchNotes();
-        });
+        // Initialize base functionality (watchers, Preline, etc.)
+        this.initBase();
 
+        // Setup public-specific watchers
+        this.$watch('search', () => this.fetchNotes());
+        this.$watch('categoryId', () => this.fetchNotes());
+
+        // Handle pagination link clicks
         this.$nextTick(() => {
-            // Bind Preline Combobox to Alpine
-            const comboBoxEl = document.querySelector('[data-hs-combo-box]');
-            if (comboBoxEl) {
-                comboBoxEl.addEventListener('hsComboBoxSelection', (e) => {
-                    this.categoryId = e.detail.value || '';
-                });
-
-                // Fallback for direct clicks
-                comboBoxEl.addEventListener('click', (e) => {
-                    const itemWrapper = e.target.closest('[data-hs-combo-box-output-item]');
-                    if (itemWrapper) {
-                        const valueSource = itemWrapper.querySelector('[data-value]');
-                        if (valueSource) {
-                            this.categoryId = valueSource.getAttribute('data-value') || '';
-                        }
-                    }
-                });
-            }
-
-            // Handle pagination links
             document.addEventListener('click', (e) => {
                 const paginationLink = e.target.closest('#notes-wrapper .pagination a, #notes-wrapper nav a');
                 if (paginationLink) {
@@ -41,7 +25,6 @@ export default ({ initialSearch = '', initialCategoryId = '' }) => ({
                 }
             });
         });
-
     },
 
     async fetchNotes(url = null) {
@@ -78,18 +61,14 @@ export default ({ initialSearch = '', initialCategoryId = '' }) => ({
             if (wrapper) {
                 wrapper.outerHTML = html;
 
-                // Re-initialize icons and Preline
-                this.$nextTick(() => {
-                    if (window.refreshIcons) window.refreshIcons();
-                    if (typeof HSStaticMethods !== 'undefined') {
-                        HSStaticMethods.autoInit();
-                    }
-                    // Handle scrolling if it was pagination
-                    if (url.includes('page=')) {
-                        const grid = document.getElementById('notes-grid');
-                        if (grid) grid.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
+                // Re-initialize Preline and icons
+                this.reinitializeUI();
+
+                // Handle scrolling if it was pagination
+                if (url.includes('page=')) {
+                    const grid = document.getElementById('notes-grid');
+                    if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+                }
             }
         } catch (error) {
             console.error('Error fetching notes:', error);
