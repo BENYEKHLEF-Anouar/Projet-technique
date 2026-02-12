@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultSimpleView('vendor.pagination.preline');
 
         Gate::before(function ($user, $ability) {
+            \Illuminate\Support\Facades\Log::info("Gate Check: $ability for User {$user->id} (Admin: " . ($user->hasRole('admin') ? 'Yes' : 'No') . ")");
             return $user->hasRole('admin') ? true : null;
         });
 
@@ -35,11 +36,21 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('create-note', function (User $user) {
-            return !$user->isAdmin(); // Only non-admins (editors) can create notes
+            return $user->hasPermissionTo('create-note');
         });
 
-        Gate::define('manage-note', function (User $user, Note $note) {
-            return $user->isAdmin() || $user->id === $note->user_id;
+        Gate::define('update-note', function (User $user, Note $note) {
+            $permission = $user->hasPermissionTo('edit-any-note') ||
+                ($user->hasPermissionTo('edit-own-note') && $note->user_id === $user->id);
+            \Illuminate\Support\Facades\Log::info("Update Gate: User {$user->id}, Note Owner {$note->user_id}. Permission: " . ($permission ? 'Granted' : 'Denied'));
+            return $permission;
+        });
+
+        Gate::define('delete-note', function (User $user, Note $note) {
+            $permission = $user->hasPermissionTo('delete-any-note') ||
+                ($user->hasPermissionTo('delete-own-note') && $note->user_id === $user->id);
+            \Illuminate\Support\Facades\Log::info("Delete Gate: User {$user->id}, Note Owner {$note->user_id}. Permission: " . ($permission ? 'Granted' : 'Denied'));
+            return $permission;
         });
     }
 }
