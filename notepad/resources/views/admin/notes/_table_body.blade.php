@@ -22,24 +22,29 @@
         </td>
 
         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-            <div class="flex justify-end gap-x-2" x-show="userRole === 'admin' || note.user_id === currentUserId">
+            <div class="flex justify-end gap-x-2">
                 {{-- Edit --}}
-                <button type="button" @click="openEditModal(note)"
-                    class="inline-flex items-center justify-center size-8 rounded-lg text-blue-600 hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-blue-900/30"
-                    title="{{ __('note.views.edit') }}">
-                    <i data-lucide="pencil" class="size-4"></i>
-                </button>
+                @can('edit-note')
+                    <button type="button" @click="openEditModal(note)"
+                        class="inline-flex items-center justify-center size-8 rounded-lg text-blue-600 hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-blue-900/30"
+                        title="{{ __('note.views.edit') }}">
+                        <i data-lucide="pencil" class="size-4"></i>
+                    </button>
+                @endcan
+
                 {{-- Delete --}}
-                <button type="button" @click="deleteNote(note.id)"
-                    class="inline-flex items-center justify-center size-8 rounded-lg text-red-600 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-900/30"
-                    title="{{ __('note.views.delete') }}">
-                    <i data-lucide="trash-2" class="size-4"></i>
-                </button>
+                @can('delete-note')
+                    <button type="button" @click="deleteNote(note.id)"
+                        class="inline-flex items-center justify-center size-8 rounded-lg text-red-600 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-900/30"
+                        title="{{ __('note.views.delete') }}">
+                        <i data-lucide="trash-2" class="size-4"></i>
+                    </button>
+                @endcan
             </div>
         </td>
     </tr>
 </template>
-<template x-if="notes.length === 0">
+<template x-if="notes.length === 0 && !loading">
     <tr>
         <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
             {{ __('note.views.no_notes_found') }}

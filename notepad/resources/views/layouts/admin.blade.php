@@ -61,7 +61,8 @@
                 </div>
                 <div class="grow">
                     <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->name ?? 'User' }}</p>
-                    <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role ?? 'member' }}</p>
+                    <p class="text-xs text-gray-500 capitalize">
+                        {{ __('user.roles.' . (auth()->user()->role ?? 'member')) }}</p>
                 </div>
             </div>
 

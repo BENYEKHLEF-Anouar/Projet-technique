@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
             $header = fgetcsv($handle);
             while (($row = fgetcsv($handle)) !== false) {
                 $data = array_combine($header, $row);
-                User::firstOrCreate(
+                User::updateOrCreate(
                     ['email' => $data['email']],
                     [
                         'name' => $data['name'],

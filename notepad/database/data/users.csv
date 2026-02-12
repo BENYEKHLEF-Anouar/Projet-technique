@@ -1,4 +1,4 @@
 name,email,password,role
 Anouar,Anouar@example.com,secret123,admin
-Mehdi,Mehdi@example.com,secret123,user
-Nabil,Nabil@example.com,secret123,user
+Mehdi,Mehdi@example.com,secret123,editor
+Nabil,Nabil@example.com,secret123,editor

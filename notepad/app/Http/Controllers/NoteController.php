@@ -65,7 +65,7 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        $this->authorize('manage-note', $note);
+        $this->authorize('edit-note', $note);
 
         if (request()->wantsJson()) {
             return response()->json([
@@ -83,7 +83,7 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        $this->authorize('manage-note', $note);
+        $this->authorize('edit-note', $note);
 
         $data = $request->validated();
 
@@ -108,7 +108,7 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        $this->authorize('manage-note', $note);
+        $this->authorize('delete-note', $note);
         $this->noteService->delete($note);
 
         if (request()->wantsJson()) {

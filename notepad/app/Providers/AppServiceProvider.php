@@ -31,11 +31,17 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('create-note', function (User $user) {
-            return !$user->isAdmin(); // Only non-admins (editors) can create notes
+            return !$user->isAdmin(); // Only editors can create notes
         });
 
-        Gate::define('manage-note', function (User $user, Note $note) {
-            return $user->isAdmin() || $user->id === $note->user_id;
+        // Global check for UI visibility (SPA compatibility)
+        Gate::define('edit-note', function (User $user) {
+            return $user->isAdmin(); // Only admins can edit notes
+        });
+
+        // Global check for UI visibility (SPA compatibility)
+        Gate::define('delete-note', function (User $user) {
+            return $user->isAdmin(); // Only admins can delete notes
         });
     }
 }
