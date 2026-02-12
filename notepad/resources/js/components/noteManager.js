@@ -1,17 +1,29 @@
+import { baseItemManager } from './baseManager';
 
-export default ({ initialNotes = [], initialPagination = {}, initialCategoryId = '', csrf = '', deleteConfirmMessage = '', currentUserId = null, userRole = 'user' }) => ({
-    notes: initialNotes,
-    pagination: initialPagination,
+export default ({ initialNotes = [], initialPagination = {}, initialCategoryId = '', initialSearch = '', csrf = '', deleteConfirmMessage = '', currentUserId = null, userRole = 'user' }) => ({
+    // Spread item manager functionality (includes base manager)
+    ...baseItemManager({
+        initialItems: initialNotes,
+        initialPagination,
+        initialCategoryId,
+        initialSearch,
+        csrf
+    }),
+
+    // Map 'items' to 'notes' for semantic clarity
+    get notes() {
+        return this.items;
+    },
+    set notes(value) {
+        this.items = value;
+    },
+
+    // Note-specific properties
     deleteConfirmMessage: deleteConfirmMessage,
     currentUserId: currentUserId,
     userRole: userRole,
-    search: '',
-    categoryId: initialCategoryId,
-    currentPage: initialPagination.current_page || 1,
-    showModal: false,
-    isEdit: false,
-    loading: false,
-    errors: {},
+
+    // Note-specific form data structure (overrides base formData)
     formData: {
         id: null,
         name: '',
@@ -22,95 +34,34 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
     imagePreview: null,
 
     init() {
-        // Initial fetch not strictly needed if we populate initialNotes from Blade
-        // but good for resetting state if needed.
-        this.$watch('search', () => this.fetchNotes());
-        this.$watch('categoryId', () => {
-            this.fetchNotes();
-        });
-
-        this.$nextTick(() => {
-            // Re-initialize Preline components
-            if (typeof HSStaticMethods !== 'undefined') {
-                HSStaticMethods.autoInit();
-            }
-
-            // Bind Preline Combobox to Alpine
-            const comboBoxEl = document.querySelector('[data-hs-combo-box]');
-            if (comboBoxEl) {
-                // Preline v2.x emits a custom event on selection
-                comboBoxEl.addEventListener('hsComboBoxSelection', (e) => {
-                    const value = e.detail.value;
-                    this.categoryId = value || '';
-                });
-
-                // Fallback for click on items if needed
-                comboBoxEl.addEventListener('click', (e) => {
-                    const itemWrapper = e.target.closest('[data-hs-combo-box-output-item]');
-                    if (itemWrapper) {
-                        const valueSource = itemWrapper.querySelector('[data-value]');
-                        if (valueSource) {
-                            const val = valueSource.getAttribute('data-value');
-                            this.categoryId = val || '';
-                        }
-                    }
-                });
-            }
-        });
+        // Initialize item manager (includes base)
+        this.initItemManager();
     },
 
-    async fetchNotes(page = 1) {
+    // Override fetchItems from baseItemManager
+    async fetchItems(page = 1) {
         this.loading = true;
         this.currentPage = page;
 
-        const params = new URLSearchParams({
-            search: this.search,
-            category_id: this.categoryId,
-            page: this.currentPage
-        });
-
         try {
-            const response = await fetch(`/notes?${params.toString()}`, {
+            const url = this.buildFetchUrl('/notes', page);
+            const response = await fetch(url, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
                     'Accept': 'application/json'
                 }
             });
-            const data = await response.json();
 
-            // data is the return of LengthAwarePaginator->toArray()
-            this.notes = data.data || [];
-            this.pagination = data;
-
-            // Re-init generic plugins if needed (like Lucide)
-            this.$nextTick(() => {
-                if (window.refreshIcons) window.refreshIcons();
-            });
+            const data = await this.handleFetchResponse(response);
+            this.items = data.data || [];
         } catch (error) {
-            console.error('Error serving notes:', error);
+            console.error('Error fetching notes:', error);
         } finally {
             this.loading = false;
         }
     },
 
-    changePage(page) {
-        if (page < 1 || page > this.pagination.last_page || page === this.currentPage) return;
-        this.fetchNotes(page);
-    },
-
-    get pages() {
-        const pages = [];
-        const lastPage = this.pagination.last_page || 1;
-        const current = this.currentPage;
-
-        let start = Math.max(1, current - 2);
-        let end = Math.min(lastPage, current + 2);
-
-        for (let i = start; i <= end; i++) {
-            pages.push(i);
-        }
-        return pages;
-    },
+    // changePage and pages are inherited from baseItemManager
 
     openCreateModal() {
         this.resetForm();
@@ -197,7 +148,7 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
                 method: 'POST', // Always POST for FormData with _method spoofing
                 body: data,
                 headers: {
-                    'X-CSRF-TOKEN': csrf,
+                    'X-CSRF-TOKEN': this.csrf,
                     'X-Requested-With': 'XMLHttpRequest',
                     'Accept': 'application/json'
                 }
@@ -205,30 +156,20 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
 
             const result = await response.json();
 
-            if (!response.ok) {
-                if (response.status === 422) {
-                    this.errors = result.errors;
-                } else {
-                    window.dispatchEvent(new CustomEvent('notify', {
-                        detail: { message: result.message || 'An error occurred', type: 'error' }
-                    }));
+            if (!this.handleFormResponse(response, result)) {
+                if (response.status !== 422) {
+                    this.notify(result.message || 'An error occurred', 'error');
                 }
                 return;
             }
 
             // Success
             this.closeModal();
-            this.fetchNotes();
-
-            // Success feedback
-            window.dispatchEvent(new CustomEvent('notify', {
-                detail: { message: result.message, type: 'success' }
-            }));
+            this.fetchItems();
+            this.notify(result.message, 'success');
         } catch (error) {
             console.error(error);
-            window.dispatchEvent(new CustomEvent('notify', {
-                detail: { message: 'Unexpected error occurred', type: 'error' }
-            }));
+            this.notify('Unexpected error occurred', 'error');
         } finally {
             this.loading = false;
         }
@@ -241,7 +182,7 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
             const response = await fetch(`/notes/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'X-CSRF-TOKEN': csrf,
+                    'X-CSRF-TOKEN': this.csrf,
                     'X-Requested-With': 'XMLHttpRequest',
                     'Accept': 'application/json'
                 }
@@ -250,20 +191,14 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
             const result = await response.json();
 
             if (response.ok) {
-                this.fetchNotes();
-                window.dispatchEvent(new CustomEvent('notify', {
-                    detail: { message: result.message, type: 'success' }
-                }));
+                this.fetchItems();
+                this.notify(result.message, 'success');
             } else {
-                window.dispatchEvent(new CustomEvent('notify', {
-                    detail: { message: result.message || 'Failed to delete note', type: 'error' }
-                }));
+                this.notify(result.message || 'Failed to delete note', 'error');
             }
         } catch (error) {
             console.error('Error deleting note:', error);
-            window.dispatchEvent(new CustomEvent('notify', {
-                detail: { message: 'Unexpected error occurred', type: 'error' }
-            }));
+            this.notify('Unexpected error occurred', 'error');
         }
     }
 });
