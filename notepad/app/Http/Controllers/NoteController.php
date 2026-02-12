@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateNoteRequest;
 use App\Services\CategoryService;
 use App\Services\NoteService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class NoteController extends Controller
 {
@@ -22,6 +23,7 @@ class NoteController extends Controller
 
     public function index(Request $request)
     {
+        Gate::authorize('view-notes'); // Added Gate authorization
         $notes = $this->noteService->getAll([
             'search' => $request->input('search'),
             'category_id' => $request->input('category_id')
@@ -36,10 +38,17 @@ class NoteController extends Controller
         return view('admin.notes.index', compact('notes', 'categories'));
     }
 
+    // Added create method
+    public function create()
+    {
+        Gate::authorize('create-note');
+        $categories = $this->categoryService->getAllCategories(); // Using service
+        return view('admin.notes.create', compact('categories')); // Adjusted view path
+    }
+
     public function store(StoreNoteRequest $request)
     {
-        $this->authorize('create-note');
-
+        Gate::authorize('create-note'); // Changed from $this->authorize
         $data = $request->validated();
 
         $data['user_id'] = auth()->id();
@@ -65,7 +74,7 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        $this->authorize('manage-note', $note);
+        Gate::authorize('view-notes');
 
         if (request()->wantsJson()) {
             return response()->json([
@@ -83,7 +92,7 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        $this->authorize('manage-note', $note);
+        Gate::authorize('update-note', $note);
 
         $data = $request->validated();
 
@@ -108,7 +117,7 @@ class NoteController extends Controller
     {
         $note = $this->noteService->getNote($id);
 
-        $this->authorize('manage-note', $note);
+        Gate::authorize('delete-note', $note);
         $this->noteService->delete($note);
 
         if (request()->wantsJson()) {

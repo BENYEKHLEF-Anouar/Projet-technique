@@ -26,8 +26,12 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('vendor.pagination.preline');
         Paginator::defaultSimpleView('vendor.pagination.preline');
 
-        Gate::define('admin-only', function (User $user) {
-            return $user->isAdmin();
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('admin') ? true : null;
+        });
+
+        Gate::define('view-notes', function (User $user) {
+            return $user->hasPermissionTo('view-notes');
         });
 
         Gate::define('create-note', function (User $user) {

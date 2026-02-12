@@ -14,14 +14,15 @@ class UserSeeder extends Seeder
             $header = fgetcsv($handle);
             while (($row = fgetcsv($handle)) !== false) {
                 $data = array_combine($header, $row);
-                User::firstOrCreate(
+                $user = User::firstOrCreate(
                     ['email' => $data['email']],
                     [
                         'name' => $data['name'],
                         'password' => Hash::make($data['password']),
-                        'role' => $data['role'] ?? 'user',
                     ]
                 );
+
+                $user->assignRole($data['role'] ?? 'user');
             }
             fclose($handle);
         }
