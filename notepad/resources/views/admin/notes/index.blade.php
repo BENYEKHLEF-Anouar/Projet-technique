@@ -6,9 +6,7 @@
         initialPagination: {{ Js::from($notes->toArray()) }},
         initialCategoryId: '{{ request('category_id', '') }}',
         csrf: '{{ csrf_token() }}',
-        deleteConfirmMessage: '{{ __('note.views.delete_confirm') }}',
-        currentUserId: {{ auth()->id() ?? 'null' }},
-        userRole: '{{ auth()->user()->role ?? 'user' }}'
+        deleteConfirmMessage: '{{ __('note.views.delete_confirm') }}'
     })"
         class="container mx-auto p-4 space-y-6">
 

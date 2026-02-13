@@ -54,8 +54,15 @@
         <div class="mt-auto p-6 border-t border-gray-200">
             <div class="flex items-center gap-x-3 mb-4 px-2.5">
                 <div class="shrink-0">
+                    @php
+                        $avatarColor = match(auth()->user()->role ?? 'member') {
+                            'admin' => 'bg-blue-100 text-blue-800',
+                            'editor' => 'bg-emerald-100 text-emerald-800',
+                            default => 'bg-gray-100 text-gray-800',
+                        };
+                    @endphp
                     <div
-                        class="size-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">
+                        class="size-8 rounded-full {{ $avatarColor }} flex items-center justify-center font-bold text-xs">
                         {{ substr(auth()->user()->name ?? 'U', 0, 1) }}
                     </div>
                 </div>

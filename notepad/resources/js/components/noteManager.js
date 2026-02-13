@@ -1,6 +1,6 @@
 import { baseItemManager } from './baseManager';
 
-export default ({ initialNotes = [], initialPagination = {}, initialCategoryId = '', initialSearch = '', csrf = '', deleteConfirmMessage = '', currentUserId = null, userRole = 'user' }) => ({
+export default ({ initialNotes = [], initialPagination = {}, initialCategoryId = '', initialSearch = '', csrf = '', deleteConfirmMessage = '' }) => ({
     // Spread item manager functionality (includes base manager)
     ...baseItemManager({
         initialItems: initialNotes,
@@ -20,8 +20,6 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
 
     // Note-specific properties
     deleteConfirmMessage: deleteConfirmMessage,
-    currentUserId: currentUserId,
-    userRole: userRole,
 
     // Note-specific form data structure (overrides base formData)
     formData: {
