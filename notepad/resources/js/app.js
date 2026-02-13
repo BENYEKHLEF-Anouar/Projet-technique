@@ -8,7 +8,7 @@ import publicNoteManager from './components/publicNoteManager';
 Alpine.data('noteManager', noteManager);
 Alpine.data('publicNoteManager', publicNoteManager);
 
-window.Alpine = Alpine;
+window.Alpine = Alpine; // Makes Alpine accessible globally.
 Alpine.start();
 
 // Pre-initialize icons

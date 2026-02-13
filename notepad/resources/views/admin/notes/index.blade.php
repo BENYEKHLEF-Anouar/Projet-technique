@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
+    <!-- converts a PHP array/collection to a JS array/object literal. -->
+
 @section('content')
     <div x-data="noteManager({ 
-        initialNotes: {{ Js::from($notes->items()) }}, 
+        initialNotes: {{ Js::from($notes->items()) }},  
         initialPagination: {{ Js::from($notes->toArray()) }},
         initialCategoryId: '{{ request('category_id', '') }}',
         csrf: '{{ csrf_token() }}',

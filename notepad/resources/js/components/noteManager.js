@@ -2,7 +2,7 @@ import { baseItemManager } from './baseManager';
 
 export default ({ initialNotes = [], initialPagination = {}, initialCategoryId = '', initialSearch = '', csrf = '', deleteConfirmMessage = '' }) => ({
     // Spread item manager functionality (includes base manager)
-    ...baseItemManager({
+    ...baseItemManager({  // factory function
         initialItems: initialNotes,
         initialPagination,
         initialCategoryId,
@@ -22,7 +22,7 @@ export default ({ initialNotes = [], initialPagination = {}, initialCategoryId =
     deleteConfirmMessage: deleteConfirmMessage,
 
     // Note-specific form data structure (overrides base formData)
-    formData: {
+    formData: { // JavaScript object that holds all the current data for a form in your Alpine.js component
         id: null,
         name: '',
         content: '',

@@ -23,8 +23,8 @@ const baseManager = (config = {}) => ({
         this.setupWatchers();
 
         // Initialize Preline combobox integration
-        this.$nextTick(() => {
-            this.setupCombobox();
+        this.$nextTick(() => {   // Defers execution until after the DOM updates are flushed.
+            this.setupCombobox(); //  Integrates Preline dropdown with Alpine.js
             this.initPreline();
         });
     },
