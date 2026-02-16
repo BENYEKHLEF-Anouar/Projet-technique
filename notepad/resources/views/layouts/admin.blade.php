@@ -55,7 +55,8 @@
             <div class="flex items-center gap-x-3 mb-4 px-2.5">
                 <div class="shrink-0">
                     @php
-                        $avatarColor = match(auth()->user()->role ?? 'member') {
+                        $userRole = auth()->user()->roles->first()?->name ?? 'member';
+                        $avatarColor = match ($userRole) {
                             'admin' => 'bg-blue-100 text-blue-800',
                             'editor' => 'bg-emerald-100 text-emerald-800',
                             default => 'bg-gray-100 text-gray-800',
@@ -69,7 +70,8 @@
                 <div class="grow">
                     <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->name ?? 'User' }}</p>
                     <p class="text-xs text-gray-500 capitalize">
-                        {{ __('user.roles.' . (auth()->user()->role ?? 'member')) }}</p>
+                        {{ __('user.roles.' . $userRole) }}
+                    </p>
                 </div>
             </div>
 

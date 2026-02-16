@@ -19,7 +19,6 @@ class UserSeeder extends Seeder
                     [
                         'name' => $data['name'],
                         'password' => Hash::make($data['password']),
-                        'role' => $data['role'] ?? 'user',
                     ]
                 );
             }

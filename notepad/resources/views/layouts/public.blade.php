@@ -61,7 +61,8 @@
                             <i data-lucide="user" class="w-4 h-4"></i>
                             <span class="font-semibold">{{ Auth::user()->name }}</span>
                             @php
-                                $roleColor = match(Auth::user()->role) {
+                                $userRole = Auth::user()->roles->first()?->name ?? 'member';
+                                $roleColor = match($userRole) {
                                     'admin' => 'bg-blue-100 text-blue-800',
                                     'editor' => 'bg-emerald-100 text-emerald-800',
                                     default => 'bg-gray-100 text-gray-800',
@@ -69,7 +70,7 @@
                             @endphp
                             <span class="inline-flex items-center gap-x-1 py-0.5 px-2 rounded-full text-xs font-medium {{ $roleColor }}">
                                 <i data-lucide="smile" class="size-3"></i>
-                                {{ __('user.roles.' . (Auth::user()->role ?? 'member')) }}
+                                {{ __('user.roles.' . $userRole) }}
                             </span>
                             <i data-lucide="chevron-down" class="hs-dropdown-open:rotate-180 w-4 h-4"></i>
                         </button>
