@@ -15,9 +15,12 @@ class NoteService extends BaseService
     {
         $query = Note::with(['user', 'categories']);
 
-        // Search by name
+        // Search by name or content
         if (!empty($filters['search'])) {
-            $query->where('name', 'like', '%' . $filters['search'] . '%');
+            $query->where(function ($q) use ($filters) {
+                $q->where('name', 'like', '%' . $filters['search'] . '%')
+                  ->orWhere('content', 'like', '%' . $filters['search'] . '%');
+            });
         }
 
         // Filter by category
